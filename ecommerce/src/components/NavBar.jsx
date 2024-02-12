@@ -21,7 +21,7 @@ export default function NavBar() {
   const { phone, mail, offerMsg, companyName } = data.navBar;
 
   return (
-    <div className="font-monster">
+    <div className="">
       <div className="bg-darkbg p-2 text-lightText text-center items-center justify-between flex px-5">
         <div className="flex gap-3">
           <div className="text-white items-center p-2.5 gap-[5px] flex">
@@ -88,7 +88,7 @@ export default function NavBar() {
             </div>
           ))}
         </nav>
-        <div className="flex gap-8 font-monster font-bold">
+        <div className="flex gap-8 font-bold">
         <div className="flex items-center text-navBlue">
           <FontAwesomeIcon icon={faUser} size="sm"/>
           <Link to="/login" className="no-underline text-navBlue text-sm">Login</Link> / <Link to="/signup" className="no-underline text-navBlue text-sm">Register</Link>

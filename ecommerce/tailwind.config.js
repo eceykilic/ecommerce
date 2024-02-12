@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         'darkbg': '#252B42',
+        "lightbg": "#FAFAFA"
       },
       fontFamily: {
         monster: ['Montserrat', "sans-serif"]
@@ -14,7 +15,8 @@ module.exports = {
       lightText: "#FFFFFF",
       darkText: "#252B42",
       lighterDark: "#737373",
-      navBlue: "#23A6F0"
+      navBlue: "#23A6F0",
+      btnGreen: "#2DC071"
     }
   },
   plugins: [],
