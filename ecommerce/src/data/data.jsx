@@ -13,5 +13,5 @@ export const data = {
             women: { name: "women"},
             accessories: { name: "accessories" },
             kids: { name: "kids"},
-        }
+        },
 }
