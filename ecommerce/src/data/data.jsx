@@ -24,6 +24,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl2.jpg",
@@ -31,6 +33,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl3.jpg",
@@ -38,6 +42,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl4.jpg",
@@ -45,6 +51,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl5.jpg",
@@ -52,6 +60,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl6.jpg",
@@ -59,6 +69,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl7.jpg",
@@ -66,6 +78,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl8.jpg",
@@ -73,6 +87,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl9.jpg",
@@ -80,6 +96,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl10.jpg",
@@ -87,6 +105,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl11.jpg",
@@ -94,6 +114,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/cardlist/pl12.jpg",
@@ -101,15 +123,17 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "productList",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
-  ],
-  bestSeller: [
     {
       productImage: "/product-card/product1.jpg",
       productName: "Graphic Design-1",
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "bestSeller",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/product-card/product2.jpg",
@@ -117,6 +141,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "bestSeller",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/product-card/product3.jpg",
@@ -124,6 +150,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "bestSeller",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/product-card/product4.jpg",
@@ -131,6 +159,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "bestSeller",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/product-card/product5.jpg",
@@ -138,6 +168,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "bestSeller",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/product-card/product6.jpg",
@@ -145,6 +177,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "bestSeller",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/product-card/product7.jpg",
@@ -152,6 +186,8 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
+      category: "bestSeller",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },
     {
       productImage: "/product-card/product8.jpg",
@@ -159,8 +195,9 @@ export const data = {
       department: "English Department",
       price: "$16.48",
       discountedPrice: "$6.48",
-    },
-  
+      category: "bestSeller",
+      badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
+    },  
   ],
 
 };

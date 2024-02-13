@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT ({
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -19,8 +22,9 @@ module.exports = {
       navBlue: "#23A6F0",
       btnGreen: "#2DC071",
       priceGray: "#BDBDBD",
-      priceGreen: "#23856D"
+      priceGreen: "#23856D",
+      ratingY: "#F3CD03"
     }
   },
   plugins: [],
-};
+});

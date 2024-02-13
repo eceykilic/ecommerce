@@ -12,7 +12,7 @@ import {
 import { data } from "../data/data"
 
 export default function ProductCards() {
-  const productl = data.productl;
+  const productl = data.productl.filter(product => product.category === "productList");
   const groupedpl = productl.reduce((acc, product, index) => {
     const groupIndex = Math.floor(index / 4);
 
@@ -105,7 +105,7 @@ export default function ProductCards() {
                 department={product.department}
                 price={product.price}
                 discountedPrice={product.discountedPrice}
-                badges={["./product-card/Ellipse 14.png", "./product-card/Ellipse 15.png", "./product-card/Ellipse 16.png", "./product-card/Ellipse 17.png"]}
+                badges={product.badges}
               />
             ))}
           </div>

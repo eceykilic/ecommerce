@@ -1,17 +1,18 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from 'react-router-dom';
+import { faChevronRight, faStar, faHeart, faCartShopping, faEye } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
+import { Carousel } from "@material-tailwind/react";
 
-function ProductPage({data}) {
-    const { productName } = useParams();
+function ProductPage({ data }) {
+  const { productName } = useParams();
   const product = data.productl.find((p) => p.productName === productName);
-  
+
   if (!product) {
     // Eğer ürün bulunamazsa, burada bir hata mesajı veya yönlendirme yapabilirsiniz.
     return <div>Ürün bulunamadı</div>;
   }
-  
+
   const {
     productName: productNameFromData,
     productImage,
@@ -20,11 +21,10 @@ function ProductPage({data}) {
     discountedPrice,
     badges,
   } = product;
-  
+
   return (
-    
-    <div className="flex justify-start w-[85%] mx-auto">
-      <div className="flex mt-1 gap-2">
+    <div className="">
+      <div className="flex mt-1 gap-2 justify-start w-[85%] mx-auto">
         <h6>Home</h6>
         <FontAwesomeIcon
           icon={faChevronRight}
@@ -33,27 +33,85 @@ function ProductPage({data}) {
         <h6 className="text-priceGray">Shop</h6>
       </div>
       <div>
-      <h1>{productNameFromData}</h1>
-      <img
-        src={productImage}
-        alt={productNameFromData}
-      />
-      <p>Department: {department}</p>
-      <div>
-        <p>Price: {price}</p>
-        <p>Discounted Price: {discountedPrice}</p>
+        <div className="flex w-[85%] mx-auto mt-10 gap-16">
+          <div>
+            <Carousel
+              className="w-[500px] h-[450px]"
+              navigation={({ setActiveIndex, activeIndex, length }) => (
+                <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+                  {new Array(length).fill("").map((_, i) => (
+                    <span
+                      key={i}
+                      className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                        activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
+                      }`}
+                      onClick={() => setActiveIndex(i)}
+                    />
+                  ))}
+                </div>
+              )}
+            >
+              <img
+                src={productImage}
+                alt={productNameFromData}
+                className="h-full w-full object-cover"
+              />
+              <img
+                src={productImage}
+                alt={productNameFromData}
+                className="h-full w-full object-cover"
+              />
+            </Carousel>
+          </div>
+          <div className="flex flex-col justify-between">
+            <h4 className="font-bold text-darkText">{productNameFromData}</h4>
+            <div className="flex gap-2">
+              <FontAwesomeIcon icon={faStar} className="text-ratingY mt-0.5" />
+              <FontAwesomeIcon icon={faStar} className="text-ratingY mt-0.5" />
+              <FontAwesomeIcon icon={faStar} className="text-ratingY mt-0.5" />
+              <FontAwesomeIcon icon={faStar} className="text-ratingY mt-0.5" />
+              <FontAwesomeIcon icon={faStar} className="text-ratingY mt-0.5" />
+              <h6 className="text-lighterDark font-bold pl-3">10 reviews</h6>
+            </div>
+            <div className="mt-3">
+              <h5 className="text-darkText text-[24px] font-bold">{price}</h5>
+              <div className="flex gap-2">
+                <h6 className="text-lighterDark font-bold ">Availability:</h6>
+                <h6 className="text-navBlue font-bold ">In Stock</h6>
+              </div>
+            </div>
+            <div className="mt-4 w-[50%] text-[16px] font-medium">
+              <p className="text-lighterDark">
+                Met minim Mollie non desert Alamo est sit cliquey dolor do met
+                sent. RELIT official consequent door ENIM RELIT Mollie.
+                Excitation venial consequent sent nostrum met.
+              </p>
+              <hr className="mt-4"/>
+            </div>
+            {console.log("Badges:", badges)}
+            <div className="flex gap-1 mt-4">
+              <div className="w-[30px] h-[30px] bg-light-blue-500 rounded-full shadow-sm" />
+              <div className="w-[30px] h-[30px] bg-green-500 rounded-full shadow-sm" />
+              <div className="w-[30px] h-[30px] bg-orange-400 rounded-full shadow-sm" />
+              <div className="w-[30px] h-[30px] bg-darkText rounded-full shadow-sm" />
+            </div>
+            <div>
+            <div className='flex gap-2'>
+                        <button className='text-white text-sm font-bold leading-normal tracking-tight rounded-md bg-blue-400 px-3 py-2.5'> Select Options </button>
+                        <div className='rounded-full border border-gray-800 w-10 flex justify-center items-center'>
+                            <FontAwesomeIcon icon={faHeart} size="sm" className='text-red-600' />
+                        </div>
+                        <div className='rounded-full border border-gray-800 w-10 flex justify-center items-center'>
+                            <FontAwesomeIcon icon={faCartShopping} size="sm" className='text-slate-600' />
+                        </div>
+                        <div className='rounded-full border border-gray-800 w-10 flex justify-center items-center'>
+                            <FontAwesomeIcon icon={faEye} size="sm" className='text-slate-600' />
+                        </div>
+            </div>
+            </div>
+          </div>
+        </div>
       </div>
-      {console.log("Badges:", badges)}
-      <div className="flex gap-1 mt-2">
-        {Array.isArray(badges) ? (
-          badges.map((badgeItem, index) => (
-            <img key={index} src={badgeItem} alt={`Badge ${index}`} />
-          ))
-        ) : (
-          <div>No badges available</div>
-        )}
-      </div>
-    </div>
     </div>
   );
 }
