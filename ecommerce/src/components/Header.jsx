@@ -1,52 +1,114 @@
-
-import React from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    UncontrolledCarousel
-} from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "./temporary.css"
+  faPhone,
+  faEnvelope,
+  faAngleDown,
+  faUser,
+  faSearch,
+  faCartShopping,
+  faHeart
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  faFacebook,
+  faInstagram,
+  faTwitter,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
+import { data } from "../data/data";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-
-function Header () {
-
-    const items = [
-        {
-          altText: '',
-          caption: '',
-          key: 1,
-          src: './carousel/shop-hero-1-product-slide-1.svg'
-        },
-        {
-          altText: '',
-          caption: '',
-          key: 2,
-          src: './carousel/shop-hero-1-product-slide-2.svg'
-        }
-      ];
-
-      const caption = (
-        <div className="overlay absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 text-lightText flex flex-col gap-5">
-          <h5 className="font-bold tracking-wider">SUMMER 2020</h5>
-          <h1 className="font-bold text-6xl tracking-wider">NEW COLLECTION</h1>
-          <h4 className="tracking-wider ">We know how large objects will act,
-            <br />
-            but things on a small scale</h4>
-            <button className="bg-btnGreen text-white font-bold text-2xl py-3 rounded leading-8 w-52">SHOP NOW</button>
-        </div>
-        
-      );
-  
+export default function Header() {
+  const { phone, mail, offerMsg, companyName } = data.navBar;
 
   return (
-    <>
-    <div>
-    <UncontrolledCarousel
-    items={items}   
- />
-     {caption}
+    <div className="">
+      <div className="bg-darkbg p-2 text-lightText text-center items-center justify-between flex px-5">
+        <div className="flex gap-3">
+          <div className="text-white items-center p-2.5 gap-[5px] flex">
+            <FontAwesomeIcon icon={faPhone} size="sm" />
+            <h6 className="text-sm font-bold leading-normal mb-0">{phone}</h6>
+          </div>
+          <div className="text-white items-center  p-2.5 gap-[5px] flex">
+            <FontAwesomeIcon icon={faEnvelope} size="sm" />
+            <h6 className="text-sm font-bold leading-normal mb-0">{mail}</h6>
+          </div>
+        </div>
+        <div className="p-2.5">
+          <h6 className="text-white text-sm font-bold leading-normal mb-0">
+            {offerMsg}
+          </h6>
+        </div>
+        <div className="text-white items-center justify-start p-2.5 gap-2.5 flex">
+          <h6 className="text-sm font-bold leading-normal mb-0">Follow Us :</h6>
+          <div className="items-center justify-start gap-1 flex flex-wrap">
+            <FontAwesomeIcon icon={faInstagram} size="sm" className="p-1" />
+            <FontAwesomeIcon icon={faYoutube} size="sm" className="p-1" />
+            <FontAwesomeIcon icon={faFacebook} size="sm" className="p-1" />
+            <FontAwesomeIcon icon={faTwitter} size="sm" className="p-1" />
+          </div>
+        </div>
+      </div>
+      <div className="px-5 flex justify-between">
+        <header className="flex items-center p-2.5">
+          <Link to="/" className="no-underline text-darkText">
+            <h3 className="text-2xl text-slate-800 font-bold leading-loose cursor-pointer">
+              {companyName}
+            </h3>
+          </Link>
+        </header>
+
+        <div className="flex w-[80%] justify-between">
+        <nav className="gap-4 flex">
+          {[
+            ["Home", "/"],
+            ["Shop", "/shopping"],
+            ["About", "/about"],
+            ["Contact", "/contact"],
+            ["Team", "/team"],
+          ].map(([title, url], idx) => (
+            <div className="flex items-center justify-center" key={idx}>
+              {title == "Shop" ? (
+                <div>
+                  <label tabIndex={0} className="font-medium text-sm">
+                    <Link to="/shopping" className="no-underline text-darkText">
+                      Shop
+                    </Link>
+                    <FontAwesomeIcon icon={faAngleDown} className="pl-3" />
+                  </label>
+                </div>
+              ) : (
+                <Link
+                  to={url}
+                  key={idx}
+                  className="no-underline text-lighterDark font-bold text-sm"
+                >
+                  {title}
+                </Link>
+              )}
+            </div>
+          ))}
+        </nav>
+        <div className="flex gap-8 font-bold">
+        <div className="flex items-center text-navBlue">
+          <FontAwesomeIcon icon={faUser} size="sm"/>
+          <Link to="/login" className="no-underline text-navBlue text-sm">Login</Link> / <Link to="/signup" className="no-underline text-navBlue text-sm">Register</Link>
+        </div>
+        <div className="flex items-center text-navBlue">
+          <FontAwesomeIcon icon={faSearch} size="sm"/>
+          <Link to="/login" className="no-underline text-navBlue text-sm" />
+        </div>
+        <div className="flex items-center text-navBlue">
+          <FontAwesomeIcon icon={faCartShopping} size="sm"/>
+          <Link to="/login" className="no-underline text-navBlue text-sm" />
+        </div>
+        <div className="flex items-center text-navBlue">
+          <FontAwesomeIcon icon={faHeart} size="sm"/>
+          <Link to="/login" className="no-underline text-navBlue text-sm" />
+          <div className="font-normal leading-none text-sm tracking-tight">1</div>
+        </div>
+        </div>
+      </div>     
+      </div>
     </div>
-    </>
   );
 }
-
-export default Header;
