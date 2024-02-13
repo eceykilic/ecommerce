@@ -15,10 +15,11 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { data } from "../data/data";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Header() {
   const { phone, mail, offerMsg, companyName } = data.navBar;
+  const history = useHistory();
 
   return (
     <div className="">
@@ -48,8 +49,8 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <div className="px-5 flex justify-between">
-        <header className="flex items-center p-2.5">
+      <div className="flex justify-between w-[85%] mx-auto">
+        <header className="flex items-center pb-4 pt-4">
           <Link to="/" className="no-underline text-darkText">
             <h3 className="text-2xl text-slate-800 font-bold leading-loose cursor-pointer">
               {companyName}
@@ -70,7 +71,7 @@ export default function Header() {
               {title == "Shop" ? (
                 <div>
                   <label tabIndex={0} className="font-medium text-sm">
-                    <Link to="/shopping" className="no-underline text-darkText">
+                    <Link to="/shopping" className="no-underline text-darkText" onClick={() => history.push("/shopping")}>
                       Shop
                     </Link>
                     <FontAwesomeIcon icon={faAngleDown} className="pl-3" />

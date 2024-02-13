@@ -86,14 +86,14 @@ export default function BestSeller() {
 
   return (
     <div>
-      <div className="mt-16 mb-12 font-monster text-center flex flex-col gap-2">
+      <div className="flex mt-16 mb-8 font-monster text-center flex-col">
         <h2 className="text-lighterDark font-normal text-xl">Featured Products</h2>
         <h3 className="font-bold">BESTSELLER PRODUCTS</h3>
         <p className="text-lighterDark font-normal mb-12">
           Problems trying to resolve the conflict between
         </p>
         {groupedBestSeller.map((group, groupIndex) => (
-          <div key={groupIndex} className="flex justify-center items-center gap-8 mb-2">
+          <div key={groupIndex} className="flex justify-between w-[85%] mx-auto mt-2">
             {group.map((product, index) => (
               <ProductCard
                 key={index}
