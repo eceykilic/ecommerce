@@ -31,7 +31,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
       ];
 
     return (
-      <div className="mb-24">
+      <div className="mb-24 w-[85%] mx-auto">
         <div className="text-center mt-28">
           <h6 className="text-navBlue text-sm font-bold">Practice Advice</h6>
           <h3 className="text-darkText text-4xl font-bold mt-3">Featured Posts</h3>
@@ -41,7 +41,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
           </p>
         </div>
   
-        <div className="flex gap-3 flex-wrap justify-center">
+        <div className="flex flex-wrap justify-between">
           {blogData.map((post, index) => (
             <div key={index} className="w-[348px] h-[606px] shadow-md">
               <div className="relative">
