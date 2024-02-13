@@ -9,114 +9,10 @@ import {
   faRedditAlien,
   faStripe,
 } from "@fortawesome/free-brands-svg-icons";
+import { data } from "../data/data"
 
 export default function ProductCards() {
-  const badgesTypes = [
-    "./product-card/Ellipse 14.png",
-    "./product-card/Ellipse 15.png",
-    "./product-card/Ellipse 16.png",
-    "./product-card/Ellipse 17.png",
-  ];
-
-  const productl = [
-    {
-      productImage: "./cardlist/pl1.jpg",
-      productName: "Graphic Design",
-      department: "Department 1",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl2.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl3.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl4.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl5.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl6.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl7.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl8.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl9.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl10.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl11.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl12.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-  ];
-
+  const productl = data.productl;
   const groupedpl = productl.reduce((acc, product, index) => {
     const groupIndex = Math.floor(index / 4);
 
@@ -132,7 +28,7 @@ export default function ProductCards() {
   return (
     <div>
       <div className="mt-5">
-        <div className="flex w-[85%] justify-between mx-auto mb-4">
+        <div className="flex w-[60%] justify-between mx-auto mb-4">
           <p className="text-lighterDark font-bold pt-2">
             Showing all 12 results
           </p>
@@ -199,7 +95,7 @@ export default function ProductCards() {
         {groupedpl.map((group, groupIndex) => (
           <div
             key={groupIndex}
-            className="flex justify-between w-[85%] mx-auto mt-2"
+            className="flex justify-between w-[60%] mx-auto mt-2"
           >
             {group.map((product, index) => (
               <ProductCard
@@ -209,7 +105,7 @@ export default function ProductCards() {
                 department={product.department}
                 price={product.price}
                 discountedPrice={product.discountedPrice}
-                badges={product.badges}
+                badges={["./product-card/Ellipse 14.png", "./product-card/Ellipse 15.png", "./product-card/Ellipse 16.png", "./product-card/Ellipse 17.png"]}
               />
             ))}
           </div>

@@ -1,77 +1,8 @@
 import ProductCard from "./ProductCard";
-
-const badgesTypes = ["./product-card/Ellipse 14.png", "./product-card/Ellipse 15.png", "./product-card/Ellipse 16.png", "./product-card/Ellipse 17.png"]
-
-
-const bestSeller = [
-  {
-    productImage: "./product-card/product1.jpg",
-    productName: "Product 1",
-    department: "Department 1",
-    price: "$19.99",
-    discountedPrice: "$14.99",
-    badges: badgesTypes,
-  },
-  {
-    productImage: "./product-card/product2.jpg",
-    productName: "Product 2",
-    department: "Department 2",
-    price: "$24.99",
-    discountedPrice: "$19.99",
-    badges: badgesTypes,
-  },
-  {
-    productImage: "./product-card/product3.jpg",
-    productName: "Product 2",
-    department: "Department 2",
-    price: "$24.99",
-    discountedPrice: "$19.99",
-    badges: badgesTypes,
-  },
-  {
-    productImage: "./product-card/product4.jpg",
-    productName: "Product 2",
-    department: "Department 2",
-    price: "$24.99",
-    discountedPrice: "$19.99",
-    badges: badgesTypes,
-  },
-  {
-    productImage: "./product-card/product5.jpg",
-    productName: "Product 2",
-    department: "Department 2",
-    price: "$24.99",
-    discountedPrice: "$19.99",
-    badges: badgesTypes,
-  },
-  {
-    productImage: "./product-card/product6.jpg",
-    productName: "Product 2",
-    department: "Department 2",
-    price: "$24.99",
-    discountedPrice: "$19.99",
-    badges: badgesTypes,
-  },
-  {
-    productImage: "./product-card/product7.jpg",
-    productName: "Product 2",
-    department: "Department 2",
-    price: "$24.99",
-    discountedPrice: "$19.99",
-    badges: badgesTypes,
-  },
-  {
-    productImage: "./product-card/product8.jpg",
-    productName: "Product 2",
-    department: "Department 2",
-    price: "$24.99",
-    discountedPrice: "$19.99",
-    badges: badgesTypes,
-  },
-
-];
+import { data } from "../data/data"
 
 export default function BestSeller() {
+  const bestSeller = data.bestSeller;
   const groupedBestSeller = bestSeller.reduce((acc, product, index) => {
     const groupIndex = Math.floor(index / 4);
 
@@ -93,7 +24,7 @@ export default function BestSeller() {
           Problems trying to resolve the conflict between
         </p>
         {groupedBestSeller.map((group, groupIndex) => (
-          <div key={groupIndex} className="flex justify-between w-[85%] mx-auto mt-2">
+          <div key={groupIndex} className="flex justify-between w-[60%] mx-auto mt-2">
             {group.map((product, index) => (
               <ProductCard
                 key={index}
@@ -102,7 +33,7 @@ export default function BestSeller() {
                 department={product.department}
                 price={product.price}
                 discountedPrice={product.discountedPrice}
-                badges={product.badges}
+                badges={["./product-card/Ellipse 14.png", "./product-card/Ellipse 15.png", "./product-card/Ellipse 16.png", "./product-card/Ellipse 17.png"]}
               />
             ))}
           </div>

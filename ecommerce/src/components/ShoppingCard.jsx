@@ -14,7 +14,7 @@ export default function ShoppingCard () {
                 </div>
             </div>
         </div>
-        <div className="flex justify-between w-[85%] mx-auto pt-4 pb-4">
+        <div className="flex justify-between w-[60%] mx-auto pt-4 pb-4">
       {Array.from({ length: 5 }, (_, index) => (
         <div key={index} className="relative m-2">
         <img
