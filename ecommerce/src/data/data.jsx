@@ -204,6 +204,12 @@ export const data = {
       { fullname: "Username", department: "Profession", src: "/about/team1.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
       { fullname: "Username", department: "Profession", src: "/about/team2.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
       { fullname: "Username", department: "Profession", src: "/about/team3.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+      { fullname: "Username", department: "Profession", src: "/about/team1.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+      { fullname: "Username", department: "Profession", src: "/about/team2.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+      { fullname: "Username", department: "Profession", src: "/about/team3.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+      { fullname: "Username", department: "Profession", src: "/about/team1.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+      { fullname: "Username", department: "Profession", src: "/about/team2.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+      { fullname: "Username", department: "Profession", src: "/about/team3.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
     ]
   }
 
