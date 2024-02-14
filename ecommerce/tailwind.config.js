@@ -26,6 +26,7 @@ module.exports = withMT ({
       ratingY: "#F3CD03",
       cpurple: "#977DF4",
       clpink: "#FFE9EA",
+      bluebg: "#2A7CC7"
     }
   },
   plugins: [],

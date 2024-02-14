@@ -17,7 +17,7 @@ export default function ProductPageBest() {
     const productGroups = chunkArray(bestSellerProducts, 4);
 
     return productGroups.map((group, index) => ( 
-      <div key={index} className="flex justify-center items-center gap-3 mb-16 mt-2">
+      <div key={index} className="w-[70%] flex justify-between items-center mb-16 mt-2 mx-auto">
         {group.map((product) => (
           <ProductCard
             key={product.productName}
@@ -37,7 +37,7 @@ export default function ProductPageBest() {
 
   return (
     <div className="bg-lightbg pt-5"> 
-      <div className="w-[85%] mx-auto">
+      <div className="w-[70%] mx-auto">
         <h3 className="font-monster text-darkText font-bold mb-4">
           BESTSELLER PRODUCTS
         </h3>

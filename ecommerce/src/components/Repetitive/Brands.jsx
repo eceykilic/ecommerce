@@ -12,8 +12,8 @@ import {
 
 export default function Brands() {
     return (
-        <div className="bg-lightbg w-[85%] mx-auto justify-between">
-        <div className="flex justify-between mx-auto py-8 mb-0 pb-0">
+        <div className="bg-lightbg mx-auto justify-between">
+        <div className="flex justify-between mx-auto py-8 mb-0 pb-0 w-[70%]">
           <FontAwesomeIcon
             icon={faHooli}
             size="sm"

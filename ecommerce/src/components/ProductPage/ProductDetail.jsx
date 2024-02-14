@@ -29,7 +29,7 @@ function ProductDetail({ data }) {
   return (
     <div className="bg-lightbg pt-10 pb-8">
       <div>
-        <div className="flex mt-1 gap-2 justify-start w-[85%] mx-auto">
+        <div className="flex mt-1 gap-2 justify-start w-[70%] mx-auto">
           <h6>Home</h6>
           <FontAwesomeIcon
             icon={faChevronRight}
@@ -38,7 +38,7 @@ function ProductDetail({ data }) {
           <h6 className="text-priceGray">Shop</h6>
         </div>
         <div>
-          <div className="flex w-[85%] mx-auto mt-10 gap-16">
+          <div className="flex w-[70%] mx-auto mt-10 gap-16">
             <div>
               <Carousel
                 className="w-[500px] h-[450px]"
@@ -150,7 +150,7 @@ function ProductDetail({ data }) {
         </div>
       </div>
 
-      <div className="flex w-[85%] gap-2 mx-auto mt-3 mb-10">
+      <div className="flex w-[70%] gap-2 mx-auto mt-3 mb-10">
         <img src={productImage} alt="" className="w-[100px] h-[75px] object-cover overflow-hidden opacity-40" />
         <img src={productImage} alt="" className="w-[100px] h-[75px] object-cover overflow-hidden" />
       </div>

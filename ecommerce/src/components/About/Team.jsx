@@ -29,7 +29,7 @@ export default function Team() {
             <h2 className="text-darkText text-[40px] font-bold"> Meet Our Team</h2>
             <p className="text-center text-lighterDark text-sm font-normal"> Problems trying to resolve the conflict between <br /> the two major realms of Classical physics: Newtonian mechanics </p>
         </div>
-        <div className="flex gap-5 w-[80%] mx-auto">
+        <div className="flex gap-5 w-[70%] mx-auto">
             {ourTeam}
         </div>
     </div>

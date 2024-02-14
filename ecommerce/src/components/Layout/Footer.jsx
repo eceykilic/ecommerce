@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Footer() {
     return (
         <div className="bg-lightbg flex flex-col mx-auto">
-            <div className="w-[85%] mx-auto">
+            <div className="w-[70%] mx-auto">
                 <div className="flex justify-between items-center py-6 pt-10">
                     <h3 className="text-darkText text-2xl font-bold leading-loose tracking-tight">Bandage</h3>
                     <div className="text-navBlue gap-8 flex ">
@@ -16,7 +16,7 @@ export default function Footer() {
                 <hr className="border border-t-lighterDark mb-2" />
             </div>
             <div className="bg-lightText">
-            <div className="py-12 flex gap-8 justify-between w-[85%] mx-auto">
+            <div className="py-12 flex justify-between w-[70%] mx-auto">
                 <div className="flex flex-col gap-4">
                     <h5 className="text-base font-bold leading-normal tracking-tight">Company info</h5>
                     <div className="flex flex-col gap-3">
@@ -57,16 +57,16 @@ export default function Footer() {
                     <h5 className="text-base font-bold leading-normal tracking-tight">Get in Touch</h5>
                     <div className="flex flex-col items-start">
                         <div className="flex items-center">
-                            <input type="text" placeholder="Your Email" className="p-[5%] border rounded-l-md text-darkText font-normal leading-7 tracking-tight bg-stone-50 " />
-                            <button className="py-[5%] px-[4%] border border-neutral-200 bg-[#23A6F0] text-white rounded-r-md">Subscribe</button>
+                            <input type="text" placeholder="Your Email" className="p-[5%] border rounded-l-md text-darkText font-normal leading-7 tracking-tight " />
+                            <button className="py-[6%] px-[2%] border bg-[#23A6F0] text-white rounded-r-md">Subscribe</button>
                         </div>
                         <p className="text-darkText text-xs font-normal leading-7 tracking-tight">Lore imp sum dolor Amit</p>
                     </div>
                 </div>
                 </div>
             </div>
-            <div className="pb-4">
-                <p className=" text-lighterDark text-sm font-bold leading-normal tracking-tight w-[85%] mx-auto mt-4 mb-0">Made With Love By Finland All Right Reserved</p>
+            <div className="pb-4 w-[70%] mx-auto">
+                <p className=" text-lighterDark text-sm font-bold leading-normal tracking-tight mx-auto mt-4 mb-0">Made With Love By Finland All Right Reserved</p>
             </div>
         </div>
     )

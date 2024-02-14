@@ -5,7 +5,7 @@ export default function ShoppingCard () {
     return (
         <div className="bg-lightbg">
         <div className="pt-4">
-            <div className="flex w-[85%] justify-between mx-auto">
+            <div className="flex w-[70%] justify-between mx-auto">
                 <h2 className="text-darkText font-bold font-monster text-[24px]">Shop</h2>
                 <div className="flex gap-2 mt-1">
                     <h6>Home</h6>
@@ -14,9 +14,9 @@ export default function ShoppingCard () {
                 </div>
             </div>
         </div>
-        <div className="flex justify-between w-[60%] mx-auto pt-4 pb-4">
+        <div className="flex justify-between w-[70%] mx-auto pt-4 pb-4">
       {Array.from({ length: 5 }, (_, index) => (
-        <div key={index} className="relative m-2">
+        <div key={index} className="relative">
         <img
           src={`./productlist/list${index + 1}.jpg`}
           alt={`List ${index + 1}`}

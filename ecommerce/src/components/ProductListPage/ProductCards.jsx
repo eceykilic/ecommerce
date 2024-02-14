@@ -22,7 +22,7 @@ export default function ProductCards() {
   return (
     <div>
       <div className="mt-5">
-        <div className="flex w-[60%] justify-between mx-auto mb-10">
+        <div className="flex w-[70%] justify-between mx-auto mb-10">
           <p className="text-lighterDark font-bold pt-2">
             Showing all 12 results
           </p>
@@ -89,7 +89,7 @@ export default function ProductCards() {
         {groupedpl.map((group, groupIndex) => (
           <div
             key={groupIndex}
-            className="flex justify-between w-[60%] mx-auto mt-2 mb-20"
+            className="flex justify-between w-[70%] mx-auto mt-2 mb-20"
           >
             {group.map((product, index) => (
               <ProductCard
@@ -117,7 +117,7 @@ export default function ProductCards() {
           </p>
         </button>
         <button
-          className=" relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 bg-gray-100 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className=" relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
         >
           <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">

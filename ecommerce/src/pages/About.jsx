@@ -8,7 +8,7 @@ export default function About() {
   return (
     <div>
       <div className="flex flex-col mx-auto gap-20">
-        <div className="flex items-center justify-between gap-10 w-[85%] mx-auto">
+        <div className="flex items-center justify-between gap-10 w-[70%] mx-auto">
           <div className=" flex flex-col gap-4 items-start justify-center">
             <h5 className="text-darkText text-base font-bold leading-normal tracking-tight">
               ABOUT COMPANY
@@ -36,14 +36,14 @@ export default function About() {
         </div>
       </div>
 
-      <div className=" items-center w-[60%] mx-auto mt-10 mb-10">
+      <div className="w-[70%] mx-auto mt-10 mb-10">
         <p className="text-red-500 text-sm font-medium">Problems trying</p>
         <div className="flex gap-20">
           <h2 className="text-darkText text-2xl font-bold">
             Met minim Mollie non desert <br /> Alamo est sit cliquey dolor do
             met sent.
           </h2>
-          <p className="text-lighterDark w-[85%] text-sm font-medium">
+          <p className="text-lighterDark w-[70%] text-sm font-medium ml-20">
             Problems trying to resolve the conflict between the two major realms
             of <br />
             Classical physics: Newtonian mechanics{" "}
@@ -105,12 +105,12 @@ export default function About() {
         </div>
 
         <div className="flex">
-                <div className="w-2/3 bg-navBlue flex justify-center rounded-l-md">
+                <div className="w-2/3 bg-bluebg flex justify-center rounded-l-md">
                     <div className=" w-1/2 flex flex-col items-start my-auto mx-auto gap-6">
                         <h5 className="text-lightText text-base font-bold leading-normal tracking-tight">WORK WITH US</h5>
                         <h2 className="text-lightText text-[40px] font-bold leading-[50px] tracking-tight">Now Let's grow Yours</h2>
-                        <p className="text-lightText text-sm font-normal leading-tight tracking-tight">The gradual accumulation of information about atomic and small-scale behavior during the first quarter of the 20th </p>
-                        <button className="text-lighterDark ring-1 px-7 py-2.5 ring-slate-200 rounded-md text-sm font-bold leading-snug tracking-tight">Contact Us</button>
+                        <p className="text-lightText font-normal leading-tight tracking-tight">The gradual accumulation of information about atomic and <br />small-scale behavior during the first quarter of the 20th </p>
+                        <button className="text-lightText ring-1 px-7 py-2.5 ring-gray-200 rounded-md text-sm font-bold leading-snug tracking-tight">Button</button>
                     </div>
                 </div>
                 <div className="w-1/3 rounded-r-md">

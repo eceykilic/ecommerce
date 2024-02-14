@@ -20,7 +20,7 @@ function Carousel2() {
   ];
 
   const caption = (
-    <div className="absolute top-2/3 left-1/4 transform -translate-x-1/2 -translate-y-1/2 text-lightText flex flex-col gap-4">
+    <div className="absolute top-2/4 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-lightText flex flex-col gap-4">
       <h5 className="font-bold tracking-wider mb-4">SUMMER 2020</h5>
       <h1 className="font-bold text-7xl tracking-wider mb-4 ">Vita Classic <br /> Product</h1>
       <h4 className="tracking-wider mb-4">
