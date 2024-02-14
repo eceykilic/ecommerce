@@ -14,7 +14,7 @@ import {
   faTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import { data } from "../data/data";
+import { data } from "../../data/data";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Header() {

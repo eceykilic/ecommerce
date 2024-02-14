@@ -1,15 +1,9 @@
 import { faBorderAll, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ProductCard from "./ProductCard";
-import {
-  faAws,
-  faHooli,
-  faLyft,
-  faPiedPiperHat,
-  faRedditAlien,
-  faStripe,
-} from "@fortawesome/free-brands-svg-icons";
-import { data } from "../data/data"
+import ProductCard from "../Repetitive/ProductCard";
+import Brands from "../Repetitive/Brands";
+
+import { data } from "../../data/data"
 
 export default function ProductCards() {
   const productl = data.productl.filter(product => product.category === "productList");
@@ -28,7 +22,7 @@ export default function ProductCards() {
   return (
     <div>
       <div className="mt-5">
-        <div className="flex w-[60%] justify-between mx-auto mb-4">
+        <div className="flex w-[60%] justify-between mx-auto mb-10">
           <p className="text-lighterDark font-bold pt-2">
             Showing all 12 results
           </p>
@@ -95,7 +89,7 @@ export default function ProductCards() {
         {groupedpl.map((group, groupIndex) => (
           <div
             key={groupIndex}
-            className="flex justify-between w-[60%] mx-auto mt-2"
+            className="flex justify-between w-[60%] mx-auto mt-2 mb-20"
           >
             {group.map((product, index) => (
               <ProductCard
@@ -106,6 +100,7 @@ export default function ProductCards() {
                 price={product.price}
                 discountedPrice={product.discountedPrice}
                 badges={product.badges}
+                customImageSize="w-[240px] h-[430px]"
               />
             ))}
           </div>
@@ -154,44 +149,7 @@ export default function ProductCards() {
           </p>
         </button>
       </div>
-      <div className="bg-lightbg">
-        <div className="flex justify-between mx-auto py-8 mb-0 pb-0 w-[85%]">
-          <FontAwesomeIcon
-            icon={faHooli}
-            size="sm"
-            className="text-lighterDark text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faLyft}
-            size="sm"
-            className="text-lighterDark  text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faPiedPiperHat}
-            size="sm"
-            className="text-lighterDark  text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faStripe}
-            size="sm"
-            className="text-lighterDark text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faAws}
-            size="sm"
-            className="text-lighterDark text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faRedditAlien}
-            size="sm"
-            className="  text-lighterDark  text-8xl"
-          />
-
-          
-        </div>
-        <br />
-        <hr className="mb-1 text-priceGray"/>
-      </div>
+      <Brands />
     </div>
   );
 }

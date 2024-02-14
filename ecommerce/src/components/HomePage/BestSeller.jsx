@@ -1,5 +1,5 @@
-import ProductCard from "./ProductCard";
-import { data } from "../data/data"
+import ProductCard from "../Repetitive/ProductCard";
+import { data } from "../../data/data"
 
 export default function BestSeller() {
   const bestSeller = data.productl.filter(product => product.category === "bestSeller");
@@ -24,7 +24,7 @@ export default function BestSeller() {
           Problems trying to resolve the conflict between
         </p>
         {groupedBestSeller.map((group, groupIndex) => (
-          <div key={groupIndex} className="flex justify-between w-[60%] mx-auto mt-2">
+          <div key={groupIndex} className="flex justify-between w-[60%] mx-auto mt-2 mb-10">
             {group.map((product, index) => (
               <ProductCard
                 key={index}
@@ -34,6 +34,7 @@ export default function BestSeller() {
                 price={product.price}
                 discountedPrice={product.discountedPrice}
                 badges={product.badges}
+                customImageSize="w-[240px] h-[430px]"
               />
             ))}
           </div>
