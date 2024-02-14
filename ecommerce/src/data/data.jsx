@@ -199,5 +199,12 @@ export const data = {
       badges: ["/product-card/Ellipse 14.png", "/product-card/Ellipse 15.png", "/product-card/Ellipse 16.png", "/product-card/Ellipse 17.png"]
     },  
   ],
+  about: {
+    employees: [
+      { fullname: "Username", department: "Profession", src: "/about/team1.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+      { fullname: "Username", department: "Profession", src: "/about/team2.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+      { fullname: "Username", department: "Profession", src: "/about/team3.jpg", facebookURL: "facebook.com", instagramURL: "instagram.com", twitterURL: "twitter.com" },
+    ]
+  }
 
 };

@@ -23,7 +23,9 @@ module.exports = withMT ({
       btnGreen: "#2DC071",
       priceGray: "#BDBDBD",
       priceGreen: "#23856D",
-      ratingY: "#F3CD03"
+      ratingY: "#F3CD03",
+      cpurple: "#977DF4",
+      clpink: "#FFE9EA",
     }
   },
   plugins: [],
