@@ -9,7 +9,8 @@ module.exports = withMT ({
       backgroundColor: {
         'darkbg': '#252B42',
         "lightbg": "#FAFAFA",
-        "redish": "#E74040"
+        "redish": "#E74040",
+        "blcarou": "#02b8dd",
       },
       fontFamily: {
         monster: ['Montserrat', "sans-serif"]
@@ -26,7 +27,7 @@ module.exports = withMT ({
       ratingY: "#F3CD03",
       cpurple: "#977DF4",
       clpink: "#FFE9EA",
-      bluebg: "#2A7CC7"
+      bluebg: "#2A7CC7",
     }
   },
   plugins: [],

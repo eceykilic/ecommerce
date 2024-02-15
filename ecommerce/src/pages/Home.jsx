@@ -1,4 +1,4 @@
-import Carousel from "../components/HomePage/Carousel";
+import CarouselHome from "../components/HomePage/CarouselHome";
 import ShopCard from "../components/HomePage/ShopCard";
 import BestSeller from "../components/HomePage/BestSeller";
 import Carousel2 from "../components/HomePage/Carousel2";
@@ -10,7 +10,7 @@ export default function Home() {
     return(
         <>
 
-    <Carousel />
+    <CarouselHome />
     <ShopCard />
     <BestSeller />
     <Carousel2 />
