@@ -22,11 +22,11 @@ export default function ProductCards() {
   return (
     <div>
       <div className="mt-5">
-        <div className="flex max-w-screen-2xl justify-between mx-auto mb-10">
+        <div className="flex max-w-screen-2xl justify-between mx-auto mb-10 sm:flex-col sm:justify-center sm:text-center sm:gap-6">
           <p className="text-lighterDark font-bold pt-2">
             Showing all 12 results
           </p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 sm:justify-center sm:text-center sm:gap-4">
             <p className="text-lighterDark text-sm font-bold leading-normal tracking-tight pt-2">
               Views:
             </p>
@@ -39,7 +39,7 @@ export default function ProductCards() {
               className="text-darkText p-2 border rounded cursor-pointer"
             />
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 sm:justify-center sm:text-center">
             <form className="flex items-center gap-3">
               <select className="select w-full text-sm leading-normal tracking-tight">
                 <option
@@ -89,7 +89,7 @@ export default function ProductCards() {
         {groupedpl.map((group, groupIndex) => (
           <div
             key={groupIndex}
-            className="flex justify-between max-w-screen-2xl mx-auto mt-2 mb-20"
+            className="flex justify-between max-w-screen-2xl mx-auto mt-2 mb-20 sm:flex-col sm:gap-16"
           >
             {group.map((product, index) => (
               <ProductCard
@@ -100,7 +100,7 @@ export default function ProductCards() {
                 price={product.price}
                 discountedPrice={product.discountedPrice}
                 badges={product.badges}
-                customImageSize="w-[240px] h-[430px]"
+                customImageSize="w-[240px] h-[430px] sm:w-[380px]"
               />
             ))}
           </div>
@@ -125,7 +125,7 @@ export default function ProductCards() {
           </span>
         </button>
         <button
-          className="relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-lightText bg-navBlue transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-lightText bg-navBlue transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
         >
           <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -133,7 +133,7 @@ export default function ProductCards() {
           </span>
         </button>
         <button
-          className="relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
         >
           <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">
@@ -141,7 +141,7 @@ export default function ProductCards() {
           </span>
         </button>
         <button
-          className="relative max-h-[40px] w-10 max-w-[40px] select-none p-[2rem] rounded-lg rounded-l-none border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="relative max-h-[40px] w-10 max-w-[40px] select-none p-[2rem] rounded-lg rounded-l-none border text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
         >
           <p className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">

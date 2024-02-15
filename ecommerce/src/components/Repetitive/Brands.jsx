@@ -13,11 +13,11 @@ import {
 export default function Brands() {
     return (
         <div className="bg-lightbg mx-auto justify-between">
-        <div className="flex justify-between mx-auto py-8 mb-0 pb-0 max-w-screen-2xl">
+        <div className="flex justify-between mx-auto py-8 mb-0 pb-0 max-w-screen-2xl sm:flex-col sm:gap-10">
           <FontAwesomeIcon
             icon={faHooli}
             size="sm"
-            className="text-lighterDark text-8xl"
+            className="text-lighterDark text-8xl sm:text-9xl"
           />
           <FontAwesomeIcon
             icon={faLyft}

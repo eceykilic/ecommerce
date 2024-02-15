@@ -69,15 +69,15 @@ export default function Header() {
 
           <div className="hidden sm:flex font-semibold text-3xl sm:flex-col sm:mx-auto sm:gap-6 sm:my-20 sm:text-center">
 
-                    <Link to="/home" className="no-underline text-lighterDark" onClick={() => history.push("/home")}>
+                    <Link to="/" className="no-underline text-lighterDark" onClick={() => history.push("/")}>
                       Home
                     </Link>
 
                     <Link to="/shopping" className="no-underline text-lighterDark" onClick={() => history.push("/shopping")}>
                       Product
                     </Link>
-                    <Link to="/" className="no-underline text-lighterDark" onClick={() => history.push("/")}>
-                      Pricing
+                    <Link to="/about" className="no-underline text-lighterDark" onClick={() => history.push("/about")}>
+                      About
                     </Link>
                     <Link to="/contact" className="no-underline text-lighterDark" onClick={() => history.push("/contact")}>
                       Contact
