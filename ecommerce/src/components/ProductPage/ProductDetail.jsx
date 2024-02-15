@@ -29,16 +29,16 @@ function ProductDetail({ data }) {
   return (
     <div className="bg-lightbg pt-10 pb-8">
       <div>
-        <div className="flex mt-1 gap-2 justify-start max-w-screen-2xl mx-auto">
-          <h6>Home</h6>
+        <div className="flex mt-1 gap-2 justify-start max-w-screen-2xl mx-auto font-bold sm:text-center sm:justify-center">
+          <h6 className="text-darkText">Home</h6>
           <FontAwesomeIcon
             icon={faChevronRight}
-            className="text-priceGray mt-0.5"
+            className="text-lighterDark mt-0.5"
           />
-          <h6 className="text-priceGray">Shop</h6>
+          <h6 className="text-lighterDark sm:pb-2">Shop</h6>
         </div>
         <div>
-          <div className="max-w-screen-2xl flex mx-auto mt-10 gap-16">
+          <div className="max-w-screen-2xl flex mx-auto mt-10 gap-16 sm:scale-90 sm:flex-col sm:mt-2 sm:items-center sm:mx-auto">
             <div>
               <Carousel
                 className="w-[500px] h-[450px]"
@@ -47,7 +47,7 @@ function ProductDetail({ data }) {
                     {new Array(length).fill("").map((_, i) => (
                       <span
                         key={i}
-                        className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                        className={`block h-1 cursor-pointer rounded-2xl transition-all sm:hidden content-[''] ${
                           activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
                         }`}
                         onClick={() => setActiveIndex(i)}
@@ -69,8 +69,8 @@ function ProductDetail({ data }) {
               </Carousel>
             </div>
 
-            <div className="flex flex-col justify-between">
-              <h4 className="font-bold text-darkText">{productNameFromData}</h4>
+            <div className="flex flex-col justify-between sm:pl-10 sm:gap-6">
+              <h4 className="font-bold text-darkText sm:text-2xl">{productNameFromData}</h4>
               <div className="flex gap-2">
                 <FontAwesomeIcon
                   icon={faStar}
@@ -96,12 +96,12 @@ function ProductDetail({ data }) {
               </div>
               <div className="mt-4">
                 <h5 className="text-darkText text-[24px] font-bold">{price}</h5>
-                <div className="flex gap-2">
+                <div className="flex gap-2 sm:mt-3">
                   <h6 className="text-lighterDark font-bold ">Availability:</h6>
                   <h6 className="text-navBlue font-bold ">In Stock</h6>
                 </div>
               </div>
-              <div className="mt-4 w-[50%] text-[16px] font-medium">
+              <div className="mt-4 w-[50%] text-[16px] font-medium sm:w-96">
                 <p className="text-lighterDark">
                   Met minim Mollie non desert Alamo est sit cliquey dolor do met
                   sent. RELIT official consequent door ENIM RELIT Mollie.
@@ -150,7 +150,7 @@ function ProductDetail({ data }) {
         </div>
       </div>
 
-      <div className="flex max-w-screen-2xl gap-2 mx-auto mt-3 mb-10">
+      <div className="flex max-w-screen-2xl gap-2 mx-auto mt-3 mb-10 sm:hidden">
         <img src={productImage} alt="" className="w-[100px] h-[75px] object-cover overflow-hidden opacity-40" />
         <img src={productImage} alt="" className="w-[100px] h-[75px] object-cover overflow-hidden" />
       </div>

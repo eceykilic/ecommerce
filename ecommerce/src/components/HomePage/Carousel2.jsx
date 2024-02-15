@@ -27,7 +27,7 @@ function Carousel2() {
       <Carousel
   className="max-w-[1800px] max-h-[1000px] bg-priceGreen relative overflow-hidden mx-auto sm:h-[1230px]"
   navigation={({ setActiveIndex, activeIndex, length }) => (
-    <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+    <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2 sm:hidden">
       {new Array(length).fill("").map((_, i) => (
         <span
           key={i}
