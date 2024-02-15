@@ -9,6 +9,8 @@ import About from "./pages/About";
 import TeamPage from "./pages/TeamPage";
 import ContactPage from "./pages/ContactPage";
 import { data } from "./data/data";
+import "./App.css"
+
 function App() {
   return (
     <Router>

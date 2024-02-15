@@ -17,14 +17,14 @@ export default function BestSeller() {
 
   return (
     <div>
-      <div className="flex mt-16 mb-8 font-monster text-center flex-col">
-        <h2 className="text-lighterDark font-normal text-xl">Featured Products</h2>
-        <h3 className="font-bold">BESTSELLER PRODUCTS</h3>
-        <p className="text-lighterDark font-normal mb-12">
+      <div className="flex mt-16 mb-8 text-center flex-col gap-3">
+        <h2 className="text-lighterDark text-xl font-medium">Featured Products</h2>
+        <h3 className="font-bold text-2xl sm:w-2/5 sm:mx-auto sm:py-2">BESTSELLER PRODUCTS</h3>
+        <p className="text-lighterDark font-medium mb-12 sm:w-2/3 sm:mx-auto">
           Problems trying to resolve the conflict between
         </p>
         {groupedBestSeller.map((group, groupIndex) => (
-          <div key={groupIndex} className="flex justify-between max-w-screen-2xl w-full mx-auto mt-2 mb-10">
+          <div key={groupIndex} className="flex justify-between max-w-screen-2xl w-full mx-auto mt-2 mb-10 sm:flex-col sm:gap-10">
             {group.map((product, index) => (
               <ProductCard
                 key={index}
@@ -34,7 +34,7 @@ export default function BestSeller() {
                 price={product.price}
                 discountedPrice={product.discountedPrice}
                 badges={product.badges}
-                customImageSize="w-[240px] h-[430px]"
+                customImageSize="w-[240px] h-[430px] sm:w-[300px]"
               />
             ))}
           </div>

@@ -5,10 +5,10 @@ import { Carousel } from "@material-tailwind/react";
 function CarouselHome () {
 
       const caption = (
-        <div className="overlay absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-lightText flex flex-col gap-10">
-          <h5 className="font-bold tracking-wider">SUMMER 2020</h5>
-          <h1 className="font-bold text-6xl tracking-wider">NEW COLLECTION</h1>
-          <h4 className="tracking-wider ">We know how large objects will act,
+        <div className="overlay absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-lightText flex flex-col gap-10 sm:text-center sm:items-center sm:ml-10 sm:gap-3">
+          <h5 className="font-bold tracking-wider sm:mt-10">SUMMER 2020</h5>
+          <h1 className="font-bold text-6xl tracking-wider sm:scale-[60%]">NEW COLLECTION</h1>
+          <h4 className="tracking-wider">We know how large objects will act,
             <br />
             but things on a small scale</h4>
             <button className="bg-btnGreen text-white font-bold text-2xl py-3 rounded leading-8 w-52">SHOP NOW</button>
@@ -21,9 +21,9 @@ function CarouselHome () {
     <>
     <div className="relative bg-blcarou">
     <Carousel
-                className="max-w-[1800px] max-h-[1000px] bg-blcarou mx-auto"
+                className="{`flex items-center justify-left relative max-sm:flex-col-reverse max-sm:bg-[#23856d]`}"
                 navigation={({ setActiveIndex, activeIndex, length }) => (
-                  <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+                  <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2 ">
                     {new Array(length).fill("").map((_, i) => (
                       <span
                         key={i}
@@ -37,14 +37,14 @@ function CarouselHome () {
                 )}
               >
                 <img
-                  src='./carousel/shop-hero-1-product-slide-1.svg'
+                  src='./carousel/carouselfemale.jpg'
                   alt="femalePicture"
-                  className="h-full w-full object-cover"
+                  className="w-full h-screen object-cover sm:mx-auto sm:pt-20  "
                 />
                 <img
-                  src='./carousel/shop-hero-1-product-slide-1.svg'
+                  src='./carousel/carouselfemale.jpg'
                   alt="femalePicture"
-                  className="h-full w-full object-cover"
+                  className="w-full h-screen object-cover sm:mx-auto sm:pt-20"
                 />
               </Carousel>
      {caption}

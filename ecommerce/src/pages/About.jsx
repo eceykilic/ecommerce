@@ -4,6 +4,7 @@ import Team from "../components/About/Team";
 import Brands from "../components/Repetitive/Brands";
 
 
+
 export default function About() {
   return (
     <div>
