@@ -6,7 +6,9 @@ import {
   faUser,
   faSearch,
   faCartShopping,
-  faHeart
+  faHeart,
+  faBars,
+  faShoppingCart
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
@@ -23,8 +25,8 @@ export default function Header() {
 
   return (
     <div className="">
-      <div className="bg-darkbg">
-      <div className="max-w-screen-2xl bg-darkbg pb-2 pt-2 text-lightText text-center items-center justify-between flex mx-auto">
+      <div className="bg-darkbg sm:hidden">
+      <div className="max-w-screen-2xl pb-2 pt-2 text-lightText text-center items-center justify-between flex mx-auto">
         <div className="flex gap-3">
           <div className="text-white items-center p-2.5 gap-[5px] flex">
             <FontAwesomeIcon icon={faPhone} size="sm" />
@@ -51,17 +53,39 @@ export default function Header() {
         </div>
       </div>
       </div>
-      <div className="flex justify-between max-w-screen-2xl mx-auto">
-        <header className="flex items-center pb-4 pt-4">
+      <div className="flex justify-between max-w-screen-2xl mx-auto sm:flex-col ">
+        <header className="flex items-center pb-4 pt-4 sm:justify-between">
           <Link to="/" className="no-underline text-darkText">
-            <h3 className="text-2xl text-darkText font-bold leading-loose cursor-pointer">
+            <h3 className="text-2xl text-darkText font-bold leading-loose cursor-pointer sm:pl-10">
               {companyName}
             </h3>
           </Link>
+          <div className="hidden sm:flex sm:gap-8 sm:mr-10">
+          <FontAwesomeIcon icon={faSearch} size='lg'  />
+          <FontAwesomeIcon icon={faShoppingCart} size="lg"/>
+          <FontAwesomeIcon icon={faBars} size='lg' />
+          </div>
         </header>
 
-        <div className="flex w-[80%] justify-between">
-        <nav className="gap-4 flex">
+          <div className="hidden sm:flex font-semibold text-3xl sm:flex-col sm:mx-auto sm:gap-6 sm:my-20 sm:text-center">
+
+                    <Link to="/home" className="no-underline text-lighterDark" onClick={() => history.push("/home")}>
+                      Home
+                    </Link>
+
+                    <Link to="/shopping" className="no-underline text-lighterDark" onClick={() => history.push("/shopping")}>
+                      Product
+                    </Link>
+                    <Link to="/" className="no-underline text-lighterDark" onClick={() => history.push("/")}>
+                      Pricing
+                    </Link>
+                    <Link to="/contact" className="no-underline text-lighterDark" onClick={() => history.push("/contact")}>
+                      Contact
+                    </Link>
+        </div>
+
+        <div className="flex w-[80%] justify-between sm:hidden">
+        <nav className="flex mx-auto gap-4">
           {[
             ["Home", "/"],
             ["Shop", "/shopping"],
@@ -72,7 +96,7 @@ export default function Header() {
             <div className="flex items-center justify-center" key={idx}>
               {title == "Shop" ? (
                 <div>
-                  <label tabIndex={0} className="font-medium text-sm">
+                  <label tabIndex={0} className="font-medium text-sm ">
                     <Link to="/shopping" className="no-underline text-darkText" onClick={() => history.push("/shopping")}>
                       Shop
                     </Link>
@@ -91,7 +115,7 @@ export default function Header() {
             </div>
           ))}
         </nav>
-        <div className="flex gap-8 font-bold">
+        <div className="flex gap-8 font-bold sm:hidden">
         <div className="flex items-center text-navBlue">
           <FontAwesomeIcon icon={faUser} size="sm"/>
           <Link to="/login" className="no-underline text-navBlue text-sm">Login</Link> / <Link to="/signup" className="no-underline text-navBlue text-sm">Register</Link>

@@ -21,7 +21,7 @@ export default function ProductCard({
             className={`object-cover overflow-hidden ${customImageSize}`}
           />
         </Link>
-        <div className="mt-4 flex flex-col items-center">
+        <div className="mt-4 flex flex-col items-center gap-3">
           <h5 className="text-base font-bold text-darkText">{productName}</h5>
           <p className="text-sm font-bold text-lighterDark">{department}</p>
           <div className="flex gap-2">
