@@ -7,6 +7,7 @@ import Footer from "./components/Layout/Footer";
 import ProductPage from "./pages/ProductPage";
 import About from "./pages/About";
 import TeamPage from "./pages/TeamPage";
+import ContactPage from "./pages/ContactPage";
 import { data } from "./data/data";
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         />
         <Route path="/about" component={About} />
         <Route path="/team" component={TeamPage} />
+        <Route path="/contact" component={ContactPage} />
         <Route path="/" component={Home} />
       </Switch>
       <Footer />

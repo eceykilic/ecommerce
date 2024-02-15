@@ -8,7 +8,7 @@ export default function About() {
   return (
     <div>
       <div className="flex flex-col mx-auto gap-20">
-        <div className="flex items-center justify-between gap-10 w-[70%] mx-auto">
+        <div className="flex items-center justify-between gap-10 max-w-screen-2xl mx-auto">
           <div className=" flex flex-col gap-4 items-start justify-center">
             <h5 className="text-darkText text-base font-bold leading-normal tracking-tight">
               ABOUT COMPANY
@@ -36,14 +36,14 @@ export default function About() {
         </div>
       </div>
 
-      <div className="w-[70%] mx-auto mt-10 mb-10">
+      <div className="max-w-screen-2xl mx-auto mt-10 mb-10">
         <p className="text-red-500 text-sm font-medium">Problems trying</p>
         <div className="flex gap-20">
           <h2 className="text-darkText text-2xl font-bold">
             Met minim Mollie non desert <br /> Alamo est sit cliquey dolor do
             met sent.
           </h2>
-          <p className="text-lighterDark w-[70%] text-sm font-medium ml-20">
+          <p className="text-lighterDark max-w-screen-2xl text-sm font-medium ml-20">
             Problems trying to resolve the conflict between the two major realms
             of <br />
             Classical physics: Newtonian mechanics{" "}
@@ -51,7 +51,7 @@ export default function About() {
         </div>
       </div>
 
-      <div className="flex w-[70%] mx-auto justify-between ">
+      <div className="flex max-w-screen-2xl mx-auto justify-between ">
         <div className="flex flex-col w-1/4 items-center">
           <p className=" text-darkText text-[58px] font-bold leading-[80px]">
             15K
@@ -85,7 +85,7 @@ export default function About() {
       </div>
 
 
-      <div className="w-[70%] relative flex items-center justify-center rounded-lg mx-auto mt-40 mb-40">
+      <div className="max-w-screen-2xl relative flex items-center justify-center rounded-lg mx-auto mt-40 mb-40">
                 <img className="w-full h-[550px] mx-auto rounded-lg" src="/about/media.png" />
                 <div className="w-full h-full absolute bg-black opacity-50 rounded-lg" />
                 <div className="flex items-center justify-center w-20 h-20 bg-navBlue rounded-full absolute shadow-xl">

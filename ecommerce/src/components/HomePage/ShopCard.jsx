@@ -1,12 +1,12 @@
 export default function ShopCard() {
   return (
     <div className="bg-lightbg">
-    <div className="flex flex-col items-center w-[70%] mx-auto text-darkText py-14 pb-16">
+    <div className="flex flex-col items-center max-w-screen-2xl w-full mx-auto text-darkText py-14 pb-16">
       <div className="my-4">
         <h3 className="font-bold text-center">EDITOR'S PICK</h3>
         <p className=" text-lighterDark font-normal">Problems trying to resolve the conflict between</p>
       </div>
-      <div className="flex gap-10 justify-center">
+      <div className="flex gap-10 justify-center max-w-screen-2xl">
         <div className="relative overflow-hidden">
           <img
             src="./card-content/card-content-1.jpg"

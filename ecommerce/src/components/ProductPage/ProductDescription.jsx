@@ -12,7 +12,7 @@ export default function ProductDescription() {
           <h5 className="text-priceGreen font-bold text-base">(0)</h5>
         </div>
       </div>
-      <div className="w-[70%] mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <hr className="mb-10" />
         <div>
           <div className="flex flex-row items-center justify-between">

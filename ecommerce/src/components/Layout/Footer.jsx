@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Footer() {
     return (
         <div className="bg-lightbg flex flex-col mx-auto">
-            <div className="w-[70%] mx-auto">
-                <div className="flex justify-between items-center py-6 pt-10">
+            <div className="max-w-screen-2xl flex w-full mx-auto justify-between">
+                <div className="flex items-center py-6 pt-10 max-w-screen-2xl justify-between w-full h-full">
                     <h3 className="text-darkText text-2xl font-bold leading-loose tracking-tight">Bandage</h3>
                     <div className="text-navBlue gap-8 flex ">
                         <FontAwesomeIcon icon={faFacebook} size="lg" />
@@ -16,7 +16,7 @@ export default function Footer() {
                 <hr className="border border-t-lighterDark mb-2" />
             </div>
             <div className="bg-lightText">
-            <div className="py-12 flex justify-between w-[70%] mx-auto">
+            <div className="py-12 flex justify-between max-w-screen-2xl mx-auto">
                 <div className="flex flex-col gap-4">
                     <h5 className="text-base font-bold leading-normal tracking-tight">Company info</h5>
                     <div className="flex flex-col gap-3">
@@ -65,8 +65,8 @@ export default function Footer() {
                 </div>
                 </div>
             </div>
-            <div className="pb-4 w-[70%] mx-auto">
-                <p className=" text-lighterDark text-sm font-bold leading-normal tracking-tight mx-auto mt-4 mb-0">Made With Love By Finland All Right Reserved</p>
+            <div className="flex pb-4 max-w-screen-2xl mx-auto w-full h-full">
+                <p className=" text-lighterDark text-sm font-bold leading-normal tracking-tight mt-4 mb-0">Made With Love By Finland All Right Reserved</p>
             </div>
         </div>
     )

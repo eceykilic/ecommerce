@@ -24,7 +24,7 @@ export default function BestSeller() {
           Problems trying to resolve the conflict between
         </p>
         {groupedBestSeller.map((group, groupIndex) => (
-          <div key={groupIndex} className="flex justify-between w-[60%] mx-auto mt-2 mb-10">
+          <div key={groupIndex} className="flex justify-between max-w-screen-2xl w-full mx-auto mt-2 mb-10">
             {group.map((product, index) => (
               <ProductCard
                 key={index}

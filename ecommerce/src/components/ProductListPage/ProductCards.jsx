@@ -22,7 +22,7 @@ export default function ProductCards() {
   return (
     <div>
       <div className="mt-5">
-        <div className="flex w-[70%] justify-between mx-auto mb-10">
+        <div className="flex max-w-screen-2xl justify-between mx-auto mb-10">
           <p className="text-lighterDark font-bold pt-2">
             Showing all 12 results
           </p>
@@ -89,7 +89,7 @@ export default function ProductCards() {
         {groupedpl.map((group, groupIndex) => (
           <div
             key={groupIndex}
-            className="flex justify-between w-[70%] mx-auto mt-2 mb-20"
+            className="flex justify-between max-w-screen-2xl mx-auto mt-2 mb-20"
           >
             {group.map((product, index) => (
               <ProductCard
