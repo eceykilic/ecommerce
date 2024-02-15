@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-export default function ShoppingCard () {
+export default function CategoryCard () {
     return (
         <div className="bg-lightbg">
         <div className="pt-4">
-            <div className="flex w-[85%] justify-between mx-auto">
+            <div className="flex max-w-screen-2xl justify-between mx-auto">
                 <h2 className="text-darkText font-bold font-monster text-[24px]">Shop</h2>
                 <div className="flex gap-2 mt-1">
                     <h6>Home</h6>
@@ -14,9 +14,9 @@ export default function ShoppingCard () {
                 </div>
             </div>
         </div>
-        <div className="flex justify-between w-[85%] mx-auto pt-4 pb-4">
+        <div className="flex justify-between max-w-screen-2xl mx-auto pt-4 pb-4">
       {Array.from({ length: 5 }, (_, index) => (
-        <div key={index} className="relative m-2">
+        <div key={index} className="relative">
         <img
           src={`./productlist/list${index + 1}.jpg`}
           alt={`List ${index + 1}`}

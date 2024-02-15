@@ -14,7 +14,7 @@ import {
   faTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import { data } from "../data/data";
+import { data } from "../../data/data";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Header() {
@@ -23,7 +23,8 @@ export default function Header() {
 
   return (
     <div className="">
-      <div className="bg-darkbg p-2 text-lightText text-center items-center justify-between flex px-5">
+      <div className="bg-darkbg">
+      <div className="max-w-screen-2xl bg-darkbg pb-2 pt-2 text-lightText text-center items-center justify-between flex mx-auto">
         <div className="flex gap-3">
           <div className="text-white items-center p-2.5 gap-[5px] flex">
             <FontAwesomeIcon icon={faPhone} size="sm" />
@@ -49,10 +50,11 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <div className="flex justify-between w-[85%] mx-auto">
+      </div>
+      <div className="flex justify-between max-w-screen-2xl mx-auto">
         <header className="flex items-center pb-4 pt-4">
           <Link to="/" className="no-underline text-darkText">
-            <h3 className="text-2xl text-slate-800 font-bold leading-loose cursor-pointer">
+            <h3 className="text-2xl text-darkText font-bold leading-loose cursor-pointer">
               {companyName}
             </h3>
           </Link>

@@ -1,122 +1,12 @@
 import { faBorderAll, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ProductCard from "./ProductCard";
-import {
-  faAws,
-  faHooli,
-  faLyft,
-  faPiedPiperHat,
-  faRedditAlien,
-  faStripe,
-} from "@fortawesome/free-brands-svg-icons";
+import ProductCard from "../Repetitive/ProductCard";
+import Brands from "../Repetitive/Brands";
+
+import { data } from "../../data/data"
 
 export default function ProductCards() {
-  const badgesTypes = [
-    "./product-card/Ellipse 14.png",
-    "./product-card/Ellipse 15.png",
-    "./product-card/Ellipse 16.png",
-    "./product-card/Ellipse 17.png",
-  ];
-
-  const productl = [
-    {
-      productImage: "./cardlist/pl1.jpg",
-      productName: "Graphic Design",
-      department: "Department 1",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl2.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl3.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl4.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl5.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl6.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl7.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl8.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl9.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl10.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl11.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-    {
-      productImage: "./cardlist/pl12.jpg",
-      productName: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      discountedPrice: "$6.48",
-      badges: badgesTypes,
-    },
-  ];
-
+  const productl = data.productl.filter(product => product.category === "productList");
   const groupedpl = productl.reduce((acc, product, index) => {
     const groupIndex = Math.floor(index / 4);
 
@@ -132,7 +22,7 @@ export default function ProductCards() {
   return (
     <div>
       <div className="mt-5">
-        <div className="flex w-[85%] justify-between mx-auto mb-4">
+        <div className="flex max-w-screen-2xl justify-between mx-auto mb-10">
           <p className="text-lighterDark font-bold pt-2">
             Showing all 12 results
           </p>
@@ -199,7 +89,7 @@ export default function ProductCards() {
         {groupedpl.map((group, groupIndex) => (
           <div
             key={groupIndex}
-            className="flex justify-between w-[85%] mx-auto mt-2"
+            className="flex justify-between max-w-screen-2xl mx-auto mt-2 mb-20"
           >
             {group.map((product, index) => (
               <ProductCard
@@ -210,6 +100,7 @@ export default function ProductCards() {
                 price={product.price}
                 discountedPrice={product.discountedPrice}
                 badges={product.badges}
+                customImageSize="w-[240px] h-[430px]"
               />
             ))}
           </div>
@@ -226,7 +117,7 @@ export default function ProductCards() {
           </p>
         </button>
         <button
-          className=" relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 bg-gray-100 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className=" relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
         >
           <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">
@@ -258,44 +149,7 @@ export default function ProductCards() {
           </p>
         </button>
       </div>
-      <div className="bg-lightbg">
-        <div className="flex justify-between mx-auto py-8 mb-0 pb-0 w-[85%]">
-          <FontAwesomeIcon
-            icon={faHooli}
-            size="sm"
-            className="text-lighterDark text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faLyft}
-            size="sm"
-            className="text-lighterDark  text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faPiedPiperHat}
-            size="sm"
-            className="text-lighterDark  text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faStripe}
-            size="sm"
-            className="text-lighterDark text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faAws}
-            size="sm"
-            className="text-lighterDark text-8xl"
-          />
-          <FontAwesomeIcon
-            icon={faRedditAlien}
-            size="sm"
-            className="  text-lighterDark  text-8xl"
-          />
-
-          
-        </div>
-        <br />
-        <hr className="mb-1 text-priceGray"/>
-      </div>
+      <Brands />
     </div>
   );
 }

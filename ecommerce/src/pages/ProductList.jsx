@@ -1,11 +1,12 @@
-import ShoppingCard from "../components/ShoppingCard"
-import ProductCards from "../components/ProductCards"
+import CategoryCard from "../components/Repetitive/CategoryCard"
+import ProductCards from "../components/ProductListPage/ProductCards"
+
 
 export default function ProductList () {
     
     return (
         <>
-        <ShoppingCard />
+        <CategoryCard />
         <ProductCards />
         </>
     )

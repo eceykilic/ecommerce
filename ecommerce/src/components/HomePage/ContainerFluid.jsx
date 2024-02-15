@@ -8,7 +8,7 @@ export default function ContainerFluid() {
                 <h4 className="mt-4 text-lighterDark text-xl">We know how large objects will act, <br /> but things on a small scale.</h4>
                 <div className="mt-4 flex gap-2">
                     <button className="w-[150px] h-[52px] bg-btnGreen font-bold rounded text-white text-sm">BUY NOW</button>
-                    <button className="w-[170px] h-[52px] border-2 border-x-btnGreen font-bold rounded text-btnGreen text-sm">READ MORE</button>
+                    <button className="w-[170px] h-[52px] border-2 border-btnGreen font-bold rounded text-btnGreen text-sm">READ MORE</button>
                 </div>
             </div>
         </div>
