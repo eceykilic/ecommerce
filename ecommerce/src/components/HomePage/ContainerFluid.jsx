@@ -1,6 +1,6 @@
 export default function ContainerFluid() {
     return (
-        <div className="flex gap-[10rem] justify-center sm:flex-col-reverse sm:gap-10">
+        <div className="flex gap-[10rem] justify-center md:flex-col-reverse sm:gap-10">
             <img src="./fluid/fluid-1.png" alt="" className="sm:px-10"/>
             <div className="mt-40 sm:mx-auto sm:text-center sm:w-2/3">
                 <h5 className="text-priceGray text-base font-semibold">SUMMER 2020</h5>
