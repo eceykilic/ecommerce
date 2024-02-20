@@ -44,6 +44,8 @@ const SignUp = () => {
       role_id: data.role === "admin" ? 0 : 2,
     };
 
+    
+
     if (data.role.toLowerCase() === "store") {
       userData = {
         ...userData,
@@ -55,6 +57,8 @@ const SignUp = () => {
           bank_account: data.storeIBAN,
         },
       };
+
+      console.log(userData);
     }
 
     axios
@@ -288,7 +292,148 @@ const SignUp = () => {
                         )
                     )}
                 </select>
-
+                {watch("role")?.toLowerCase() === "store" && (
+                  <>
+                  <div className="flex flex-col gap-8 mt-8">
+                    <div>
+                      <label
+                        htmlFor="storeName"
+                        className="ml-1  text-sm font-bold text-lighterDark tracking-wide"
+                      >
+                        Store Name
+                      </label>
+                      <input
+                        id="storeName"
+                        className=" bg-white w-full text-base px-4 py-2 border-2 border-priceGray rounded-md focus:outline-none focus:border-navBlue"
+                        type="text"
+                        placeholder="Enter your store name"
+                        {...register("storeName", {
+                          required: {
+                            value: true,
+                            message: "Store name is required",
+                          },
+                          minLength: {
+                            value: 3,
+                            message:
+                              "Store Name should be at least 3 characters long",
+                          },
+                          maxLength: {
+                            value: 35,
+                            message:
+                              "Store Name cannot be longer than 30 characters.",
+                          },
+                        })}
+                      />
+                      {errors["storeName"] && (
+                        <p
+                          role="alert"
+                          className="ml-1 mt-1 text-sm font-bold text-red-600 tracking-wide"
+                        >
+                          {errors["storeName"]?.message}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="storePhone"
+                        className="ml-1 text-sm font-bold text-lighterDark tracking-wide"
+                      >
+                        Store Phone
+                      </label>
+                      <input
+                        id="storePhone"
+                        className="bg-white w-full text-base px-4 py-2 border-2 border-priceGray rounded-md focus:outline-none focus:border-navBlue"
+                        type="tel"
+                        placeholder="Enter your store phone | +90XXXXXXXXXX"
+                        {...register("storePhone", {
+                          required: {
+                            value: true,
+                            message: "Store phone is required",
+                          },
+                          pattern: {
+                            value:
+                              /^((\+|00)90|0)?\s?5\d{2}\s?\d{3}\s?\d{2}\s?\d{2}$/,
+                            message: "Invalid phone number",
+                          },
+                        })}
+                      />
+                      {errors["storePhone"] && (
+                        <p
+                          role="alert"
+                          className="ml-1 mt-1 text-sm font-bold text-red-600 tracking-wide"
+                        >
+                          {errors["storePhone"]?.message}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="storeTaxNumber"
+                        className="ml-1 text-sm font-bold text-lighterDark tracking-wide"
+                      >
+                        Store Tax Number
+                      </label>
+                      <input
+                        id="storeTaxNumber"
+                        className="bg-white w-full text-base px-4 py-2 border-2 border-priceGray rounded-md focus:outline-none focus:border-navBlue"
+                        type="text"
+                        placeholder="Enter your store tax number | TXXXXVXXXXXX"
+                        {...register("storeTaxNumber", {
+                          required: {
+                            value: true,
+                            message: "Store tax number is required",
+                          },
+                          pattern: {
+                            value: /^T\d{4}V\d{6}$/,
+                            message: "Invalid tax number",
+                          },
+                        })}
+                      />
+                      {errors["storeTaxNumber"] && (
+                        <p
+                          role="alert"
+                          className="ml-1 mt-1 text-sm font-bold text-red-600 tracking-wide"
+                        >
+                          {errors["storeTaxNumber"]?.message}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="storeIBAN"
+                        className="ml-1 text-sm font-bold text-lighterDark tracking-wide"
+                      >
+                        Store IBAN:
+                      </label>
+                      <input
+                        id="storeIBAN"
+                        className="bg-white w-full text-base px-4 py-2 border-2 border-priceGray rounded-md focus:outline-none focus:border-navBlue"
+                        type="text"
+                        placeholder="Enter your store IBAN | TRXXXXXXXXXXXXXXXXXXXXXXXX"
+                        {...register("storeIBAN", {
+                          required: {
+                            value: true,
+                            message: "Store IBAN is required",
+                          },
+                          pattern: {
+                            value:
+                              /^TR\d{2}\s?(\d{4}\s?){1}(\d{1})(\d{3}\s?)(\d{4}\s?){3}(\d{2})\s?$/,
+                            message: "Invalid IBAN",
+                          },
+                        })}
+                      />
+                      {errors["storeIBAN"] && (
+                        <p
+                          role="alert"
+                          className="ml-1 mt-1 text-sm font-bold text-red-600 tracking-wide"
+                        >
+                          {errors["storeIBAN"]?.message}
+                        </p>
+                      )}
+                    </div>
+                    </div>
+                  </>
+                )}
               </div>
               <div>
                 <button
