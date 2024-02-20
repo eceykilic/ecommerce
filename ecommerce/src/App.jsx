@@ -8,6 +8,7 @@ import ProductPage from "./pages/ProductPage";
 import About from "./pages/About";
 import TeamPage from "./pages/TeamPage";
 import ContactPage from "./pages/ContactPage";
+import SignUp from "./pages/SignUp";
 import { data } from "./data/data";
 import "./App.css"
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/team" component={TeamPage} />
         <Route path="/contact" component={ContactPage} />
+        <Route path="/signup" component={SignUp} />
         <Route path="/" component={Home} />
       </Switch>
       <Footer />
