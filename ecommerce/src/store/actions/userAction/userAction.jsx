@@ -1,5 +1,7 @@
 import axios from "axios";
 import * as types from './userActionTypes';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const userRequest = (userData) => {
     return {
@@ -35,7 +37,10 @@ export const signUpUser = (userData, history) => (dispatch) => {
         .then((response) => {
             dispatch(userSuccess(response.data));
             console.log("Sign up has been successfully");
-            history.goBack();
+            toast.success("Sign up successful! Check your email to activate your account.");
+            setTimeout(() => {
+                history.goBack();
+              }, 5000);
         }).catch((error) => {
             dispatch(userFailure(error))
             console.error("Sign up has been failed", error);
