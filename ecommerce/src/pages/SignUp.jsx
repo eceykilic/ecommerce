@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Spinner } from "@material-tailwind/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -10,12 +10,18 @@ import {
   userSuccess,
   userFailure,
 } from "../store/actions/userAction/userAction";
+import { updateRoles } from "../store/actions/globalAction/globalAction"
 
-const SignUp = ({ roles }) => {
+const SignUp = () => {
   const dispatch = useDispatch();
+  const roles = useSelector(state => state.global.roles);
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, watch, formState: { errors, isValid } } = useForm({ mode: "onBlur" });
   const history = useHistory();
+
+  useEffect(() => {
+    dispatch(updateRoles()); // updateRoles fonksiyonunu kullanarak rolleri güncelle
+  }, [dispatch]);
 
   const onSubmit = (data) => {
     setLoading(true);

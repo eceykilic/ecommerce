@@ -6,6 +6,7 @@ export const updateRoles = () => {
         axios.get("https://workintech-fe-ecommerce.onrender.com/roles")
             .then((response) => {
                 dispatch({ type: types.UPDATE_ROLES, payload: response.data });
+                console.log(response)
             })
             .catch((error) => {
                 console.log("Roles Fetching Error: " + error.message);
