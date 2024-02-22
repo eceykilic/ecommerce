@@ -1,9 +1,10 @@
 import * as types from '../actions/userAction/userActionTypes';
 
+const storedUser = localStorage.getItem('user');
 const initialState = {
     isLoading: false,
     error: null,
-    response:{},
+    response:storedUser ? JSON.parse(storedUser) : {},
     userData: {},
 };
 
@@ -17,6 +18,7 @@ const userReducer = (state = initialState, action) => {
                 error: null,
             };
         case types.USER_SUCCESS:
+        {/* Başarılı giriş: isLoading:false, error:null, kullanıcı verileri:response*/}
             return {
                 ...state,
                 isLoading: false,

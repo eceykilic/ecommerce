@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Spinner } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   signUpUser,
@@ -416,7 +415,6 @@ const SignUp = () => {
           </form>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

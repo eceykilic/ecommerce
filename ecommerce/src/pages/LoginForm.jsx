@@ -1,8 +1,22 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../store/actions/userAction/userAction';
+import useLocalStorage from '../hooks/useLocalStorage';
+
 
 export default function LoginForm() {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: "onBlur" });
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const [token, setToken] = useLocalStorage("Token", "");
+    
+    const onSubmit = (userData) => {
+        dispatch(loginUser(userData,history,setToken));
+    }
+
+
   
   
     return (
@@ -15,7 +29,7 @@ export default function LoginForm() {
               Please log into your account
             </p>
           </div>
-          <form className="mt-8 space-y-6">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <input type="hidden" name="remember" defaultValue="false" />
             <div>
               <label

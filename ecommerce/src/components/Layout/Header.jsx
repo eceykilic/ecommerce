@@ -18,10 +18,25 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { data } from "../../data/data";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch, useSelector } from "react-redux";
+import { logOutUser } from "../../store/actions/userAction/userAction";
+import Gravatar from "./Gravatar";
 
 export default function Header() {
   const { phone, mail, offerMsg, companyName } = data.navBar;
   const history = useHistory();
+  const user = useSelector((store) => store.user.response);
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    if (history) {
+      // çıkış yapmak istendiğinde logOutUser eylemini tetikle
+      dispatch(logOutUser());
+      // Redirect to the home page or another page after logout
+      history.push('/');
+    }
+  };
+
 
   return (
     <div className="">
@@ -117,9 +132,25 @@ export default function Header() {
         </nav>
         <div className="flex gap-8 font-bold sm:hidden">
         <div className="flex items-center text-navBlue">
-          <FontAwesomeIcon icon={faUser} size="sm"/>
-          <Link to="/login" className="no-underline text-navBlue text-sm">Login</Link> / <Link to="/signup" className="no-underline text-navBlue text-sm">Register</Link>
+        {Object.keys(user).length > 1 ? (
+                                <div className="flex items-center gap-3 cursor-pointer">
+                                    <Gravatar userEmail={user.email} />
+                                    <div className="dropdown">
+                                        <div tabIndex={0} role="button">{user.name}</div>
+                                        <ul tabIndex={0}>
+                                            <li><div onClick={() => handleLogOut()} className="text-lighterDark text-sm">Log out</div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="flex items-center gap-1">
+                                    <FontAwesomeIcon icon={faUser} size="sm" className="" />
+                                    <Link to="/login">Login</Link> / <Link to="/signup">Register</Link>
+                                </div>
+                            )}
         </div>
+        
+        
         <div className="flex items-center text-navBlue">
           <FontAwesomeIcon icon={faSearch} size="sm"/>
           <Link to="/login" className="no-underline text-navBlue text-sm" />
