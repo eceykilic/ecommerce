@@ -59,7 +59,7 @@ export default function ContactPage() {
         </h2>
       </div>
 
-      <div className="flex gap-3 max-w-screen-lg min-h-96 mx-auto text-center mb-20 sm:flex-col sm:w-96">
+      <div className="flex gap-3 mx-80 max-w-screen-lg min-h-96  text-center mb-20 sm:flex-col sm:w-96">
         <div className="flex flex-1 flex-col items-center justify-center gap-3 sm:gap-6 sm:py-20">
         <FontAwesomeIcon icon={faPhone} size="4x" className="text-navBlue" />
         <div className="text-darkText">
