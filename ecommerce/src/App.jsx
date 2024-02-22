@@ -10,7 +10,7 @@ import TeamPage from "./pages/TeamPage";
 import ContactPage from "./pages/ContactPage";
 import SignUp from "./pages/SignUp";
 import LoginForm from "./pages/LoginForm";
-import { data } from "./data/data";
+import { updateCategories } from './store/actions/globalAction/globalAction';
 import "./App.css"
 import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
@@ -47,13 +47,18 @@ function App() {
         // Token is not authorized
         localStorage.removeItem("Token");
         // Remove token from axios header
-        dispatch(logOutUser());
+        if (isLoggedIn) {
+          dispatch(logOutUser());
+        }
       });
     } else {
       // Token is not present
-      dispatch(logOutUser());
+      if (isLoggedIn) {
+        dispatch(logOutUser());
+      }
     }
-  }, [isLoggedIn]); 
+    dispatch(updateCategories());
+  }, [isLoggedIn]);
 
 
   return (
@@ -61,11 +66,12 @@ function App() {
       <Header />
       <ToastContainer />
       <Switch>
-        <Route path="/shopping" component={ProductList} />
-        <Route
-          path="/product/:productName"
-          component={(props) => <ProductPage {...props} data={data} />}
-        />
+      <Route path="/shopping/:gender/:category/:productId/:productNameSlug" exact>
+          <ProductPage />
+        </Route>
+        <Route path="/shopping/:gender?/:category?" exact>
+          <ProductList />
+        </Route>
         <Route path="/about" component={About} />
         <Route path="/team" component={TeamPage} />
         <Route path="/contact" component={ContactPage} />

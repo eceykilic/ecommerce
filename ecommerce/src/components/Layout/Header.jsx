@@ -173,9 +173,7 @@ export default function Header() {
                           {womanCategories.map((category, idx) => (
                             <Link
                               key={idx}
-                              to={`/shopping/kadin/${category.code.slice(
-                                2
-                              )}${search}`}
+                              to={`/shopping/kadin/${search}`}
                               className="block px-4 py-2 text-sm text-gray-500"
                             >
                               {category.title}
@@ -191,17 +189,17 @@ export default function Header() {
                         >
                           Men
                         </Link>
-                        {manCategories.map((category, idx) => (
-                          <Link
-                            key={idx}
-                            to={`/shopping/erkek/${category.code.slice(
-                              2
-                            )}${search}`}
-                            className="block px-4 py-2 text-sm text-gray-500 group-hover:block"
-                          >
-                            {category.title}
-                          </Link>
-                        ))}
+                        <div className="space-y-2">
+                          {manCategories.map((category, idx) => (
+                            <Link
+                              key={idx}
+                              to={`/shopping/erkek/${search}`}
+                              className="block px-4 py-2 text-sm text-gray-500"
+                            >
+                              {category.title}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -222,19 +220,15 @@ export default function Header() {
               {Object.keys(user).length > 1 ? (
                 <div className="flex items-center gap-3 cursor-pointer">
                   <Gravatar userEmail={user.email} />
-                  <div className="group relative">
+                  <div className="">
                     <div className="flex items-center">
                       <span>{user.name}</span>
-                      <FontAwesomeIcon
-                        icon={faAngleDown}
-                        className="pl-1 transition-transform duration-300 transform group-hover:-rotate-180"
-                      />
                     </div>
-                    <ul className="absolute hidden z-10 group-hover:block mt-2 space-y-2 bg-white rounded-md shadow-lg">
+                    <ul className="">
                       <li>
                         <div
                           onClick={() => handleLogOut()}
-                          className="block px-4 py-2 text-sm text-lighterDark"
+                          className="text-sm text-lighterDark"
                         >
                           Log out
                         </div>

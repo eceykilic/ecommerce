@@ -71,5 +71,5 @@ export const logOutUser = (history) => (dispatch) => {
     dispatch(userLogOut());
     localStorage.removeItem('user');
     console.log("Log out has been successfully");
-    toast.success("Log out successful.")
+    toast.success("Log out successful")
 };
