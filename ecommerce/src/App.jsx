@@ -9,13 +9,16 @@ import About from "./pages/About";
 import TeamPage from "./pages/TeamPage";
 import ContactPage from "./pages/ContactPage";
 import SignUp from "./pages/SignUp";
+import LoginForm from "./pages/LoginForm";
 import { data } from "./data/data";
 import "./App.css"
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <Router>
       <Header />
+      <ToastContainer />
       <Switch>
         <Route path="/shopping" component={ProductList} />
         <Route
@@ -26,7 +29,9 @@ function App() {
         <Route path="/team" component={TeamPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/login" component={LoginForm} />
         <Route path="/" component={Home} />
+        
       </Switch>
       <Footer />
     </Router>

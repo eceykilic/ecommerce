@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Spinner } from "@material-tailwind/react";
+import { useDispatch, useSelector } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
 import {
-  updateRoles,
-  updateCategories,
-} from "../store/actions/globalAction/globalAction";
-import { useSelector, useDispatch } from "react-redux";
+  signUpUser,
+  userSuccess,
+  userFailure,
+} from "../store/actions/userAction/userAction";
+import { updateRoles } from "../store/actions/globalAction/globalAction"
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const roles = useSelector(state => state.global.roles);
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors, isValid },
-  } = useForm({ mode: "onBlur" });
-  const roles = useSelector((state) => state.global.roles);
-  // const categories = useSelector((state) => state.global.categories);
+  const { register, handleSubmit, watch, formState: { errors, isValid } } = useForm({ mode: "onBlur" });
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(updateRoles());
-    dispatch(updateCategories());
+    dispatch(updateRoles()); // updateRoles fonksiyonunu kullanarak rolleri güncelle
   }, [dispatch]);
 
   const onSubmit = (data) => {
@@ -51,50 +43,23 @@ const SignUp = () => {
           bank_account: data.storeIBAN,
         },
       };
-
-      console.log(userData);
     }
 
-    axios
-      .post("https://workintech-fe-ecommerce.onrender.com/signup", userData)
-      .then((response) => {
-        if (
-          response.data &&
-          response.data.message ===
-            "User created. Check your email for activation instructions."
-        ) {
-          // Redirect to the previous page with a success message
-          setTimeout(() => {
-            // Redirect to the previous page after the delay
-            history.goBack();
-          }, 3000);
-          setSuccessMessage(
-            "You need to click link in email to activate your account!"
-          );
+    dispatch(signUpUser(userData, history, handleSuccess, handleFailure));
+  };
 
-          setTimeout(() => {
-            setSuccessMessage(null);
-          }, 8000);
-        } else {
-          // Handle other responses, e.g., display an error message
-          setErrorMessage(response.data.message);
-          console.error("Error signing up:", response.data.message);
-          setTimeout(() => {
-            setErrorMessage(null);
-          }, 5000);
-        }
-      })
-      .catch((error) => {
-        console.error("Error signing up:", error);
-        setErrorMessage("An error occurred during signup.");
+  const handleSuccess = (response) => {
+    setLoading(false);
 
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 5000);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    setTimeout(() => {
+      history.goBack();
+    }, 5000);
+  };
+
+  const handleFailure = (error) => {
+    setLoading(false);
+
+    console.error("Error signing up:", error);
   };
 
   return (
@@ -449,20 +414,6 @@ const SignUp = () => {
             </div>
           </form>
         </div>
-      </div>
-
-      <div>
-        {successMessage && (
-          <div className="mt-4 p-4 bg-green-500 text-white rounded">
-            {successMessage}
-          </div>
-        )}
-
-        {errorMessage && (
-          <div className="mt-4 p-4 bg-red-500 text-white rounded">
-            {errorMessage}
-          </div>
-        )}
       </div>
     </>
   );
