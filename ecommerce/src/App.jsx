@@ -22,7 +22,7 @@ function App() {
   const dispatch = useDispatch();
   const [isEqualToken, setIsEqualToken] = useState(false);
   const user = useSelector((state) => state.user.response)
-  let isLoggedIn = !!localStorage.getItem("Token");
+  let isLoggedIn = user.hasOwnProperty("token")
   
   useEffect(() => {
     const storedToken = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token : null;
@@ -53,7 +53,7 @@ function App() {
       // Token is not present
       dispatch(logOutUser());
     }
-  }, [dispatch]); 
+  }, [isLoggedIn]); 
 
 
   return (
