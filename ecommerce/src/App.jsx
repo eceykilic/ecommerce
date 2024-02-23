@@ -31,7 +31,6 @@ function App() {
       if (window.location.pathname !== "/login") {
         window.location.replace("/login");
       }
-      return () => {}; // Temizleme fonksiyonu, hiçbir şey yapmıyor
     }
   
     axios.get('https://workintech-fe-ecommerce.onrender.com/verify', {
@@ -57,18 +56,11 @@ function App() {
           dispatch(logOutUser());
         }
   
-        // Eğer token geçerli değilse ve mevcut sayfa /login ise, tekrar /login sayfasına yönlendir
-        if (window.location.pathname === "/login") {
-          window.location.replace("/login");
-        }
+      
       });
   
     dispatch(updateCategories());
   
-    // Temizleme fonksiyonu, useEffect'in temizleme aşamasında çalışacak
-    return () => {
-      // Burada temizleme işlemleri yapabilirsiniz, örneğin abonelikleri kaldırabilirsiniz
-    };
   }, [isLoggedIn, dispatch]);
 
   return (
