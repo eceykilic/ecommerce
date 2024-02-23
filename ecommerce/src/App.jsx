@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
@@ -11,28 +11,34 @@ import ContactPage from "./pages/ContactPage";
 import SignUp from "./pages/SignUp";
 import LoginForm from "./pages/LoginForm";
 import { updateCategories } from './store/actions/globalAction/globalAction';
-import "./App.css"
+import "./App.css";
 import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSuccess, logOutUser } from './store/actions/userAction/userAction';
 
 function App() {
-
   const dispatch = useDispatch();
   const [isEqualToken, setIsEqualToken] = useState(false);
-  const user = useSelector((state) => state.user.response)
-  let isLoggedIn = user.hasOwnProperty("token")
-  
+  const user = useSelector((state) => state.user.response);
+  const isLoggedIn = user && user.hasOwnProperty("token");
+
   useEffect(() => {
     const storedToken = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token : null;
   
-    if (storedToken) {
-      axios.get('https://workintech-fe-ecommerce.onrender.com/verify', {
-        headers: {
-          Authorization: storedToken,
-        },
-      })
+    if (!storedToken || !isLoggedIn) {
+      // Eğer token yoksa veya kullanıcı giriş yapmamışsa login sayfasına yönlendir
+      if (window.location.pathname !== "/login") {
+        window.location.replace("/login");
+      }
+      return () => {}; // Temizleme fonksiyonu, hiçbir şey yapmıyor
+    }
+  
+    axios.get('https://workintech-fe-ecommerce.onrender.com/verify', {
+      headers: {
+        Authorization: storedToken,
+      },
+    })
       .then((response) => {
         dispatch(userSuccess(response.data));
         localStorage.setItem("Token", response.data.token);
@@ -50,23 +56,27 @@ function App() {
         if (isLoggedIn) {
           dispatch(logOutUser());
         }
+  
+        // Eğer token geçerli değilse ve mevcut sayfa /login ise, tekrar /login sayfasına yönlendir
+        if (window.location.pathname === "/login") {
+          window.location.replace("/login");
+        }
       });
-    } else {
-      // Token is not present
-      if (isLoggedIn) {
-        dispatch(logOutUser());
-      }
-    }
+  
     dispatch(updateCategories());
-  }, [isLoggedIn]);
-
+  
+    // Temizleme fonksiyonu, useEffect'in temizleme aşamasında çalışacak
+    return () => {
+      // Burada temizleme işlemleri yapabilirsiniz, örneğin abonelikleri kaldırabilirsiniz
+    };
+  }, [isLoggedIn, dispatch]);
 
   return (
     <Router>
       <Header />
       <ToastContainer />
       <Switch>
-      <Route path="/shopping/:gender/:category/:productId/:productNameSlug" exact>
+        <Route path="/shopping/:gender/:category/:productId/:productNameSlug" exact>
           <ProductPage />
         </Route>
         <Route path="/shopping/:gender?/:category?" exact>
@@ -78,7 +88,6 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={LoginForm} />
         <Route path="/" component={Home} />
-        
       </Switch>
       <Footer />
     </Router>
@@ -86,4 +95,3 @@ function App() {
 }
 
 export default App;
-
