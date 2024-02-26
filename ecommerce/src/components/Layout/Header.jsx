@@ -160,12 +160,12 @@ export default function Header() {
                     <div
                       className={`absolute ${
                         isDropdownOpen ? "" : "hidden"
-                      } z-10 mt-2 space-y-2 bg-white rounded-md shadow-lg`}
+                      } z-10 p-4 bg-white rounded-md shadow-lg flex gap-4`}
                     >
-                      <div className="py-2 px-4">
+                      <div className="">
                         <Link
                           to="/shopping/kadin"
-                          className="font-bold text-gray-800"
+                          className="font-bold text-gray-800 pl-3"
                         >
                           Women
                         </Link>
@@ -174,7 +174,7 @@ export default function Header() {
                             <Link
                               key={idx}
                               to={`/shopping/kadin/${search}`}
-                              className="block px-4 py-2 text-sm text-gray-500"
+                              className="block px-4 py-2 text-sm text-gray-500 mt-3"
                             >
                               {category.title}
                             </Link>
@@ -182,10 +182,10 @@ export default function Header() {
                         </div>
                       </div>
 
-                      <div className="py-2 px-4">
+                      <div className="">
                       <Link
                           to="/shopping/erkek"
-                          className="font-bold text-gray-800"
+                          className="font-bold text-gray-800 pl-3"
                         >
                           Men
                         </Link>
@@ -194,7 +194,7 @@ export default function Header() {
                             <Link
                               key={idx}
                               to={`/shopping/erkek/${search}`}
-                              className="block px-4 py-2 text-sm text-gray-500"
+                              className="block px-4 py-2 text-sm text-gray-500 mt-3"
                             >
                               {category.title}
                             </Link>
