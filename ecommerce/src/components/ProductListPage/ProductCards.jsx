@@ -2,10 +2,13 @@ import { faBorderAll, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProductCard from "../Repetitive/ProductCard";
 import Brands from "../Repetitive/Brands";
-
+import { useForm } from 'react-hook-form';
 import { data } from "../../data/data"
 
 export default function ProductCards() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  
+  
   const productl = data.productl.filter(product => product.category === "productList");
   const groupedpl = productl.reduce((acc, product, index) => {
     const groupIndex = Math.floor(index / 4);
@@ -40,7 +43,8 @@ export default function ProductCards() {
             />
           </div>
           <div className="flex items-center gap-3 sm:justify-center sm:text-center">
-            <form className="flex items-center gap-3">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-3">
+            <input type="search" placeholder="Search" {...register("filter", {})} className="bg-white input input-bordered w-full text-neutral-500 text-sm font-semibold" />
               <select className="select w-full text-sm leading-normal tracking-tight">
                 <option
                   className="text-lighterDark text-sm leading-normal tracking-tight"
