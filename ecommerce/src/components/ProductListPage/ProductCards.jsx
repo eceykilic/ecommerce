@@ -13,12 +13,14 @@ import { addMoreProducts, fetchProducts } from "../../store/actions/productActio
 
 
 export default function ProductCards() {
+  
   const dispatch = useDispatch();
-    const { gender, category } = useParams();
-    const categories = useSelector((store) => store.global.categories);
-    const products = useSelector((store) => store.products);
+  const categories = useSelector((store) => store.global.categories);
+  const products = useSelector((store) => store.products);
+  
+  const { gender, category } = useParams();
     const { totalProductCount, productList, fetchState } = products;
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit} = useForm();
     const [queryParams, setQueryParams] = useQueryParams({
         filter: "",
         sort: "",
@@ -26,7 +28,7 @@ export default function ProductCards() {
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const infiniteScrollParams = {
-        limit: 24,
+        limit: 25,
         offset: offset,
     };
 
@@ -48,32 +50,28 @@ export default function ProductCards() {
                 limit: infiniteScrollParams.limit,
                 offset: 0,
                 category: categoryId,
+                sort: queryParams.sort,
             })
         )
     }, [queryParams, categoryId])
 
     const nextProducts = () => {
-        let lastLimit = (totalProductCount - productList.length) % 24
-        if (lastLimit === 0) {
-            dispatch(
-                addMoreProducts({
-                    ...queryParams,
-                    ...infiniteScrollParams,
-                    category: categoryId
-                })
-            );
-            setOffset(offset+1);
-        }else{
-            dispatch(
-                addMoreProducts({
-                    ...queryParams,
-                    limit:lastLimit,
-                    offset:infiniteScrollParams.offset,
-                    category: categoryId
-                })
-            );
-        }
-    };
+      let lastLimit = Math.min(25, totalProductCount - productList.length);
+  
+      if (lastLimit > 0) {
+          dispatch(
+              addMoreProducts({
+                  ...queryParams,
+                  limit: lastLimit,
+                  offset: infiniteScrollParams.offset,
+                  category: categoryId,
+              })
+          );
+          setOffset(offset + 1);
+      } else {
+          setHasMore(false);
+      }
+  };
 
     useEffect(() => {
         if (totalProductCount && productList.length >= totalProductCount) {
@@ -93,7 +91,7 @@ export default function ProductCards() {
       <div className="mt-5">
         <div className="flex max-w-screen-2xl justify-between mx-auto mb-10 sm:flex-col sm:justify-center sm:text-center sm:gap-6">
           <p className="text-lighterDark font-bold pt-2">
-            Showing all 12 results
+            Showing all results
           </p>
           <div className="flex gap-2 sm:justify-center sm:text-center sm:gap-4">
             <p className="text-lighterDark text-sm font-bold leading-normal tracking-tight pt-2">
@@ -111,7 +109,7 @@ export default function ProductCards() {
           <div className="flex items-center gap-3 sm:justify-center sm:text-center">
             <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-3">
             <input type="search" placeholder="Search" {...register("filter", {})} className="bg-white input input-bordered w-full text-neutral-500 text-sm font-semibold" />
-              <select className="select w-full text-sm leading-normal tracking-tight">
+              <select {...register("sort", {})} className="select w-full text-sm leading-normal tracking-tight">
                 <option
                   className="text-lighterDark text-sm leading-normal tracking-tight"
                   value=""
@@ -120,25 +118,27 @@ export default function ProductCards() {
                 </option>
                 <option
                   className="text-lighterDark text-sm font-semibold leading-normal tracking-tight"
-                  value=""
+                  value="price:desc"
                 >
                   Highest Price
                 </option>
+                
                 <option
                   className="text-lighterDark text-sm font-semibold leading-normal tracking-tight"
-                  value=""
+                  value="price:asc"
                 >
                   Lowest Price
                 </option>
+                
                 <option
                   className="text-lighterDark text-sm font-semibold leading-normal tracking-tight"
-                  value=""
+                  value="rating:asc"
                 >
                   Lowest Rating
                 </option>
                 <option
                   className="text-lighterDark text-sm font-semibold leading-normal tracking-tight"
-                  value=""
+                  value="rating:desc"
                 >
                   Highest Rating
                 </option>
@@ -158,7 +158,7 @@ export default function ProductCards() {
       <div className="flex flex-col items-center mx-auto">
                 {fetchState === fetchTypes.FETCHED && (
                     <InfiniteScroll
-                        dataLength={productList.length || 1}
+                        dataLength={productList.length && 0}
                         next={nextProducts}
                         hasMore={hasMore}
                         
@@ -176,48 +176,6 @@ export default function ProductCards() {
                     </>}
             </div>
 
-      <div className="flex flex-row justify-center mb-10">
-        <button
-          className="relative h-10 max-h-[40px] w-10 max-w-[40px] p-[2rem] select-none rounded-lg rounded-r-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <p className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-lighterDark">
-            First
-          </p>
-        </button>
-        <button
-          className=" relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">
-            1
-          </span>
-        </button>
-        <button
-          className="relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-lightText bg-navBlue transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-            2
-          </span>
-        </button>
-        <button
-          className="relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">
-            3
-          </span>
-        </button>
-        <button
-          className="relative max-h-[40px] w-10 max-w-[40px] select-none p-[2rem] rounded-lg rounded-l-none border text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <p className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">
-            Next
-          </p>
-        </button>
-      </div>
       <Brands />
     </div>
   );
