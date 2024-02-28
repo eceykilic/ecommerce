@@ -67,7 +67,7 @@ export default function ProductCards() {
                   category: categoryId,
               })
           );
-          setOffset(offset + 1);
+          setOffset(offset + 25);
       } else {
           setHasMore(false);
       }
