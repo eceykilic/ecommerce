@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import useQueryParams from "../../hooks/useQueryParams";
 import * as fetchTypes from '../../store/actions/fetchStatesTypes';
 import { addMoreProducts, fetchProducts } from "../../store/actions/productAction/productAction";
-import { ClimbingBoxLoader } from "react-spinners";
+
 
 export default function ProductCards() {
   const dispatch = useDispatch();
@@ -161,7 +161,7 @@ export default function ProductCards() {
                         dataLength={productList.length || 1}
                         next={nextProducts}
                         hasMore={hasMore}
-                        loader={<ClimbingBoxLoader color="#23a6f0" className="mx-auto" />}
+                        
                         endMessage={
                             <p className="text-center p-4 text-neutral-500 text-lg font-semibold leading-normal tracking-tight">There are no more products in this category</p>
                         }
@@ -172,7 +172,7 @@ export default function ProductCards() {
                 {fetchState === fetchTypes.FETCHING &&
                     <>
                         <p className="text-center p-4 text-neutral-500 text-lg font-semibold leading-normal tracking-tight">There are no more products in this category</p>
-                        <ClimbingBoxLoader color="#23a6f0" />
+                        
                     </>}
             </div>
 
