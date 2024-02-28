@@ -15,25 +15,25 @@ export default function ProductCard(props) {
     const category = catCode?.slice(2)
     const productURL = `/shopping/${gender}/${category}/${id}/${nameSlug}`
     
-    return (
+    return (  
         <div onClick={() => {
             history.push(
                 productURL
             );
             window.scrollTo(0, 0);
-        }} className="flex flex-col text-center w-[20%] max-sm:w-full shadow-md rounded-b-md cursor-pointer ease-out duration-300 hover:scale-105 hover:ease-out hover:duration-300">
+        }} className="flex flex-col text-center w-[20%] max-w-screen-2xl shadow-sm cursor-pointer">
             <div>
-                <img src={image} className="max-w-full max-sm:w-full object-cover rounded-t-md  " />
+                <img src={image} className="w-[300px] mx-auto" />
             </div>
-            <div className="p-6 flex-col gap-2">
-                <h5 className="text-slate-800 text-base font-bold leading-normal tracking-tight">{name}</h5>
-                <h5 className="text-neutral-500 text-sm font-bold leading-normal tracking-tight truncate">{description}</h5>
-                <h5 className="text-neutral-500 text-sm font-bold leading-normal tracking-tight truncate">{sell_count} amount purchased</h5>
-                <div className="flex gap-1 justify-center">
-                    <h5 className="text-stone-300 text-base font-bold leading-normal tracking-tight">${priceWithoutDiscount.toFixed(2)}</h5>
-                    <h5 className="text-teal-700 text-base font-bold leading-normal tracking-tight">${price}</h5>
+            <div className="p-6 flex flex-col gap-3">
+                <h5 className="text-slate-800 text-base font-bold">{name}</h5>
+                <h5 className="text-lighterDark text-sm font-bold truncate w-4/5 mx-auto">{description}</h5>
+                <h5 className="text-lighterDark text-sm font-bold truncate">{sell_count} items sold</h5>
+                <div className="flex gap-4 justify-center">
+                    <h5 className="text-stone-300 text-base font-bold">${priceWithoutDiscount.toFixed(2)}</h5>
+                    <h5 className="text-teal-700 text-base font-bold">${price}</h5>
                 </div>
-                <div className="w-20 h-4 justify-start items-center gap-1.5 inline-flex">
+                <div className="w-20 h-4 items-center gap-1.5 inline-flex mx-auto">
                     <div className="w-4 h-4 bg-navBlue rounded-full" />
                     <div className="w-4 h-4 bg-teal-700 rounded-full" />
                     <div className="w-4 h-4 bg-orange-400 rounded-full" />
