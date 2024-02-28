@@ -1,26 +1,92 @@
 import { faBorderAll, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ProductCard from "../Repetitive/ProductCard";
+import Product from "./Product";
 import Brands from "../Repetitive/Brands";
 import { useForm } from 'react-hook-form';
-import { data } from "../../data/data"
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import useQueryParams from "../../hooks/useQueryParams";
+import * as fetchTypes from '../../store/actions/fetchStatesTypes';
+import { addMoreProducts, fetchProducts } from "../../store/actions/productAction/productAction";
+import { ClimbingBoxLoader } from "react-spinners";
 
 export default function ProductCards() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  
-  
-  const productl = data.productl.filter(product => product.category === "productList");
-  const groupedpl = productl.reduce((acc, product, index) => {
-    const groupIndex = Math.floor(index / 4);
+  const dispatch = useDispatch();
+    const { gender, category } = useParams();
+    const categories = useSelector((store) => store.global.categories);
+    const products = useSelector((store) => store.products);
+    const { totalProductCount, productList, fetchState } = products;
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [queryParams, setQueryParams] = useQueryParams({
+        filter: "",
+        sort: "",
+    });
+    const [offset, setOffset] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+    const infiniteScrollParams = {
+        limit: 24,
+        offset: offset,
+    };
 
-    if (!acc[groupIndex]) {
-      acc[groupIndex] = [];
+    const onSubmit = data => {
+        setOffset(0);
+        setQueryParams(data);
+    };
+    let categoryId;
+    let genderCode;
+    if (gender, category) {
+        genderCode = gender[0]
+        categoryId = categories.find((c) => c.code == `${genderCode}:${category}`)?.id
     }
 
-    acc[groupIndex].push(product);
+    useEffect(() => {
+        dispatch(
+            fetchProducts({
+                ...queryParams,
+                limit: infiniteScrollParams.limit,
+                offset: 0,
+                category: categoryId,
+            })
+        )
+    }, [queryParams, categoryId])
 
-    return acc;
-  }, []);
+    const nextProducts = () => {
+        let lastLimit = (totalProductCount - productList.length) % 24
+        if (lastLimit === 0) {
+            dispatch(
+                addMoreProducts({
+                    ...queryParams,
+                    ...infiniteScrollParams,
+                    category: categoryId
+                })
+            );
+            setOffset(offset+1);
+        }else{
+            dispatch(
+                addMoreProducts({
+                    ...queryParams,
+                    limit:lastLimit,
+                    offset:infiniteScrollParams.offset,
+                    category: categoryId
+                })
+            );
+        }
+    };
+
+    useEffect(() => {
+        if (totalProductCount && productList.length >= totalProductCount) {
+            setOffset(0);
+            setHasMore(false);
+        } else {
+            setHasMore(true);
+        }
+    }, [totalProductCount, productList.length]);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
 
   return (
     <div>
@@ -89,27 +155,26 @@ export default function ProductCards() {
         </div>
       </div>
 
-      <div>
-        {groupedpl.map((group, groupIndex) => (
-          <div
-            key={groupIndex}
-            className="flex justify-between max-w-screen-2xl mx-auto mt-2 mb-20 sm:flex-col sm:gap-16"
-          >
-            {group.map((product, index) => (
-              <ProductCard
-                key={index}
-                productImage={product.productImage}
-                productName={product.productName}
-                department={product.department}
-                price={product.price}
-                discountedPrice={product.discountedPrice}
-                badges={product.badges}
-                customImageSize="w-[240px] h-[430px] sm:w-[380px]"
-              />
-            ))}
-          </div>
-        ))}
-      </div>
+      <div className="flex flex-col items-center mx-auto">
+                {fetchState === fetchTypes.FETCHED && (
+                    <InfiniteScroll
+                        dataLength={productList.length || 1}
+                        next={nextProducts}
+                        hasMore={hasMore}
+                        loader={<ClimbingBoxLoader color="#23a6f0" className="mx-auto" />}
+                        endMessage={
+                            <p className="text-center p-4 text-neutral-500 text-lg font-semibold leading-normal tracking-tight">There are no more products in this category</p>
+                        }
+                        className="flex flex-col overflow-hidden h-full pt-4"
+                    >
+                        <Product products={productList} />
+                    </InfiniteScroll>)}
+                {fetchState === fetchTypes.FETCHING &&
+                    <>
+                        <p className="text-center p-4 text-neutral-500 text-lg font-semibold leading-normal tracking-tight">There are no more products in this category</p>
+                        <ClimbingBoxLoader color="#23a6f0" />
+                    </>}
+            </div>
 
       <div className="flex flex-row justify-center mb-10">
         <button

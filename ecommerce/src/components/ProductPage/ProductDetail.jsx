@@ -7,16 +7,18 @@ import {
   faCartShopping,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from "react-router-dom";
+
 import { Carousel } from "@material-tailwind/react";
 
-function ProductDetail({ data }) {
-  const { productName } = useParams();
-  const product = data.productl.find((p) => p.productName === productName);
+import { useLocation } from "react-router-dom";
 
-  if (!product) {
-    // Eğer ürün bulunamazsa, burada bir hata mesajı veya yönlendirme yapabilirsiniz.
-    return <div>Ürün bulunamadı</div>;
+function ProductDetail() {
+  const location = useLocation();
+  const productData = location.state?.productData;
+
+  if (!productData) {
+    // If product data is not available, handle accordingly (e.g., show an error message)
+    return <div>Product not found</div>;
   }
 
   const {
@@ -24,7 +26,7 @@ function ProductDetail({ data }) {
     productImage,
     price,
     badges,
-  } = product;
+  } = productData;
 
   return (
     <div className="bg-lightbg pt-10 pb-8">
