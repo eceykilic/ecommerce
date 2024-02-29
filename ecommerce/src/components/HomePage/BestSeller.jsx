@@ -1,19 +1,33 @@
 import ProductCard from "../Repetitive/ProductCard";
-import { data } from "../../data/data"
+import React, { useEffect, useState } from 'react';
 
 export default function BestSeller() {
-  const bestSeller = data.productl.filter(product => product.category === "bestSeller");
-  const groupedBestSeller = bestSeller.reduce((acc, product, index) => {
-    const groupIndex = Math.floor(index / 4);
+  const [bestSellerProducts, setBestSellerProducts] = useState([]);
 
-    if (!acc[groupIndex]) {
-      acc[groupIndex] = [];
-    }
-
-    acc[groupIndex].push(product);
-
-    return acc;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://workintech-fe-ecommerce.onrender.com/products');
+        const data = await response.json();
+  
+        console.log('Fetched data:', data);
+  
+        // Assuming the API returns an array of products
+        // Directly set the state with the fetched data
+        setBestSellerProducts(data.products);
+  
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    // Fetch data when the component mounts
+    fetchData();
   }, []);
+  
+  const productCards = bestSellerProducts.sort((a, b) => b.sell_count - a.sell_count).slice(0, 8).map((item, index) => {
+        return <ProductCard data={item} key={index} className="w-[25%]" />
+    })
 
   return (
     <div>
@@ -23,22 +37,9 @@ export default function BestSeller() {
         <p className="text-lighterDark font-medium mb-12 sm:w-2/3 sm:mx-auto">
           Problems trying to resolve the conflict between
         </p>
-        {groupedBestSeller.map((group, groupIndex) => (
-          <div key={groupIndex} className="flex justify-between max-w-screen-2xl w-full mx-auto mt-2 mb-10 sm:flex-col sm:gap-10">
-            {group.map((product, index) => (
-              <ProductCard
-                key={index}
-                productImage={product.productImage}
-                productName={product.productName}
-                department={product.department}
-                price={product.price}
-                discountedPrice={product.discountedPrice}
-                badges={product.badges}
-                customImageSize="w-[240px] h-[430px] sm:w-[300px]"
-              />
-            ))}
-          </div>
-        ))}
+        <div className="flex flex-wrap justify-center items-center gap-7 max-sm:flex-col">
+            {productCards}
+        </div>
       </div>
     </div>
   );

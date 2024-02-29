@@ -1,33 +1,123 @@
 import { faBorderAll, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ProductCard from "../Repetitive/ProductCard";
+import Product from "./Product";
 import Brands from "../Repetitive/Brands";
+import { useForm } from "react-hook-form";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import useQueryParams from "../../hooks/useQueryParams";
+import * as fetchTypes from "../../store/actions/fetchStatesTypes";
+import {
+  addMoreProducts,
+  fetchProducts,
+} from "../../store/actions/productAction/productAction";
+import { Spinner } from "@material-tailwind/react";
 
-import { data } from "../../data/data"
+// Dışa aktarılan sabitler
+const sortingOptions = [
+  { value: "", label: "Popularity" },
+  { value: "price:desc", label: "Highest Price" },
+  { value: "price:asc", label: "Lowest Price" },
+  { value: "rating:asc", label: "Lowest Rating" },
+  { value: "rating:desc", label: "Highest Rating" },
+];
 
 export default function ProductCards() {
-  const productl = data.productl.filter(product => product.category === "productList");
-  const groupedpl = productl.reduce((acc, product, index) => {
-    const groupIndex = Math.floor(index / 4);
+  const dispatch = useDispatch();
+  const categories = useSelector((store) => store.global.categories);
+  const products = useSelector((store) => store.products);
 
-    if (!acc[groupIndex]) {
-      acc[groupIndex] = [];
+  const { gender, category } = useParams();
+  const { totalProductCount, productList, fetchState } = products;
+  const { register, handleSubmit } = useForm();
+
+  const [queryParams, setQueryParams] = useQueryParams({
+    filter: "",
+    sort: "",
+  });
+
+  //infinite scroll parameters, default 25 ürün
+
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const infiniteScrollParams = {
+    limit: 25,
+    offset: offset,
+  };
+
+  //filter submit
+
+  const onSubmit = (data) => {
+    setOffset(0);
+    setQueryParams(data);
+  };
+
+  // kadınsa k erkekse e atanması için: (ilk karakter ataması)
+
+  let categoryId;
+  let genderCode;
+
+  if ((gender, category)) {
+    genderCode = gender[0];
+    categoryId = categories.find(
+      (c) => c.code == `${genderCode}:${category}`
+    )?.id;
+  }
+
+  useEffect(() => {
+    dispatch(
+      fetchProducts({
+        ...queryParams,
+        limit: infiniteScrollParams.limit,
+        offset: 0,
+        category: categoryId,
+        sort: queryParams.sort,
+      })
+    );
+  }, [queryParams, categoryId]);
+
+  
+  //25erli gruplarla renderlama
+  
+  const nextProducts = () => {
+    let lastLimit = Math.min(25, totalProductCount - productList.length);
+
+    if (lastLimit > 0) {
+      dispatch(
+        addMoreProducts({
+          ...queryParams,
+          limit: lastLimit,
+          offset: infiniteScrollParams.offset,
+          category: categoryId,
+        })
+      );
+      setOffset(offset + 25);
+    } else {
+      setHasMore(false);
     }
+  };
 
-    acc[groupIndex].push(product);
-
-    return acc;
+  useEffect(() => {
+    if (totalProductCount && productList.length >= totalProductCount) {
+      setOffset(0);
+      setHasMore(false);
+    } else {
+      setHasMore(true);
+    }
+  }, [totalProductCount, productList.length]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   return (
     <div>
       <div className="mt-5">
         <div className="flex max-w-screen-2xl justify-between mx-auto mb-10 sm:flex-col sm:justify-center sm:text-center sm:gap-6">
-          <p className="text-lighterDark font-bold pt-2">
-            Showing all 12 results
-          </p>
+          <p className="text-lighterDark font-bold pt-2">Showing all results</p>
           <div className="flex gap-2 sm:justify-center sm:text-center sm:gap-4">
-            <p className="text-lighterDark text-sm font-bold leading-normal tracking-tight pt-2">
+            <p className="text-lighterDark text-sm font-bold pt-2">
               Views:
             </p>
             <FontAwesomeIcon
@@ -40,42 +130,50 @@ export default function ProductCards() {
             />
           </div>
           <div className="flex items-center gap-3 sm:justify-center sm:text-center">
-            <form className="flex items-center gap-3">
-              <select className="select w-full text-sm leading-normal tracking-tight">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex items-center gap-3"
+            >
+              <select
+                {...register("sort", {})}
+                className="select w-full text-sm"
+              >
                 <option
-                  className="text-lighterDark text-sm leading-normal tracking-tight"
+                  className="text-lighterDark text-sm"
                   value=""
                 >
                   Popularity
                 </option>
                 <option
-                  className="text-lighterDark text-sm font-semibold leading-normal tracking-tight"
-                  value=""
+                  className="text-lighterDark text-sm font-semibold"
+                  value="price:desc"
                 >
                   Highest Price
                 </option>
+
                 <option
-                  className="text-lighterDark text-sm font-semibold leading-normal tracking-tight"
-                  value=""
+                  className="text-lighterDark text-sm font-semibold"
+                  value="price:asc"
                 >
                   Lowest Price
                 </option>
+
                 <option
-                  className="text-lighterDark text-sm font-semibold leading-normal tracking-tight"
-                  value=""
+                  className="text-lighterDark text-sm font-semibold"
+                  value="rating:asc"
                 >
                   Lowest Rating
                 </option>
                 <option
-                  className="text-lighterDark text-sm font-semibold leading-normal tracking-tight"
-                  value=""
+                  className="text-lighterDark text-sm font-semibold"
+                  value="rating:desc"
                 >
                   Highest Rating
                 </option>
               </select>
               <button
                 type="submit"
-                className="bg-navBlue px-4 py-2 text-white text-sm font-bold leading-normal tracking-tight rounded"
+                className="bg-navBlue px-4 py-2 text-white text-sm font-bold rounded"
               >
                 {" "}
                 Filter
@@ -85,70 +183,32 @@ export default function ProductCards() {
         </div>
       </div>
 
-      <div>
-        {groupedpl.map((group, groupIndex) => (
-          <div
-            key={groupIndex}
-            className="flex justify-between max-w-screen-2xl mx-auto mt-2 mb-20 sm:flex-col sm:gap-16"
+      <div className="flex flex-col items-center mx-auto">
+        {fetchState === fetchTypes.FETCHED && (
+          <InfiniteScroll
+            dataLength={productList.length && 0}
+            next={nextProducts}
+            hasMore={hasMore}
+            endMessage={
+              <p className="text-center p-4 text-lighterDark text-lg font-semibold">
+                Products not found.
+              </p>
+            }
+            className="flex flex-col overflow-hidden h-full pt-4"
           >
-            {group.map((product, index) => (
-              <ProductCard
-                key={index}
-                productImage={product.productImage}
-                productName={product.productName}
-                department={product.department}
-                price={product.price}
-                discountedPrice={product.discountedPrice}
-                badges={product.badges}
-                customImageSize="w-[240px] h-[430px] sm:w-[380px]"
-              />
-            ))}
-          </div>
-        ))}
+            <Product products={productList} />
+          </InfiniteScroll>
+        )}
+        {fetchState === fetchTypes.FETCHING && (
+          <>
+            <p className="text-center p-4 text-lighterDark text-lg font-semibold">
+              Products not found.
+            </p>
+            <Spinner className="mx-auto text-navBlue" />
+          </>
+        )}
       </div>
 
-      <div className="flex flex-row justify-center mb-10">
-        <button
-          className="relative h-10 max-h-[40px] w-10 max-w-[40px] p-[2rem] select-none rounded-lg rounded-r-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <p className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-lighterDark">
-            First
-          </p>
-        </button>
-        <button
-          className=" relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">
-            1
-          </span>
-        </button>
-        <button
-          className="relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-lightText bg-navBlue transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-            2
-          </span>
-        </button>
-        <button
-          className="relative h-10 max-h-[40px] w-10 max-w-[40px] py-[2rem] select-none rounded-lg rounded-r-none rounded-l-none border border-r-0 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">
-            3
-          </span>
-        </button>
-        <button
-          className="relative max-h-[40px] w-10 max-w-[40px] select-none p-[2rem] rounded-lg rounded-l-none border text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          <p className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-navBlue">
-            Next
-          </p>
-        </button>
-      </div>
       <Brands />
     </div>
   );

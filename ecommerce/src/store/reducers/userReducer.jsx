@@ -18,7 +18,6 @@ const userReducer = (state = initialState, action) => {
                 error: null,
             };
         case types.USER_SUCCESS:
-        {/* Başarılı giriş: isLoading:false, error:null, kullanıcı verileri:response*/}
             return {
                 ...state,
                 isLoading: false,
