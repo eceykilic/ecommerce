@@ -71,7 +71,7 @@ export default function ProductCards() {
       fetchProducts({
         ...queryParams,
         limit: infiniteScrollParams.limit,
-        offset: 0,
+        offset: offset,
         category: categoryId,
         sort: queryParams.sort,
       })
@@ -89,7 +89,7 @@ export default function ProductCards() {
         addMoreProducts({
           ...queryParams,
           limit: lastLimit,
-          offset: infiniteScrollParams.offset,
+          offset: offset + 25,
           category: categoryId,
         })
       );
