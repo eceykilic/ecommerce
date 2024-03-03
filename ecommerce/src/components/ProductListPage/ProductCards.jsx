@@ -134,6 +134,7 @@ export default function ProductCards() {
               onSubmit={handleSubmit(onSubmit)}
               className="flex items-center gap-3"
             >
+            <input type="search" placeholder="Search" {...register("filter", {})} className="bg-white input input-bordered p-2 w-full text-lighterDark text-sm font-semibold" />
               <select
                 {...register("sort", {})}
                 className="select w-full text-sm"
