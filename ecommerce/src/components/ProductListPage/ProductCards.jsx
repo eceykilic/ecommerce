@@ -71,7 +71,7 @@ export default function ProductCards() {
       fetchProducts({
         ...queryParams,
         limit: infiniteScrollParams.limit,
-        offset: 0,
+        offset: offset,
         category: categoryId,
         sort: queryParams.sort,
       })
@@ -89,7 +89,7 @@ export default function ProductCards() {
         addMoreProducts({
           ...queryParams,
           limit: lastLimit,
-          offset: infiniteScrollParams.offset,
+          offset: offset + 25,
           category: categoryId,
         })
       );
@@ -134,9 +134,10 @@ export default function ProductCards() {
               onSubmit={handleSubmit(onSubmit)}
               className="flex items-center gap-3"
             >
+            <input type="search" placeholder="Search" {...register("filter", {})} className="bg-white input input-bordered p-2 w-full text-lighterDark text-sm font-semibold" />
               <select
                 {...register("sort", {})}
-                className="select w-full text-sm"
+                className="select w-full text-sm p-2"
               >
                 <option
                   className="text-lighterDark text-sm"
