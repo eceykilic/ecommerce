@@ -137,7 +137,7 @@ export default function ProductCards() {
             <input type="search" placeholder="Search" {...register("filter", {})} className="bg-white input input-bordered p-2 w-full text-lighterDark text-sm font-semibold" />
               <select
                 {...register("sort", {})}
-                className="select w-full text-sm"
+                className="select w-full text-sm p-2"
               >
                 <option
                   className="text-lighterDark text-sm"
