@@ -32,7 +32,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const categories = useSelector((store) => store.global.categories);
-  const cart = useSelector((store) => store.shoppingCart.cartList);
+  const cart = useSelector((store) => store.shoppingCart.cart);
   
   
   const womanCategories = categories.filter((category) =>
@@ -258,14 +258,14 @@ const manCategories = categories.filter((category) =>
                 </div>
               )}
             </div>
-
+             <div className="flex gap-5">  
             <div className="flex items-center text-navBlue">
               <FontAwesomeIcon icon={faSearch} size="sm" />
               <Link to="/login" className="no-underline text-navBlue text-sm" />
             </div>
             
             <div className="relative text-left flex items-center text-navBlue">
-            <div onClick={handleShopDropdownToggle} className="flex items-center gap-1">
+            <div onClick={handleShopDropdownToggle} className="flex items-center gap-1 cursor-pointer">
               <FontAwesomeIcon icon={faCartShopping} size="sm" />
               <p className="bg-navBlue font-medium rounded-full px-2 text-white ml-1">{cart.length}</p>
               
@@ -281,6 +281,7 @@ const manCategories = categories.filter((category) =>
               <FontAwesomeIcon icon={faHeart} size="sm" />
               <Link to="/login" className="no-underline text-navBlue text-sm" />
             </div>
+            </div>   
           </div>
         </div>
       </div>

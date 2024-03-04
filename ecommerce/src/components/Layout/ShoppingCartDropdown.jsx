@@ -6,9 +6,9 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 const ShoppingCartDropdown = ({ onClose }) => {
   const shoppingCart = useSelector((store) => store.shoppingCart);
   console.log("ShoppingCartDropdown - shoppingCart:", shoppingCart);
-  const cart = useSelector((store) => store.shoppingCart.cartList);
-  const cartList = useSelector((store) => store.shoppingCart.cartList);
-  console.log("ShoppingCartDropdown - cartList:", cartList);
+  const cart = useSelector((store) => store.shoppingCart.cart);
+  const cartList = useSelector((store) => store.shoppingCart.cart);
+  console.log("ShoppingCartDropdown - cart:", cart);
 
   return (
     <div className="absolute top-12 p-5 right-1 bg-white border border-gray-300 rounded-md shadow-lg z-50 min-w-96 min-h-46">

@@ -7,10 +7,10 @@ import {
     TOGGLE_CHECK_ITEM,
   } from "../shoppingCart/shoppingCartActionTypes";
   
-  export const setAddToCart = (cartList, operation) => {
+  export const setAddToCart = (cart, operation) => {
     return {
       type: operation === "decrement" ? DECREMENT_CART_ITEM : ADD_TO_CART,
-      payload: cartList,
+      payload: cart,
     };
   };
   

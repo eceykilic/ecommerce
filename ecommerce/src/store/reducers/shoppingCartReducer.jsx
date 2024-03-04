@@ -1,35 +1,53 @@
-import {ADD_TO_CART, DECREMENT_CART_ITEM, SET_PAYMENT, SET_ADDRESS, TOGGLE_CHECK_ITEM, REMOVE_CART_ITEM} from '../actions/shoppingCart/shoppingCartActionTypes';
+import {
+  ADD_TO_CART,
+  DECREMENT_CART_ITEM,
+  SET_PAYMENT,
+  SET_ADDRESS,
+  TOGGLE_CHECK_ITEM,
+  REMOVE_CART_ITEM,
+} from "../actions/shoppingCart/shoppingCartActionTypes";
 
 const initialState = {
-  cartList: [],
+  cart: [],
   payment: {},
   address: [],
 };
 
 export const shoppingCartReducer = (state = initialState, action) => {
   switch (action.type) {
+    //sepete ekle
     case ADD_TO_CART:
-      const existingProductIndex = state.cartList.findIndex(
+      const addedToCartList = state.cart.findIndex(
         (item) => item.id === action.payload.id
       );
 
-      if (existingProductIndex !== -1) {
-        const updatedCartList = [...state.cartList];
-        updatedCartList[existingProductIndex].count += 1;
-        updatedCartList[existingProductIndex].checked = true;
+      if (addedToCartList !== -1) {
+        const updatedCartList = [...state.cart];
+        updatedCartList[addedToCartList].count += 1;
+        updatedCartList[addedToCartList].checked = true;
 
-        return { ...state, cartList: updatedCartList };
+        return { ...state, cart: updatedCartList };
       } else {
         return {
           ...state,
-          cartList: [
-            ...state.cartList,
+          cart: [
+            ...state.cart,
             { count: 1, checked: true, ...action.payload },
           ],
         };
       }
+
+    //tamamen sepetten çıkart
+    case REMOVE_CART_ITEM:
+      const updatedVersionCart = state.cart.filter(
+        (item) => item.id !== action.payload.id
+      );
+
+      return { ...state, cart: updatedVersionCart };
+
+    // sepetteki itemi düşür
     case DECREMENT_CART_ITEM:
-      const updatedCart = state.cartList
+      const updatedCart = state.cart
         .map((item) => {
           if (item.id === action.payload.id) {
             return { ...item, count: Math.max(0, item.count - 1) };
@@ -38,23 +56,17 @@ export const shoppingCartReducer = (state = initialState, action) => {
         })
         .filter((item) => item.count > 0);
 
-      return { ...state, cartList: updatedCart };
+      return { ...state, cart: updatedCart };
 
-    case REMOVE_CART_ITEM:
-      const updatedCartAfterRemove = state.cartList.filter(
-        (item) => item.id !== action.payload.id
-      );
-
-      return { ...state, cartList: updatedCartAfterRemove };
     case TOGGLE_CHECK_ITEM:
-      const toggledCart = state.cartList.map((item) => {
+      const toggledCart = state.cart.map((item) => {
         if (item.id === action.payload.id) {
           return { ...item, checked: !item.checked };
         }
         return item;
       });
 
-      return { ...state, cartList: toggledCart };
+      return { ...state, cart: toggledCart };
     case SET_PAYMENT:
       return { ...state, payment: action.payload };
     case SET_ADDRESS:
