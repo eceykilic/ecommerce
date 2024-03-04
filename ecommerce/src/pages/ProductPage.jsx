@@ -18,15 +18,21 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductDescription from "../components/ProductPage/ProductDescription";
 import Brands from "../components/Repetitive/Brands";
 import { Carousel } from "@material-tailwind/react";
+import { setAddToCart } from "../store/actions/shoppingCart/shoppingCartActions"
+
+
 
 export default function ProductPage() {
   const history = useHistory();
   const { productId } = useParams();
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
-
   const [product, setProduct] = useState({ images: [] });
   const requestURL = `/products/${productId}`;
+ 
+ 
+  
+  
 
   useEffect(() => {
     axiosInstance
@@ -43,6 +49,12 @@ export default function ProductPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  function addtoShoppingCart() {
+    dispatch(setAddToCart(product));
+  }
+
+ 
 
   return (
     <>
@@ -172,10 +184,11 @@ export default function ProductPage() {
             </div>
             <div className="flex gap-4">
               <button
-                className="text-white text-sm font-bold rounded-md bg-navBlue px-3 py-2.5 "
+                 className="text-white text-sm font-bold rounded-md bg-navBlue px-3 py-2.5 "
+                 onClick={addtoShoppingCart}
               >
                 {" "}
-                Select Options{" "}
+                Add to Cart{" "}
               </button>
               <div className="flex gap-4">
               <div className="rounded-full border border-gray-400 w-10 flex justify-center items-center">

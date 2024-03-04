@@ -9,7 +9,6 @@ import {
   faCartShopping,
   faHeart,
   faBars,
-  faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
@@ -23,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOutUser } from "../../store/actions/userAction/userAction";
 import Gravatar from "./Gravatar";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import ShoppingCartDropdown from "./ShoppingCartDropdown";
+
 
 export default function Header() {
   const { phone, mail, offerMsg, companyName } = data.navBar;
@@ -31,25 +32,35 @@ export default function Header() {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const categories = useSelector((store) => store.global.categories);
-  const womanCategories = categories.filter(
-    (category) => category.gender === "k"
-  );
-  const manCategories = categories.filter(
-    (category) => category.gender === "e"
-  );
+  
+  
+  
+  const womanCategories = categories.filter((category) =>
+  category.code.includes("k:")
+);
+const manCategories = categories.filter((category) =>
+  category.code.includes("e:")
+);
 
   const handleLogOut = () => {
-    if (history) {
-      dispatch(logOutUser());
-      history.push("/");
-    }
-  };
+    dispatch(logOutUser(history));
+    localStorage.removeItem('Token');
+}
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
+
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const handleShopDropdownToggle = () => {
+    setIsShopDropdownOpen(!isShopDropdownOpen);
+  };
+
+  
+
 
   return (
     <div className="">
@@ -92,7 +103,10 @@ export default function Header() {
           </Link>
           <div className="hidden sm:flex sm:gap-8 sm:mr-10">
             <FontAwesomeIcon icon={faSearch} size="lg" />
-            <FontAwesomeIcon icon={faShoppingCart} size="lg" />
+
+            <FontAwesomeIcon icon={faCartShopping} size="lg" />
+
+            
             <FontAwesomeIcon icon={faBars} size="lg" />
           </div>
         </header>
@@ -249,16 +263,21 @@ export default function Header() {
               <FontAwesomeIcon icon={faSearch} size="sm" />
               <Link to="/login" className="no-underline text-navBlue text-sm" />
             </div>
-            <div className="flex items-center text-navBlue">
+            
+            <div className="relative text-left flex items-center text-navBlue">
+            <div onClick={handleShopDropdownToggle}>
               <FontAwesomeIcon icon={faCartShopping} size="sm" />
-              <Link to="/login" className="no-underline text-navBlue text-sm" />
             </div>
+            {isShopDropdownOpen && (
+              <ShoppingCartDropdown
+                onClose={() => setIsShopDropdownOpen(false)}
+              />
+            )}
+          </div>
+            
             <div className="flex items-center text-navBlue">
               <FontAwesomeIcon icon={faHeart} size="sm" />
               <Link to="/login" className="no-underline text-navBlue text-sm" />
-              <div className="font-normal leading-none text-sm tracking-tight">
-                1
-              </div>
             </div>
           </div>
         </div>

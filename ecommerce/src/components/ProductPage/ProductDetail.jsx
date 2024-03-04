@@ -12,10 +12,33 @@ import { Carousel } from "@material-tailwind/react";
 
 import { useLocation } from "react-router-dom";
 
+import { saveCartItemToDB, addToCart, updateCartItemQuantity } from "../../store/actions/shoppingCart/shoppingCartActions"
+
 function ProductDetail() {
   const location = useLocation();
   const productData = location.state?.productData;
 
+  
+  const addToCartHandler = () => {
+    const cartItem = {productId:product.id, quantity: 1, isChecked:true}
+    saveCartItemToDB(userToken, history, cartItem)
+    let isAvailable = false;
+    cart.map((item) => {
+        if (item.product.id == productId) isAvailable = true;
+        return item;
+    });
+    isAvailable
+        ? dispatch(updateCartItemQuantity(productId, true))
+        : dispatch(addToCart(product));
+    toastMixin.fire({
+        animation: true,
+        title: "Product added to cart"
+    });
+};
+  
+  
+  
+  
   if (!productData) {
     // If product data is not available, handle accordingly (e.g., show an error message)
     return <div>Product not found</div>;
@@ -120,9 +143,9 @@ function ProductDetail() {
               </div>
               <div>
                 <div className="flex gap-2">
-                  <button className="text-white text-sm font-bold leading-normal tracking-tight rounded-md bg-blue-400 px-3 py-2.5">
+                  <button onClick={addToCartHandler} className="text-white text-sm font-bold leading-normal tracking-tight rounded-md bg-blue-400 px-3 py-2.5">
                     {" "}
-                    Select Options{" "}
+                    Add to Cart{" "}
                   </button>
                   <div className="rounded-full border border-gray-800 w-10 flex justify-center items-center">
                     <FontAwesomeIcon

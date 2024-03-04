@@ -1,5 +1,6 @@
-export const ADD_TO_CART = 'ADD_TO_CART';
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-export const CLEAR_CART = 'CLEAR_CART';
-export const SET_PAYMENT_INFO = 'SET_PAYMENT_INFO';
-export const SET_ADDRESS_INFO = 'SET_ADDRESS_INFO';
+export const ADD_TO_CART = "ADD_TO_CART";
+export const SET_PAYMENT = "SET_PAYMENT";
+export const SET_ADDRESS = "SET_ADDRESS";
+export const DECREMENT_CART_ITEM = "DECREMENT_CART_ITEM";
+export const TOGGLE_CHECK_ITEM = "TOGGLE_CHECK_ITEM";
+export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
