@@ -32,7 +32,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const categories = useSelector((store) => store.global.categories);
-  
+  const cart = useSelector((store) => store.shoppingCart.cartList);
   
   
   const womanCategories = categories.filter((category) =>
@@ -265,8 +265,10 @@ const manCategories = categories.filter((category) =>
             </div>
             
             <div className="relative text-left flex items-center text-navBlue">
-            <div onClick={handleShopDropdownToggle}>
+            <div onClick={handleShopDropdownToggle} className="flex items-center gap-1">
               <FontAwesomeIcon icon={faCartShopping} size="sm" />
+              <p className="bg-navBlue font-medium rounded-full px-2 text-white ml-1">{cart.length}</p>
+              
             </div>
             {isShopDropdownOpen && (
               <ShoppingCartDropdown
