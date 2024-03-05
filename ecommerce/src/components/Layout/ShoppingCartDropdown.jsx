@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ShoppingCartDropdown = ({ onClose }) => {
+  const history = useHistory(); 
   const shoppingCart = useSelector((store) => store.shoppingCart);
   console.log("ShoppingCartDropdown - shoppingCart:", shoppingCart);
   const cart = useSelector((store) => store.shoppingCart.cart);
