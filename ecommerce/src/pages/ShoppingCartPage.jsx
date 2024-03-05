@@ -84,7 +84,7 @@ export default function ShoppingCartPage() {
     <h1 className="text-xl font-bold text-darkText max-w-screen-2xl mx-auto mt-5">Shopping Cart ({cart.length} items)</h1>
     </div>
      
-    <div className="flex max-w-screen-2xl justify-between mx-auto mt-5 gap-10">
+    <div className="flex max-w-screen-2xl justify-between mx-auto mt-5 gap-10 mb-10">
         
       <div className="flex flex-col gap-8">
         
@@ -109,7 +109,7 @@ export default function ShoppingCartPage() {
                 />
                 <div className="flex flex-col gap-3">
                   <h1>{item.name}</h1>
-                  <h2 className="text-lighterDark max-w-96">{item.description}</h2>
+                  <h2 className="text-lighterDark w-96">{item.description}</h2>
                   <p>Size: M</p>
                   <div className="flex items-center gap-2">
                     <FontAwesomeIcon
@@ -130,24 +130,24 @@ export default function ShoppingCartPage() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-8">
-                  <div className="flex items-center">
+                  <div className="flex items-center w-32">
                     <button
                       onClick={() => productRemover(item)}
-                      className="px-3 py-3 border-2 bg-gray-200"
+                      className="px-3 py-3 border-2 bg-lightbg"
                     >
                       -
                     </button>
-                    <p className="px-3 py-3 border-t-2 border-b-2">
+                    <p className="border-t-2 py-3 border-b-2 w-12 mx-auto text-center">
                       {item.count}
                     </p>
                     <button
                       onClick={() => productAdder(item)}
-                      className="px-3 py-3 border-2 bg-gray-200 text-navBlue"
+                      className="px-3 py-3 border-2 bg-lightbg text-navBlue"
                     >
                       +
                     </button>
                   </div>
-                  <h1 className="text-lg text-navBlue">
+                  <h1 className="text-lg text-navBlue w-20">
                     {roundTheNumber(item.price * item.count)}$
                   </h1>
                   <FontAwesomeIcon
