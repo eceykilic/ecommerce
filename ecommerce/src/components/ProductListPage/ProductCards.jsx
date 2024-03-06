@@ -59,25 +59,31 @@ export default function ProductCards() {
   let categoryId;
   let genderCode;
 
-  if ((gender, category)) {
+  if (gender && category) {
     genderCode = gender[0];
-    categoryId = categories.find(
-      (c) => c.code == `${genderCode}:${category}`
-    )?.id;
+    categoryId = categories.find((c) => c.code === `${genderCode}:${category}`)?.id;
   }
 
   useEffect(() => {
-    dispatch(
-      fetchProducts({
-        ...queryParams,
-        limit: infiniteScrollParams.limit,
-        offset: offset,
-        category: categoryId,
-        sort: queryParams.sort,
-      })
-    );
-  }, [queryParams, categoryId]);
-
+    console.log("useEffect triggered");
+  
+    const fetchData = async () => {
+      console.log("Fetching data...");
+      dispatch(
+        fetchProducts({
+          ...queryParams,
+          limit: infiniteScrollParams.limit,
+          offset: offset,
+          category: categoryId,
+          sort: queryParams.sort,
+        })
+      );
+    };
+  
+    fetchData();
+  
+    // Bağımlılıklar dizisi boş olduğu için sadece ilk render sırasında çalışacaktır.
+  }, []);
   
   //25erli gruplarla renderlama
   

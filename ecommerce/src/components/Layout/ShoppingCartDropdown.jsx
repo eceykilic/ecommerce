@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +9,19 @@ const ShoppingCartDropdown = ({ onClose }) => {
   const shoppingCart = useSelector((store) => store.shoppingCart);
   console.log("ShoppingCartDropdown - shoppingCart:", shoppingCart);
   const cart = useSelector((store) => store.shoppingCart.cart);
-  const cartList = useSelector((store) => store.shoppingCart.cart);
   console.log("ShoppingCartDropdown - cart:", cart);
+
+  useEffect(() => {
+    // Bu kısım yalnızca bir kere çalışacak
+    console.log("Dropdown opened!");
+
+    // useEffect temizleme fonksiyonu
+    return () => {
+      console.log("Dropdown closed!");
+    };
+  }, []);
+
+
 
   return (
     <div className="absolute top-12 p-5 right-1 bg-white border border-gray-300 rounded-md shadow-lg z-50 min-w-96 min-h-46">
@@ -24,9 +35,9 @@ const ShoppingCartDropdown = ({ onClose }) => {
           onClick={onClose}
         />
       </div>
-      {cartList.length > 0 ? (
+      {cart.length > 0 ? (
         <div className="">
-          {cartList.map((item) => (
+          {cart.map((item) => (
             <div key={item.id} className="flex gap-8 border-b-2 py-2">
               <img
                 className="w-24 h-32 border-2 rounded-lg object-cover my-2"

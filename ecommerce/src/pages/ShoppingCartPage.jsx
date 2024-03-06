@@ -21,6 +21,7 @@ export default function ShoppingCartPage() {
   const [discountInput, setDiscountInput] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const history = useHistory();
+  const [isChecked, setIsChecked] = useState(false);
 
   //indirim kodu girişi
   const handleChange = (event) => {
@@ -77,6 +78,10 @@ export default function ShoppingCartPage() {
     }
   }
 
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   return (
     <>
       <div>
@@ -99,6 +104,7 @@ export default function ShoppingCartPage() {
                     type="checkbox"
                     checked={item.checked}
                     onClick={() => toggleCheckbox(item)}
+                    onChange={handleCheckboxChange}
                   />
                   <img
                     className="max-w-[150px] h-[200px] object-cover border-2 rounded-md"

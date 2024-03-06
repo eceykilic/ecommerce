@@ -1,7 +1,12 @@
+
+
 export default function OrderPage() {
+
+
     return (
         <div>
-            <p>order will be here</p>
+            <p>order will be here please</p>
+
         </div>
-    )
+    );
 }

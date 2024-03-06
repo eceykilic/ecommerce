@@ -2,39 +2,29 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCategories } from "../../store/actions/globalAction/globalAction";
 
 export default function CategoryCard() {
   const { gender } = useParams();
   const [categories, setCategories] = useState([]);
   const { search } = useLocation();
+  const dispatch = useDispatch();
+  const categoriesData = useSelector((state) => state.global.categories);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("https://workintech-fe-ecommerce.onrender.com/categories");
-        const data = await response.json();
-  
-        // Extract gender category from the URL path
-        const pathGender = gender === 'kadin' ? 'k' : 'e';
-  
-        // Filter categories based on the extracted gender
-        const filteredCategories = data.filter(category => category.gender === pathGender);
-  
-        // Sort categories based on the gender condition
-        const sortedCategories = filteredCategories.sort((a, b) => b.rating - a.rating);
-  
-        // Select top 5 categories
-        const topCategories = sortedCategories.slice(0, 5);
-  
-        // Set the state with the top categories
-        setCategories(topCategories);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-  
-    fetchCategories();
-  }, [gender]);
+    // Eğer Redux store'da kategori bilgileri yoksa, API'den çek ve store'u güncelle
+    if (categoriesData.length === 0) {
+      dispatch(updateCategories());
+    } else {
+      // Eğer Redux store'da kategori bilgileri varsa, onları kullan
+      const pathGender = gender === 'kadin' ? 'k' : 'e';
+      const filteredCategories = categoriesData.filter(category => category.gender === pathGender);
+      const sortedCategories = filteredCategories.sort((a, b) => b.rating - a.rating);
+      const topCategories = sortedCategories.slice(0, 5);
+      setCategories(topCategories);
+    }
+  }, [dispatch, gender, categoriesData]);
 
   return (
     <div className="bg-lightbg">
