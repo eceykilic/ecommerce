@@ -6,6 +6,7 @@ import {
   removeFromCart,
 } from "../store/actions/shoppingCart/shoppingCartActions";
 import { useDispatch, useSelector } from "react-redux";
+import OrderSum from "../components/Repetitive/OrderSum";
 
 import {
   faChevronRight,
@@ -34,7 +35,13 @@ export default function ShoppingCartPage() {
   }
 
   function productRemover(item) {
-    dispatch(setAddToCart(item, "decrement"));
+    if (item.count === 1) {
+      // Ürün sayısı 1 ise, ürünü sepetten tamamen kaldır
+      dispatch(removeFromCart(item));
+    } else {
+      // Ürün sayısı 1'den fazla ise, ürün sayısını azalt
+      dispatch(setAddToCart(item, "decrement"));
+    }
   }
 
   function toggleCheckbox(item) {
@@ -168,7 +175,7 @@ export default function ShoppingCartPage() {
           })}
         </div>
         {cart.length > 0 ? (
-          <div className="flex flex-col border-2 p-4 w-1/4 h-[20%]">
+          <div className="flex flex-col border-2 p-4 w-3/4 h-[20%]">
             <div className="flex flex-col gap-4 ">
               <button
                 onClick={() => {
@@ -178,51 +185,7 @@ export default function ShoppingCartPage() {
               >
                 Proceed to Checkout <FontAwesomeIcon icon={faChevronRight} />
               </button>
-              <h1 className="text-xl">Order Summary</h1>
-              <div className="flex justify-between">
-                <p>Subtotal</p>
-                <p>{roundTheNumber(totalAmount())} $</p>
-              </div>
-              <div className="flex justify-between">
-                <p>Shipping</p>
-                <p>{totalCargo} $</p>
-              </div>
-              <div className="flex justify-between border-b-2 pb-2">
-                <p>
-                  Free Shipping for <br /> 150$ and above
-                </p>
-                <p className="text-navBlue">-{totalCargo} $</p>
-              </div>
-              <div className="flex justify-between mb-3">
-                <p>Order total</p>
-                <p className="text-navBlue">{cargoPrice()} $</p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <button
-                onClick={() => setDiscountInput(!discountInput)}
-                className="text-sm font-medium border-1 rounded-md py-3 px-5 border-2"
-              >
-                <FontAwesomeIcon className="text-navBlue" icon={faPlus} /> Enter
-                Discount Code
-              </button>
-              {discountInput && (
-                <form onSubmit={""} className="flex flex-col gap-2">
-                  <input
-                    onChange={handleChange}
-                    value={discountCode}
-                    type="text"
-                    placeholder="Enter Code"
-                    className="text-center border-2 py-2"
-                  />
-                  <button
-                    type="submit"
-                    className="border-1 w-24 m-auto py-2 rounded-lg bg-navBlue text-white"
-                  >
-                    Submit
-                  </button>
-                </form>
-              )}
+              <OrderSum />
               <button
                 onClick={() => {
                   history.push("/order"); 
