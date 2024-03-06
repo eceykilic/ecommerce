@@ -7,57 +7,75 @@ import {
   REMOVE_CART_ITEM,
 } from "../actions/shoppingCart/shoppingCartActionTypes";
 
+const localStorageKey = "shoppingCart";
+
+// Function to load cart data from local storage
+const loadCartFromLocalStorage = () => {
+  const storedCart = localStorage.getItem(localStorageKey);
+  return storedCart ? JSON.parse(storedCart) : [];
+};
+
 const initialState = {
-  cart: [],
+  cart: loadCartFromLocalStorage(),
   payment: {},
   address: [],
 };
 
 export const shoppingCartReducer = (state = initialState, action) => {
   switch (action.type) {
-    //sepete ekle
+    // Add to Cart
     case ADD_TO_CART:
-      const addedToCartList = state.cart.findIndex(
+      const addedToCartListIndex = state.cart.findIndex(
         (item) => item.id === action.payload.id
       );
 
-      if (addedToCartList !== -1) {
+      if (addedToCartListIndex !== -1) {
         const updatedCartList = [...state.cart];
-        updatedCartList[addedToCartList].count += 1;
-        updatedCartList[addedToCartList].checked = true;
+        updatedCartList[addedToCartListIndex].count += 1;
+        updatedCartList[addedToCartListIndex].checked = true;
+
+        // Update local storage
+        localStorage.setItem(localStorageKey, JSON.stringify(updatedCartList));
 
         return { ...state, cart: updatedCartList };
       } else {
-        return {
-          ...state,
-          cart: [
-            ...state.cart,
-            { count: 1, checked: true, ...action.payload },
-          ],
-        };
+        const updatedCart = [
+          ...state.cart,
+          { count: 1, checked: true, ...action.payload },
+        ];
+
+        // Update local storage
+        localStorage.setItem(localStorageKey, JSON.stringify(updatedCart));
+
+        return { ...state, cart: updatedCart };
       }
 
-    //tamamen sepetten çıkart
+    // Remove from Cart
     case REMOVE_CART_ITEM:
-      const updatedVersionCart = state.cart.filter(
+      const updatedCartAfterRemoval = state.cart.filter(
         (item) => item.id !== action.payload.id
       );
 
-      return { ...state, cart: updatedVersionCart };
+      // Update local storage
+      localStorage.setItem(localStorageKey, JSON.stringify(updatedCartAfterRemoval));
 
-    // sepetteki itemi düşür
+      return { ...state, cart: updatedCartAfterRemoval };
+
+    // Decrement Cart Item
     case DECREMENT_CART_ITEM:
-      const updatedCart = state.cart
-        .map((item) => {
-          if (item.id === action.payload.id) {
-            return { ...item, count: Math.max(0, item.count - 1) };
-          }
-          return item;
-        })
-        .filter((item) => item.count > 0);
+      const updatedCartAfterDecrement = state.cart.map((item) => {
+        if (item.id === action.payload.id) {
+          return { ...item, count: Math.max(0, item.count - 1) };
+        }
+        return item;
+      });
 
-      return { ...state, cart: updatedCart };
+      // Update local storage
+      localStorage.setItem(localStorageKey, JSON.stringify(updatedCartAfterDecrement));
 
+      return { ...state, cart: updatedCartAfterDecrement };
+
+    // Toggle Check Item
     case TOGGLE_CHECK_ITEM:
       const toggledCart = state.cart.map((item) => {
         if (item.id === action.payload.id) {
@@ -66,9 +84,16 @@ export const shoppingCartReducer = (state = initialState, action) => {
         return item;
       });
 
+      // Update local storage
+      localStorage.setItem(localStorageKey, JSON.stringify(toggledCart));
+
       return { ...state, cart: toggledCart };
+
+    // Set Payment
     case SET_PAYMENT:
       return { ...state, payment: action.payload };
+
+    // Set Address
     case SET_ADDRESS:
       return { ...state, address: action.payload };
 

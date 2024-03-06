@@ -25,6 +25,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import ShoppingCartDropdown from "./ShoppingCartDropdown";
 
 
+
 export default function Header() {
   const { phone, mail, offerMsg, companyName } = data.navBar;
   const history = useHistory();
@@ -33,6 +34,7 @@ export default function Header() {
   const { search } = useLocation();
   const categories = useSelector((store) => store.global.categories);
   const cart = useSelector((store) => store.shoppingCart.cart);
+
   
   
   const womanCategories = categories.filter((category) =>
@@ -187,7 +189,7 @@ const manCategories = categories.filter((category) =>
                           {womanCategories.map((category, idx) => (
                             <Link
                               key={idx}
-                              to={`/shopping/kadin/${search}`}
+                              to={`/shopping/kadin/${category.code.split(':')[1]}`}
                               className="block px-4 py-2 text-sm text-gray-500 mt-3"
                             >
                               {category.title}
@@ -207,7 +209,7 @@ const manCategories = categories.filter((category) =>
                           {manCategories.map((category, idx) => (
                             <Link
                               key={idx}
-                              to={`/shopping/erkek/${search}`}
+                              to={`/shopping/erkek/${category.code.split(':')[1]}`}
                               className="block px-4 py-2 text-sm text-gray-500 mt-3"
                             >
                               {category.title}
