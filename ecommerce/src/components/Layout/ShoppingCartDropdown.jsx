@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ShoppingCartDropdown = ({ onClose }) => {
-  const history = useHistory(); 
+  const history = useHistory();
   const shoppingCart = useSelector((store) => store.shoppingCart);
   console.log("ShoppingCartDropdown - shoppingCart:", shoppingCart);
   const cart = useSelector((store) => store.shoppingCart.cart);
@@ -15,7 +15,9 @@ const ShoppingCartDropdown = ({ onClose }) => {
   return (
     <div className="absolute top-12 p-5 right-1 bg-white border border-gray-300 rounded-md shadow-lg z-50 min-w-96 min-h-46">
       <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-semibold">Shopping Cart <span>- {cart.length} Item(s)</span></h3>
+        <h3 className="text-lg font-semibold">
+          Shopping Cart <span>- {cart.length} Item(s)</span>
+        </h3>
         <FontAwesomeIcon
           icon={faTimes}
           className="cursor-pointer"
@@ -32,24 +34,30 @@ const ShoppingCartDropdown = ({ onClose }) => {
                 alt=""
               />
               <div className="flex flex-col mr-10 gap-2 justify-center">
-              <p className="text-md font-semibold">{item.name}</p>
-              <p className="text-sm text-lighterDark font-medium">Size:M Count:{item.count}</p>
-              <p className="text-sm">${item.price}</p>
+                <p className="text-md font-semibold">{item.name}</p>
+                <p className="text-sm text-lighterDark font-medium">
+                  Size:M Count:{item.count}
+                </p>
+                <p className="text-sm">${item.price}</p>
               </div>
             </div>
-            
           ))}
-           <div className="flex gap-3 mt-4 justify-between">
-                    <button
-                      onClick={() => history.push("/cart")}
-                      className="py-2 px-5 rounded-md bg-gray-100 hover:bg-gray-700"
-                    >
-                      Go to Cart
-                    </button>
-                    <button className="py-2 px-3 rounded-md bg-navBlue text-white hover:bg-gray-700 hover:text-navBlue">
-                      Proceed to Checkout
-                    </button>
-                  </div>
+          <div className="flex gap-3 mt-4 justify-between">
+            <button
+              onClick={() => history.push("/cart")}
+              className="py-2 px-5 rounded-md bg-gray-100 hover:bg-gray-700"
+            >
+              Go to Cart
+            </button>
+            <button
+              onClick={() => {
+                history.push("/order");
+              }}
+              className="py-2 px-3 rounded-md bg-navBlue text-white hover:bg-gray-700 hover:text-navBlue"
+            >
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       ) : (
         <p>Your shopping cart is empty.</p>

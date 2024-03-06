@@ -17,6 +17,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSuccess, logOutUser } from './store/actions/userAction/userAction';
 import ShoppingCartPage from "./pages/ShoppingCartPage";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -81,6 +82,7 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={LoginForm} />
         <Route path="/cart" component={ShoppingCartPage} />
+        <Route path="/order" component={OrderPage} />
 
         
         <Route path="/" component={Home} />
