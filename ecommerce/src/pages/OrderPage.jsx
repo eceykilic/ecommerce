@@ -137,7 +137,7 @@ export default function OrderPage() {
           <div className="flex justify-between">
             <div
               onClick={() => optionSelect("address")}
-              className={`flex flex-col w-full gap-2 border-2 ${
+              className={`flex flex-col w-full gap-2 border-2 pr-10 ${
                 option === "address"
                   ? "border-b-navBlue cursor-pointer bg-lightbg"
                   : "border-b-priceGray cursor-pointer"
@@ -158,7 +158,7 @@ export default function OrderPage() {
             </div>
             <div
               onClick={() => optionSelect("payment")}
-              className={`flex flex-col gap-2 border-2 w-full ${
+              className={`flex flex-col gap-2 border-2 w-full pr-10 ${
                 option === "payment"
                   ? "border-b-navBlue cursor-pointer bg-lightbg"
                   : "border-b-priceGray cursor-pointer"
@@ -376,7 +376,7 @@ export default function OrderPage() {
             </div>
           )}
         </div>
-        <div className="flex flex-col border-2 p-4 w-3/5 h-[20%]">
+        <div className="flex flex-col border-2 p-4 max-w-[400px] h-[20%]">
           <div className="flex flex-col gap-4 ">
             <button
               onClick={() => {

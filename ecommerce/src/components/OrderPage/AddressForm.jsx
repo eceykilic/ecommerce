@@ -288,7 +288,7 @@ export default function AddressForm({ address, closeModal, onSubmitCallback }) {
             </div>
           </div>
 
-          <div className="sm:w-4/4 w-full flex flex-col ">
+          <div className="w-full flex flex-col ">
             <label className="font-bold text-lg pt-3 pb-2">Address</label>
             <input
               type="text"

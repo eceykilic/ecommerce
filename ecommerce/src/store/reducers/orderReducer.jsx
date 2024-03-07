@@ -13,7 +13,7 @@ const orderReducer = (state = initialState, action) => {
       return { ...state, payment: action.payload };
     case types.SET_ADDRESS:
       console.log("SET_ADDRESS action payload:", action.payload);
-      return { ...state, address: [...state.address, ...action.payload] };
+      return { ...state, address: action.payload };
     case types.REMOVE_ADDRESS:
       const updatedAddressList = state.address.filter(
         (item) => item.id !== action.payload.id
