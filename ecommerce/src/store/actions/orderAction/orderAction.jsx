@@ -66,10 +66,10 @@ export const removeAddressThunkAction = (id) => (dispatch) => {
     .then((res) => {
       dispatch(removeAddressAction(id));
       console.log(res.data);
-      toast.success("Address deleted successfully");
+      toast.success("Address deleted.");
     })
     .catch((err) => {
-      toast.error("Error deleting address");
+      toast.error("Error deleting address! Please try again.");
       console.error(err);
     });
 };
@@ -85,12 +85,12 @@ export const updateAddressThunkAction = (formData) => (dispatch) => {
     })
     .then((res) => {
       dispatch(updateAddressAction(res.data));
-      toast.success("Address updated successfully");
+      toast.success("Address updated.");
       dispatch(setLoading(false));
     })
     .catch((err) => {
       console.error(err.response);
-      toast.error("Error updating address");
+      toast.error("Error updating address.");
     });
 };
 
@@ -117,10 +117,10 @@ export const updateCardThunkAction = (formData) => (dispatch) => {
     })
     .then((res) => {
       console.log(res.data);
-      toast.success("Card updated successfully");
+      toast.success("Card updated.");
     })
     .catch((err) => {
       console.error(err.response);
-      toast.error("Error updating card");
+      toast.error("Error updating card.");
     });
 };

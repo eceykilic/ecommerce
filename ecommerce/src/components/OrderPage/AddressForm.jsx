@@ -131,7 +131,7 @@ export default function AddressForm({ address, closeModal, onSubmitCallback }) {
     if (sortedNeighborhoods) {
       setNeighborhood(sortedNeighborhoods);
     } else {
-      console.error("Error fetching neighborhoods data");
+      console.error("Error! Neighborhood's data not found.");
     }
   };
 
@@ -212,7 +212,7 @@ export default function AddressForm({ address, closeModal, onSubmitCallback }) {
                 className={`p-2 rounded-md border-2 text-darkText`}
                 type="text"
                 {...register("phone", {
-                  required: "phone is required.",
+                  required: "Phone number is required.",
                   maxLength: {
                     value: 10,
                     message: "Must be at most 10 characters",
