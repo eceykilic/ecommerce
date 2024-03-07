@@ -17,6 +17,8 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSuccess, logOutUser } from './store/actions/userAction/userAction';
 import ShoppingCartPage from "./pages/ShoppingCartPage";
+import OrderPage from "./pages/OrderPage";
+import PrivateRoute from "./components/OrderPage/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -79,10 +81,11 @@ function App() {
         <Route path="/team" component={TeamPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/login" component={LoginForm} />
-        <Route path="/cart" component={ShoppingCartPage} />
-
         
+        <Route path="/cart" component={ShoppingCartPage} />
+        <PrivateRoute path="/order" component={OrderPage} />
+
+        <Route path="/login" component={LoginForm} />
         <Route path="/" component={Home} />
       </Switch>
       <Footer />
