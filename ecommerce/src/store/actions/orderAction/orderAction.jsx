@@ -42,7 +42,7 @@ export const addCard = (card) => {
 };
 
 export const setAddressThunkAction = (formData) => (dispatch) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("Token");
   axiosInstance
     .post("/user/address", formData, {
       headers: {
@@ -56,7 +56,7 @@ export const setAddressThunkAction = (formData) => (dispatch) => {
 };
 
 export const removeAddressThunkAction = (id) => (dispatch) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("Token");
   axiosInstance
     .delete("/user/address/" + id, {
       headers: {
@@ -75,8 +75,11 @@ export const removeAddressThunkAction = (id) => (dispatch) => {
 };
 
 export const updateAddressThunkAction = (formData) => (dispatch) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("Token");
   dispatch(setLoading(true));
+
+  console.log("Updating Address - formData:", formData); // Add this line
+
   axiosInstance
     .put(`/user/address`, formData, {
       headers: {
@@ -84,6 +87,7 @@ export const updateAddressThunkAction = (formData) => (dispatch) => {
       },
     })
     .then((res) => {
+      console.log("Update Address Response:", res.data); // Add this line
       dispatch(updateAddressAction(res.data));
       toast.success("Address updated.");
       dispatch(setLoading(false));
@@ -95,7 +99,7 @@ export const updateAddressThunkAction = (formData) => (dispatch) => {
 };
 
 export const addCardsThunkAction = (formData) => (dispatch) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("Token");
   axiosInstance
     .post("/user/card", formData, {
       headers: {
@@ -108,7 +112,7 @@ export const addCardsThunkAction = (formData) => (dispatch) => {
 };
 
 export const updateCardThunkAction = (formData) => (dispatch) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("Token");
   axiosInstance
     .put(`/user/card`, formData, {
       headers: {

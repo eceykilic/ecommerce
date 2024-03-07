@@ -127,7 +127,26 @@ export default function OrderPage() {
   const handleFormSubmit = () => {
     // You can perform any necessary actions when the form is submitted
     // For example, redirecting to another page
-    history.push("/order");
+    // Also, close the address form modal
+    closeAddress();
+  
+    // After adding a new address, re-fetch the addresses from the server
+    axiosInstance
+      .get("/user/address", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        dispatch(setAddress(res.data));
+        if (res.data.length > 0) {
+          setDefaultAdress(res.data[0]);
+        }
+      })
+      .catch((error) => {
+        // Handle the error if needed
+        console.error("API call failed:", error);
+      });
   };
 
   return (
