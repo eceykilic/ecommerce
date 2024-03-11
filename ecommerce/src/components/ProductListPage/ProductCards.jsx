@@ -47,12 +47,33 @@ export default function ProductCards() {
     offset: offset,
   };
 
+  const [searchTerm, setSearchTerm] = useState(queryParams.filter || "");
+  const [sortTerm, setSortTerm] = useState(queryParams.sort || "");
+
   //filter submit
 
   const onSubmit = (data) => {
     setOffset(0);
-    setQueryParams(data);
+    setQueryParams({
+      ...data,
+      filter: data.filter,
+    });
+    setSearchTerm(data.filter); // Arama terimini güncelle
+    setSortTerm(data.sort); // Sıralama terimini güncelle
   };
+
+  useEffect(() => {
+    // URL parametrelerinden gelen değerlerle formu başlat
+    const queryParamsFromUrl = {
+      filter: queryParams.filter || "",
+      sort: queryParams.sort || "",
+    };
+
+    // URL'den alınan arama ve sıralama terimlerini formda tut
+    setQueryParams(queryParamsFromUrl);
+    setSearchTerm(queryParamsFromUrl.filter);
+    setSortTerm(queryParamsFromUrl.sort);
+  }, [queryParams.filter, queryParams.sort]); // Sadece 'filter' ve 'sort' değiştiğinde çalışacak
 
   // kadınsa k erkekse e atanması için: (ilk karakter ataması)
 
@@ -134,10 +155,12 @@ export default function ProductCards() {
               onSubmit={handleSubmit(onSubmit)}
               className="flex items-center gap-3"
             >
-            <input type="search" placeholder="Search" {...register("filter", {})} className="bg-white input input-bordered p-2 w-full text-lighterDark text-sm font-semibold" />
+            <input type="search" placeholder="Search" {...register("filter", {})}  value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}  className="bg-white input input-bordered p-2 w-full text-lighterDark text-sm font-semibold" />
               <select
                 {...register("sort", {})}
                 className="select w-full text-sm p-2"
+                value={sortTerm}
+                onChange={(e) => setSortTerm(e.target.value)}
               >
                 <option
                   className="text-lighterDark text-sm"

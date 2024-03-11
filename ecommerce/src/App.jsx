@@ -45,7 +45,6 @@ function App() {
         dispatch(userSuccess(response.data));
         localStorage.setItem("Token", response.data.token);
         setIsEqualToken(true);
-        console.log("Stored token is: ", storedToken);
   
         // Renew token in localStorage and axios header
         localStorage.setItem('user', JSON.stringify(response.data));
