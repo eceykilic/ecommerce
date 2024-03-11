@@ -61,7 +61,7 @@ export default function AddressForm({ address, closeModal, onSubmitCallback }) {
       district: formData.district,
       neighborhood: formData.neighborhood,
     };
-
+  
     if (address && address.id) {
       const updatedFormData = {
         ...address,
@@ -77,7 +77,7 @@ export default function AddressForm({ address, closeModal, onSubmitCallback }) {
         })
         .then((res) => {
           const newAddress = res.data;
-
+  
           // Update local storage with the new address
           const storedAddresses =
             JSON.parse(localStorage.getItem("addresses")) || [];
@@ -85,20 +85,20 @@ export default function AddressForm({ address, closeModal, onSubmitCallback }) {
             "addresses",
             JSON.stringify([...storedAddresses, newAddress])
           );
-
+  
           // Dispatch the action to update the address in the Redux store
           dispatch(setAddressThunkAction(newAddress));
-
-          // Close the modal
+  
+          // Close the modal by calling the provided callback function
           closeModal();
-
+  
           // Notify the parent component (OrderPage) about the form submission
           onSubmitCallback();
         })
         .catch((err) => console.log(err));
     }
   };
-
+  
   useEffect(() => {
     setValue("title", address?.title || "");
     setValue("name", address?.name || "");

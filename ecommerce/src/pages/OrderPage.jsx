@@ -29,32 +29,7 @@ export default function OrderPage() {
   const [isAgreed, setIsAgreed] = useState(false);
   const history = useHistory();
 
-  // useEffect içinde token kontrolü
-  useEffect(() => {
-    // Token değeri kontrol ediliyor
-    if (!token) {
-      console.log("Token is missing or invalid. Redirecting to login page...");
-    } else {
-      // Token mevcut ve geçerli ise API çağrısı
-      axiosInstance
-        .get("/user/address", {
-          headers: {
-            Authorization: token,
-          },
-        })
-        .then((res) => {
-          dispatch(setAddress(res.data));
-          if (res.data.length > 0) {
-            setDefaultAdress(res.data[0]);
-          }
-        })
-
-        .catch((error) => {
-          // API çağrısı hata durumu
-          console.error("API call failed:", error);
-        });
-    }
-  }, [token, dispatch]);
+  const [shouldCloseModal, setShouldCloseModal] = useState(false);
 
   const removeAddress = (id) => {
     dispatch(removeAddressThunkAction(id));
@@ -88,13 +63,39 @@ export default function OrderPage() {
     setIsAddressFormOpen(true);
   };
 
-  const closeAddress = () => {
-    setIsAddressFormOpen(false);
+  const closeAddress = async () => {
+    try {
+      const res = await axiosInstance.get("/user/address", {
+        headers: {
+          Authorization: token,
+        },
+      });
+  
+      dispatch(setAddress(res.data));
+  
+      if (res.data.length > 0) {
+        setDefaultAdress(res.data[0]);
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+      setShouldCloseModal(true);
+    }
   };
+
 
   const handleModalClick = (e) => {
     if (e.target.classList.contains("modal-overlay")) {
       closeAddress();
+    }
+  };
+
+  const handleRemoveAddress = async (id) => {
+    console.log("Removing address with ID:", id);
+    if (window.confirm("Are you sure you want to delete this address?")) {
+      await dispatch(removeAddressThunkAction(id));
+      // Close the modal after removing the address
+      setShouldCloseModal(true);
     }
   };
 
@@ -124,13 +125,43 @@ export default function OrderPage() {
     };
   }, []);
 
+
+
+  useEffect(() => {
+    if (shouldCloseModal) {
+      setIsAddressFormOpen(false);
+      setShouldCloseModal(false);
+    }
+  }, [shouldCloseModal]);
+
+  // useEffect içinde token kontrolü
+  useEffect(() => {
+    // Token değeri kontrol ediliyor
+    if (!token) {
+      console.log("Token is missing or invalid. Redirecting to login page...");
+    } else {
+      // Token mevcut ve geçerli ise API çağrısı
+      axiosInstance
+        .get("/user/address", {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((res) => {
+          dispatch(setAddress(res.data));
+          if (res.data.length > 0) {
+            setDefaultAdress(res.data[0]);
+          }
+        })
+
+        .catch((error) => {
+          // API çağrısı hata durumu
+          console.error("API call failed:", error);
+        });
+    }
+  }, [token, dispatch]);
+
   const handleFormSubmit = () => {
-    // You can perform any necessary actions when the form is submitted
-    // For example, redirecting to another page
-    // Also, close the address form modal
-    closeAddress();
-  
-    // After adding a new address, re-fetch the addresses from the server
     axiosInstance
       .get("/user/address", {
         headers: {
@@ -139,13 +170,14 @@ export default function OrderPage() {
       })
       .then((res) => {
         dispatch(setAddress(res.data));
-        if (res.data.length > 0) {
-          setDefaultAdress(res.data[0]);
-        }
+        closeAddress();
+        onSubmitCallback(); // Make sure this is defined and closes the modal
       })
       .catch((error) => {
-        // Handle the error if needed
         console.error("API call failed:", error);
+      })
+      .finally(() => {
+        setShouldCloseModal(true);
       });
   };
 
@@ -291,9 +323,10 @@ export default function OrderPage() {
                         </p>
 
                         <FontAwesomeIcon
-                        onClick={() => removeAddress(item.id)}
+                        onClick={() => handleRemoveAddress(item.id)}
                         className="h-4 w-4 text-lighterDark cursor-pointer pt-14"
                         icon={faTrash}
+                        
                       />
                         </div>
                         
@@ -380,7 +413,7 @@ export default function OrderPage() {
                         </p>
 
                         <FontAwesomeIcon
-                        onClick={() => removeAddress(item.id)}
+                        onClick={() => handleRemoveAddress(item.id)}
                         className="h-4 w-4 text-lighterDark cursor-pointer pt-14"
                         icon={faTrash}
                       />
@@ -451,7 +484,10 @@ export default function OrderPage() {
             <AddressForm
               address={defaultAdress}
               closeModal={closeAddress}
-              onSubmitCallback={handleFormSubmit}
+              onSubmitCallback={() => {
+                // Add logic here to close the modal or do any other necessary actions
+                setShouldCloseModal(true);
+              }}
             />
           </div>
         </div>
