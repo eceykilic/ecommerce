@@ -7,6 +7,8 @@ import {
   faTrash,
   faUser,
   faChevronRight,
+  faCalendarAlt,
+  faCreditCard,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axiosInstance from "../api/axiosInstance";
@@ -17,6 +19,8 @@ import {
 import AddressForm from "../components/OrderPage/AddressForm";
 import OrderSum from "../components/Repetitive/OrderSum";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import CardForm from "../components/OrderPage/CardForm";
+import { addCardsThunkAction, removeCardThunkAction } from "../store/actions/orderAction/orderAction";
 
 export default function OrderPage() {
   const dispatch = useDispatch();
@@ -28,8 +32,8 @@ export default function OrderPage() {
   const [isAgreed, setIsAgreed] = useState(false);
   const history = useHistory();
   const [orderTotal, setOrderTotal] = useState(0);
-
   const [shouldCloseModal, setShouldCloseModal] = useState(false);
+  const [cards, setCards] = useState([]);
 
   const removeAddress = (id) => {
     dispatch(removeAddressThunkAction(id));
@@ -187,6 +191,63 @@ export default function OrderPage() {
     setOrderTotal(total);
   };
 
+  //kart ekleme çıkarma işlemleri
+
+  const [isAddingCard, setIsAddingCard] = useState(false);
+
+  const handleAddCardClick = () => {
+    setIsAddingCard(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsAddingCard(false);
+  };
+
+  const handleAddCard = (cardInfo) => {
+    // Dispatch addCardsThunkAction to add the new card to the backend
+    dispatch(addCardsThunkAction(cardInfo)).then(() => {
+      // Fetch the updated list of cards after adding the new card
+      axiosInstance.get("/user/card", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        // Update the cards state with the updated list of cards
+        setCards(res.data);
+        setIsAddingCard(false); // Close the modal after adding the card
+      })
+      .catch((error) => {
+        console.error("Error fetching updated cards data:", error);
+      });
+    });
+  };
+
+  useEffect(() => {
+    axiosInstance
+      .get("/user/card", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => setCards(res.data));
+  }, []);
+
+  const handleRemoveCard = async (cardId) => {
+    try {
+      // Dispatch removeCardThunkAction to remove the card from the backend
+      await dispatch(removeCardThunkAction(cardId));
+  
+      // After successful removal from backend, update local state to reflect the change
+      setCards(prevCards => prevCards.filter(card => card.id !== cardId));
+    } catch (error) {
+      console.error('Error removing card:', error);
+      // Handle error if needed
+    }
+  };
+
+
+  
   return (
     <div className="">
       <div className="flex max-w-screen-2xl justify-between mx-auto mt-14 gap-10 mb-10">
@@ -345,7 +406,7 @@ export default function OrderPage() {
                 <div className="flex justify-between items-center">
                   <div className="flex gap-1 flex-col">
                     <div className="flex gap-2">
-                      <input type="radio" className="w-4" checked />
+                      <input type="radio" className="w-4" />
                       <h2 className="text-lg font-semibold">Kart ile Öde</h2>
                     </div>
                     <p className="text-md">
@@ -358,64 +419,43 @@ export default function OrderPage() {
               <div className="flex gap-10 p-3 border-2">
                 <div className="flex-1">
                   <div className="flex justify-between">
-                    <h3 className="text-lg font-medium">Kart Bilgileri</h3>
-                    <h4 className="text-sm underline pt-1">
+                    <h3 className="text-lg font-medium ml-3">Kart Bilgileri</h3>
+                    <h4
+                      className="text-sm underline pt-1 cursor-pointer"
+                      onClick={handleAddCardClick}
+                    >
                       Başka bir Kart ile Ödeme Yap
                     </h4>
                   </div>
                   <div>
-                  <div className="flex flex-wrap justify-between">
-                  {address.map((item, index) => (
-                    <div
-                      key={index}
-                      className="w-full flex flex-col gap-3 p-3 mb-3"
-                    >
+                    <div className="flex flex-wrap justify-between">
+                    {cards.map((card, index) => (
+                  <div key={card.id} className="flex flex-col gap-5 p-3 mb-3">
+                    <div className="rounded-md flex flex-col gap-5 p-3 h-[150px] justify-center border-2">
                       <div className="flex justify-between">
                         <div className="flex gap-2">
-                          <input
-                            type="checkbox"
-                            checked={defaultAdress?.id === item.id}
-                            onChange={(e) =>
-                              handleCheckboxChange(e.target.checked, item)
-                            }
+                          <FontAwesomeIcon
+                            className="text-navBlue pt-1"
+                            icon={faCreditCard}
                           />
-                          <label htmlFor="">{item.title}</label>
+                          <h2>
+                            {card.cardName}
+                          </h2>
                         </div>
+                        {/* Kartı silme butonu */}
+                        <FontAwesomeIcon
+                          onClick={() => handleRemoveCard(card.id)}
+                          className="h-4 w-4 text-lighterDark cursor-pointer pt-14"
+                          icon={faTrash}
+                        />
                       </div>
-                      <div className="rounded-md flex flex-col gap-5 p-3 h-[180px] justify-center border-2">
-                        <div className="flex justify-between">
-                          <div className="flex gap-2">
-                            <FontAwesomeIcon
-                              className="text-navBlue pt-1"
-                              icon={faUser}
-                            />
-                            <h2>
-                              {item.name} {""}
-                              {item.surname}
-                            </h2>
-                          </div>
-                          <div className="flex gap-2">
-                            <FontAwesomeIcon
-                              className="text-navBlue"
-                              icon={faMobileScreenButton}
-                            />
-                            <h2 className="text-sm">{item.phone}</h2>
-                          </div>
-                        </div>
-                        <div className="flex justify-between">
-                          <p>
-                            {item.address}
-                            <br />
-                            {item.neighborhood} <br />
-                            {item.district} {item.city}
-                          </p>
-                        </div>
-                      </div>
+                      {/* Kart bilgileri */}
+                      <p>{card.cardNumber}</p>
+                      <p>Expiration: {card.expirationMonth}/{card.expirationYear}</p>
                     </div>
-                  ))}
-                </div>
-
-
+                  </div>
+                ))}
+                    </div>
                   </div>
                 </div>
                 <div className="flex-1">
@@ -523,6 +563,16 @@ export default function OrderPage() {
               onSubmitCallback={() => {
                 setShouldCloseModal(true);
               }}
+            />
+          </div>
+        </div>
+      )}
+      {isAddingCard && (
+        <div className="modal">
+          <div className="modal-content">
+            <CardForm
+              closeModal={handleCloseModal}
+              handleAddCard={handleAddCard}
             />
           </div>
         </div>
