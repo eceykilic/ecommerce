@@ -23,6 +23,7 @@ export default function ShoppingCartPage() {
   const [discountCode, setDiscountCode] = useState("");
   const history = useHistory();
   const [isChecked, setIsChecked] = useState(false);
+  const [orderTotal, setOrderTotal] = useState(0);
 
   //indirim kodu girişi
   const handleChange = (event) => {
@@ -87,6 +88,10 @@ export default function ShoppingCartPage() {
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
+  };
+
+  const handleOrderTotalChange = (total) => {
+    setOrderTotal(total);
   };
 
   return (
@@ -185,7 +190,7 @@ export default function ShoppingCartPage() {
               >
                 Proceed to Checkout <FontAwesomeIcon icon={faChevronRight} />
               </button>
-              <OrderSum />
+              <OrderSum onOrderTotalChange={handleOrderTotalChange} />
               <button
                 onClick={() => {
                   history.push("/order"); 
