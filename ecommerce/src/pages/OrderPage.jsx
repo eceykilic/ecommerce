@@ -203,6 +203,16 @@ export default function OrderPage() {
     setIsAddingCard(false);
   };
 
+  useEffect(() => {
+    axiosInstance
+      .get("/user/card", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => setCards(res.data));
+  }, [isAddingCard]); // Trigger the effect when isAddingCard changes
+
   const handleAddCard = (cardInfo) => {
     // Dispatch addCardsThunkAction to add the new card to the backend
     dispatch(addCardsThunkAction(cardInfo)).then(() => {
@@ -230,8 +240,11 @@ export default function OrderPage() {
           Authorization: token,
         },
       })
-      .then((res) => setCards(res.data));
-  }, []);
+      .then((res) => setCards(res.data))
+      .catch((error) => {
+        console.error("Error fetching cards data:", error);
+      });
+  }, [token]);
 
   const handleRemoveCard = async (cardId) => {
     try {
