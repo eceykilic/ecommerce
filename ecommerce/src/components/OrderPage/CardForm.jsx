@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addCardsThunkAction } from "../../store/actions/orderAction/orderAction";
 
-const CardForm = ({ closeModal, onSubmitCallback }) => {
+const CardForm = ({ closeModal}) => {
   const dispatch = useDispatch();
 
   const [cardInfo, setCardInfo] = useState({
@@ -48,7 +48,6 @@ const CardForm = ({ closeModal, onSubmitCallback }) => {
     }));
 
     closeModal();
-    onSubmitCallback();
   };
 
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
