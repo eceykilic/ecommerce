@@ -1,4 +1,5 @@
 export const ADD_CARDS = "ADD_CARDS";
+export const REMOVE_CARDS = "REMOVE_CARDS";
 export const SET_CART_LIST = "SET_CART_LIST";
 export const SET_PAYMENT = "SET_PAYMENT";
 export const SET_ADDRESS = "SET_ADDRESS";

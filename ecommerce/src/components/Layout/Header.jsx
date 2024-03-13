@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPhone,
@@ -34,7 +34,7 @@ export default function Header() {
   const { search } = useLocation();
   const categories = useSelector((store) => store.global.categories);
   const cart = useSelector((store) => store.shoppingCart.cart);
-
+  const dropdownRef = useRef(null);
   
   
   const womanCategories = categories.filter((category) =>
@@ -61,8 +61,22 @@ const manCategories = categories.filter((category) =>
     setIsShopDropdownOpen(!isShopDropdownOpen);
   };
 
-  
+  const handleCategoryClick = () => {
+    setIsShopDropdownOpen(false); // Dropdown'u kapat
+  };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsShopDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="">
@@ -182,6 +196,7 @@ const manCategories = categories.filter((category) =>
                         <Link
                           to="/shopping/kadin"
                           className="font-bold text-gray-800 pl-3"
+                          onClick={handleDropdownToggle}
                         >
                           Women
                         </Link>
@@ -191,6 +206,7 @@ const manCategories = categories.filter((category) =>
                               key={idx}
                               to={`/shopping/kadin/${category.code.split(':')[1]}`}
                               className="block px-4 py-2 text-sm text-gray-500 mt-3"
+                              onClick={handleDropdownToggle}
                             >
                               {category.title}
                             </Link>
@@ -202,6 +218,7 @@ const manCategories = categories.filter((category) =>
                       <Link
                           to="/shopping/erkek"
                           className="font-bold text-gray-800 pl-3"
+                          onClick={handleDropdownToggle}
                         >
                           Men
                         </Link>
@@ -211,6 +228,7 @@ const manCategories = categories.filter((category) =>
                               key={idx}
                               to={`/shopping/erkek/${category.code.split(':')[1]}`}
                               className="block px-4 py-2 text-sm text-gray-500 mt-3"
+                              onClick={handleDropdownToggle}
                             >
                               {category.title}
                             </Link>
@@ -224,6 +242,7 @@ const manCategories = categories.filter((category) =>
                     to={url}
                     key={idx}
                     className="no-underline text-lighterDark font-bold text-sm"
+
                   >
                     {title}
                   </Link>

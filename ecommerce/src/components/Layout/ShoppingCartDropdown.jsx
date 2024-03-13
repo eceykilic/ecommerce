@@ -24,7 +24,7 @@ const ShoppingCartDropdown = ({ onClose }) => {
 
 
   return (
-    <div className="absolute top-12 p-5 right-1 bg-white border border-gray-300 rounded-md shadow-lg z-50 min-w-96 min-h-46">
+    <div className="absolute top-12 p-5 right-1 bg-white border border-gray-300 rounded-md shadow-lg z-50 min-w-96 min-h-46" onClick={onClose}>
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-lg font-semibold">
           Shopping Cart <span>- {cart.length} Item(s)</span>

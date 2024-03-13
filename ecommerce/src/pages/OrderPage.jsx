@@ -7,6 +7,9 @@ import {
   faTrash,
   faUser,
   faChevronRight,
+  faCalendarAlt,
+  faCreditCard,
+  faPenToSquare
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axiosInstance from "../api/axiosInstance";
@@ -17,7 +20,11 @@ import {
 import AddressForm from "../components/OrderPage/AddressForm";
 import OrderSum from "../components/Repetitive/OrderSum";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import CardForm from "../components/OrderPage/CardForm";
+import {
+  addCardsThunkAction,
+  removeCardThunkAction,
+} from "../store/actions/orderAction/orderAction";
 
 export default function OrderPage() {
   const dispatch = useDispatch();
@@ -28,8 +35,12 @@ export default function OrderPage() {
   const [option, setOption] = useState("address");
   const [isAgreed, setIsAgreed] = useState(false);
   const history = useHistory();
-
+  const [orderTotal, setOrderTotal] = useState(0);
   const [shouldCloseModal, setShouldCloseModal] = useState(false);
+  const [cards, setCards] = useState([]);
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState("card");
+  const [selectedInstallmentOption, setSelectedInstallmentOption] =
+    useState("1");
 
   const removeAddress = (id) => {
     dispatch(removeAddressThunkAction(id));
@@ -53,7 +64,6 @@ export default function OrderPage() {
     setIsAgreed(event.target.checked);
   };
 
-
   const optionSelect = (e) => {
     setOption(e);
   };
@@ -70,9 +80,9 @@ export default function OrderPage() {
           Authorization: token,
         },
       });
-  
+
       dispatch(setAddress(res.data));
-  
+
       if (res.data.length > 0) {
         setDefaultAdress(res.data[0]);
       }
@@ -82,7 +92,6 @@ export default function OrderPage() {
       setShouldCloseModal(true);
     }
   };
-
 
   const handleModalClick = (e) => {
     if (e.target.classList.contains("modal-overlay")) {
@@ -125,8 +134,6 @@ export default function OrderPage() {
     };
   }, []);
 
-
-
   useEffect(() => {
     if (shouldCloseModal) {
       setIsAddressFormOpen(false);
@@ -161,30 +168,91 @@ export default function OrderPage() {
     }
   }, [token, dispatch]);
 
-  const handleFormSubmit = () => {
+  const handleOrderTotalChange = (total) => {
+    setOrderTotal(total);
+  };
+
+  //kart ekleme çıkarma işlemleri
+
+  const [isAddingCard, setIsAddingCard] = useState(false);
+
+  const handleAddCardClick = () => {
+    setIsAddingCard(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsAddingCard(false);
+  };
+
+  useEffect(() => {
     axiosInstance
-      .get("/user/address", {
+      .get("/user/card", {
         headers: {
           Authorization: token,
         },
       })
-      .then((res) => {
-        dispatch(setAddress(res.data));
-        closeAddress();
-        onSubmitCallback(); // Make sure this is defined and closes the modal
+      .then((res) => setCards(res.data));
+  }, [isAddingCard]); // Trigger the effect when isAddingCard changes
+
+  const handleAddCard = (cardInfo) => {
+    // Dispatch addCardsThunkAction to add the new card to the backend
+    dispatch(addCardsThunkAction(cardInfo)).then(() => {
+      // Fetch the updated list of cards after adding the new card
+      axiosInstance
+        .get("/user/card", {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((res) => {
+          // Update the cards state with the updated list of cards
+          setCards(res.data);
+          setIsAddingCard(false); // Close the modal after adding the card
+        })
+        .catch((error) => {
+          console.error("Error fetching updated cards data:", error);
+        });
+    });
+  };
+
+  useEffect(() => {
+    axiosInstance
+      .get("/user/card", {
+        headers: {
+          Authorization: token,
+        },
       })
+      .then((res) => setCards(res.data))
       .catch((error) => {
-        console.error("API call failed:", error);
-      })
-      .finally(() => {
-        setShouldCloseModal(true);
+        console.error("Error fetching cards data:", error);
       });
+  }, [token]);
+
+  const handleRemoveCard = async (cardId) => {
+    try {
+      // Dispatch removeCardThunkAction to remove the card from the backend
+      await dispatch(removeCardThunkAction(cardId));
+
+      // After successful removal from backend, update local state to reflect the change
+      setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
+    } catch (error) {
+      console.error("Error removing card:", error);
+      // Handle error if needed
+    }
+  };
+
+  const handlePaymentOptionChange = (option) => {
+    setSelectedPaymentOption(option);
+  };
+
+  const handleInstallmentOptionChange = (option) => {
+    setSelectedInstallmentOption(option);
   };
 
   return (
     <div className="">
       <div className="flex max-w-screen-2xl justify-between mx-auto mt-14 gap-10 mb-10">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 w-[1200px]">
           <div className="flex justify-between">
             <div
               onClick={() => optionSelect("address")}
@@ -269,7 +337,7 @@ export default function OrderPage() {
                   <h1 className="text-lg">Yeni Adres Ekle</h1>
                 </div>
                 <div className="flex flex-wrap justify-between">
-                  {address.slice(0, 8).map((item, index) => (
+                  {address.map((item, index) => (
                     <div
                       key={index}
                       className="w-[48%] flex flex-col gap-5 p-3 mb-3"
@@ -308,30 +376,25 @@ export default function OrderPage() {
                             <FontAwesomeIcon
                               className="text-navBlue"
                               icon={faMobileScreenButton}
-
                             />
                             <h2 className="text-sm">{item.phone}</h2>
                           </div>
                         </div>
                         <div className="flex justify-between">
-                        <p>
-                          {item.address}
-                          <br />
-                          {item.neighborhood} <br />
-                          {item.district} {item.city} 
-                          
-                        </p>
+                          <p>
+                            {item.address}
+                            <br />
+                            {item.neighborhood} <br />
+                            {item.district} {item.city}
+                          </p>
 
-                        <FontAwesomeIcon
-                        onClick={() => handleRemoveAddress(item.id)}
-                        className="h-4 w-4 text-lighterDark cursor-pointer pt-14"
-                        icon={faTrash}
-                        
-                      />
+                          <FontAwesomeIcon
+                            onClick={() => handleRemoveAddress(item.id)}
+                            className="h-4 w-4 text-lighterDark cursor-pointer pt-14"
+                            icon={faTrash}
+                          />
                         </div>
-                        
                       </div>
-                      
                     </div>
                   ))}
                 </div>
@@ -339,93 +402,132 @@ export default function OrderPage() {
             </div>
           )}
           {option === "payment" && (
-            <div className="flex flex-col border-2 p-5">
-              <div className="flex justify-between items-center">
-                <h1 className="text-xl">KART BİLGİLERİ BURDA OLCAK</h1>
-                <div className="flex gap-1">
-                  <input type="checkbox" />
-                  <label htmlFor="">Send my invoice to the same address</label>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 py-4">
-                <div
-                  onClick={openAddress}
-                  className="flex flex-col items-center gap-2 border-2 border-dashed border-navBlue rounded-md justify-center py-5 hover:bg-priceGray cursor-pointer"
-                >
-                  <FontAwesomeIcon
-                    className="text-navBlue text-xl"
-                    icon={faPlus}
-                  />
-                  <h1 className="text-lg">Yeni Adres Ekle</h1>
-                </div>
-                <div className="flex flex-wrap justify-between">
-                  {address.slice(0, 8).map((item, index) => (
-                    <div
-                      key={index}
-                      className="w-[48%] flex flex-col gap-5 p-3 mb-3"
-                    >
-                      <div className="flex justify-between">
-                        <div className="flex gap-2">
-                          <input
-                            type="checkbox"
-                            checked={defaultAdress?.id === item.id}
-                            onChange={(e) =>
-                              handleCheckboxChange(e.target.checked, item)
-                            }
-                          />
-                          <label htmlFor="">{item.title}</label>
-                        </div>
-                        <p
-                          onClick={() => editAddress(item)}
-                          className="text-sm underline cursor-pointer"
-                        >
-                          Düzenle
-                        </p>
-                      </div>
-                      <div className="rounded-md flex flex-col gap-5 p-3 h-[150px] justify-center border-2">
-                        <div className="flex justify-between">
-                          <div className="flex gap-2">
-                            <FontAwesomeIcon
-                              className="text-navBlue pt-1"
-                              icon={faUser}
-                            />
-                            <h2>
-                              {item.name} {""}
-                              {item.surname}
-                            </h2>
-                          </div>
-                          <div className="flex gap-2">
-                            <FontAwesomeIcon
-                              className="text-navBlue"
-                              icon={faMobileScreenButton}
-
-                            />
-                            <h2 className="text-sm">{item.phone}</h2>
-                          </div>
-                        </div>
-                        <div className="flex justify-between">
-                        <p>
-                          {item.address}
-                          <br />
-                          {item.neighborhood} <br />
-                          {item.district} {item.city} 
-                          
-                        </p>
-
-                        <FontAwesomeIcon
-                        onClick={() => handleRemoveAddress(item.id)}
-                        className="h-4 w-4 text-lighterDark cursor-pointer pt-14"
-                        icon={faTrash}
-                      />
-                        </div>
-                        
-                      </div>
-                      
+            <>
+              <div className="flex flex-col border-2 p-5">
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-1 flex-col">
+                    <div className="flex gap-2">
+                      <input type="radio" className="w-4" />
+                      <h2 className="text-lg font-semibold">Kart ile Öde</h2>
                     </div>
-                  ))}
+                    <p className="text-md">
+                      Kart ile ödemeyi seçtiniz. Banka veya Kredi Kartı
+                      kullanarak ödemenizi güvenle yapabilirsiniz.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+              <div className="flex gap-10 p-3 border-2">
+                <div className="flex-1">
+                  <div className="flex justify-between">
+                    <h3 className="text-lg font-medium ml-3">Kart Bilgileri</h3>
+                    <h4
+                      className="text-sm underline pt-1 cursor-pointer"
+                      onClick={handleAddCardClick}
+                    >
+                      Başka bir Kart ile Ödeme Yap
+                    </h4>
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap justify-between">
+                      {cards.map((card, index) => (
+                        <div
+                          key={card.id}
+                          className="flex flex-col gap-2 p-3 mb-3"
+                        >
+                          <div className="flex gap-3">
+                            <input
+                              type="radio"
+                              name="selectedCard"
+                              className="form-radio"
+                              value="card"
+                              checked={selectedPaymentOption === "card"}
+                              onChange={() => handlePaymentOptionChange("card")}
+                            />
+                            <span className="text-darkText">
+                              {card.name_on_card}
+                            </span>
+                          </div>
+                          <div className="rounded-md flex flex-col h-[180px] w-[350px] justify-center border-2">
+                            <div className="flex justify-between pr-4 pl-2">
+                              <img
+                                src="/creditcard/bonus.jpg"
+                                alt=""
+                                className="w-20 h-10"
+                              />
+                              <img
+                                src="/creditcard/card.png"
+                                alt=""
+                                className="w-10 h-10"
+                              />
+                            </div>
+                            <div className="flex flex-col text-right pt-12 pr-4">
+                              <p>{card.card_no}</p>
+                              <p>
+                                {card.expire_month}/{card.expire_year}
+                              </p>
+                            </div>
+                            <div className="pl-4 pb-1 flex gap-2">
+                              <FontAwesomeIcon
+                                onClick={() => handleRemoveCard(card.id)}
+                                className="h-4 w-4 text-lighterDark cursor-pointer pt-3"
+                                icon={faTrash}
+                              />
+                              {/* }
+                              <FontAwesomeIcon
+                                className="h-4 w-4 text-lighterDark cursor-pointer pt-3"
+                                icon={faPenToSquare}
+                              />
+                      {*/ }
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-medium">Taksit Seçenekleri</h3>
+                  <h4 className="text-sm">
+                    Kartınıza uygun taksit seçeneğini seçiniz
+                  </h4>
+                  <div className="max-w-xl mx-auto pt-7 pr-4">
+                    <table className="border-gray-200 border-2 rounded-full mx-auto w-full">
+                      <thead>
+                        <tr className="bg-gray-200">
+                          <th className="border-b border-r py-2 px-4">
+                            Taksit Sayısı
+                          </th>
+                          <th className="border-b py-2 px-4">Aylık Ödeme</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border-b border-r py-2 px-4">
+                            <label className="flex items-center">
+                              <input
+                                type="radio"
+                                name="taksit"
+                                className="form-radio"
+                                value="1"
+                                checked={selectedInstallmentOption === "1"}
+                                onChange={() =>
+                                  handleInstallmentOptionChange("1")
+                                }
+                              />
+                              <span className="ml-2">1 Taksit</span>
+                            </label>
+                          </td>
+                          <td className="border-b py-2 px-10 border-r">
+                            {orderTotal} $
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </>
           )}
         </div>
         <div className="flex flex-col border-2 p-4 max-w-[400px] h-[20%]">
@@ -434,17 +536,22 @@ export default function OrderPage() {
               onClick={() => {
                 history.push("/checkout");
               }}
-              className="text-sm border-1 rounded-md py-2 px-5 bg-navBlue text-white"
-              disabled={!isAgreed} 
+              className={`text-sm border-1 rounded-md py-2 px-5 ${!isAgreed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-navBlue text-white'} `}
+              disabled={!isAgreed}
             >
-              Save and Continue <FontAwesomeIcon icon={faChevronRight} />
+              Ödeme Yap <FontAwesomeIcon icon={faChevronRight} />
             </button>
 
             <div className="flex flex-col gap-3">
               <div className="flex gap-1 items-center">
-                <input type="checkbox" name="" id="" className="cursor-pointer w-8 h-8 mr-3 mb-8"
-                checked={isAgreed}
-                onChange={handleCheckboxChange2} />
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  className="cursor-pointer w-8 h-8 mr-3 mb-8"
+                  checked={isAgreed}
+                  onChange={handleCheckboxChange2}
+                />
                 <label className="text-sm">
                   <span className="font-bold text-darkText underline cursor-pointer">
                     Ön Bilgilendirme Koşulları
@@ -458,15 +565,15 @@ export default function OrderPage() {
               </div>
             </div>
 
-            <OrderSum />
+            <OrderSum onOrderTotalChange={handleOrderTotalChange} />
             <button
               onClick={() => {
                 history.push("/checkout");
               }}
-              className="text-sm border-1 rounded-md py-2 px-5 bg-navBlue text-white"
-              disabled={!isAgreed} 
+              className={`text-sm border-1 rounded-md py-2 px-5 ${!isAgreed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-navBlue text-white'} `}
+              disabled={!isAgreed}
             >
-              Save and Continue <FontAwesomeIcon icon={faChevronRight} />
+              Ödeme Yap <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
         </div>
@@ -485,9 +592,18 @@ export default function OrderPage() {
               address={defaultAdress}
               closeModal={closeAddress}
               onSubmitCallback={() => {
-                // Add logic here to close the modal or do any other necessary actions
                 setShouldCloseModal(true);
               }}
+            />
+          </div>
+        </div>
+      )}
+      {isAddingCard && (
+        <div className="modal">
+          <div className="modal-content">
+            <CardForm
+              closeModal={handleCloseModal}
+              handleAddCard={handleAddCard}
             />
           </div>
         </div>

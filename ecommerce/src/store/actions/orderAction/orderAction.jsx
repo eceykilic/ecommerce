@@ -5,9 +5,10 @@ import {
   SET_ADDRESS,
   SET_LOADING,
   UPDATE_ADDRESS,
+  REMOVE_CARDS
 } from "./orderActionTypes";
 import axiosInstance from "../../../api/axiosInstance";
-import useLocalStorage from "../../../hooks/useLocalStorage";
+
 
 export const setAddress = (address) => {
   // Local storage'a adresi kaydet
@@ -25,25 +26,26 @@ export const setLoading = (loading) => {
   return { type: SET_LOADING, payload: loading };
 };
 
-export const addCard = (card) => {
-  // Local storage'a kartı kaydet
-  localStorage.setItem("card", JSON.stringify(card));
-  return { type: ADD_CARDS, payload: card };
-};
 
 export const setAddressThunkAction = (formData) => (dispatch) => {
   const token = localStorage.getItem("Token");
   axiosInstance
-    .post("/user/address", formData, {
-      headers: {
-        Authorization: token,
-      },
-    })
-    .then((res) => {
-      dispatch(setAddress(res.data));
-    })
-    .catch((err) => console.log(err));
+     .post("/user/address", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`, // token değerini kullanarak Authorization başlığı
+    },
+  })
+  .then((res) => {
+    dispatch(setAddress(res.data));
+    toast.success("Address added.");
+    // Sayfayı yeniden yükle
+    window.location.reload();
+  })
+  .catch((err) => {
+    console.error("Error adding address:", err);
+  });
 };
+
 
 export const removeAddressAction = (id) => {
   console.log("Removing address action:", id);
@@ -105,6 +107,10 @@ export const updateAddressThunkAction = (formData) => (dispatch) => {
     });
 };
 
+export const addCard = (card) => {
+  return { type: ADD_CARDS, payload: card };
+};
+
 export const addCardsThunkAction = (formData) => (dispatch) => {
   const token = localStorage.getItem("Token");
   axiosInstance
@@ -133,5 +139,26 @@ export const updateCardThunkAction = (formData) => (dispatch) => {
     .catch((err) => {
       console.error(err.response);
       toast.error("Error updating card.");
+    });
+};
+
+export const removeCardThunkAction = (id) => (dispatch) => {
+  const token = localStorage.getItem('Token');
+  console.log('Removing card from DB:', id);
+
+  axiosInstance
+    .delete(`/user/card/${id}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((res) => {
+      console.log('Card successfully deleted:', res.data);
+      dispatch({ type: REMOVE_CARDS, payload: id }); // Dispatch REMOVE_CARDS action with the card ID
+      toast.success('Card deleted from the database.');
+    })
+    .catch((err) => {
+      console.error('Error deleting card from the database:', err);
+      toast.error('Error deleting card from the database. Please try again.');
     });
 };

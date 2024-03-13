@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     faChevronRight,
@@ -9,7 +9,7 @@ import {
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-export default function OrderSum () {
+export default function OrderSum ({ onOrderTotalChange }) {
     const cart = useSelector((state) => state.shoppingCart.cart);
     const dispatch = useDispatch();
     const [discountInput, setDiscountInput] = useState(false);
@@ -47,6 +47,12 @@ export default function OrderSum () {
       return parseFloat((totalAmount() + totalCargo).toFixed(2));
     }
   }
+
+  useEffect(() => {
+    // Calculate the order total whenever cart or other relevant data changes
+    const calculatedOrderTotal = cargoPrice();
+    onOrderTotalChange(calculatedOrderTotal); // Callback to update the parent state
+  }, [cart, totalCargo]);
     
     
     return (

@@ -19,6 +19,7 @@ import { userSuccess, logOutUser } from './store/actions/userAction/userAction';
 import ShoppingCartPage from "./pages/ShoppingCartPage";
 import OrderPage from "./pages/OrderPage";
 import PrivateRoute from "./components/OrderPage/PrivateRoute";
+import CheckoutPage from "./pages/CheckoutPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ function App() {
         
         <Route path="/cart" component={ShoppingCartPage} />
         <PrivateRoute path="/order" component={OrderPage} />
-
+        <Route path="/checkout" component={CheckoutPage} />
         <Route path="/login" component={LoginForm} />
         <Route path="/" component={Home} />
       </Switch>
