@@ -539,7 +539,7 @@ export default function OrderPage() {
               className={`text-sm border-1 rounded-md py-2 px-5 ${!isAgreed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-navBlue text-white'} `}
               disabled={!isAgreed}
             >
-              Save and Continue <FontAwesomeIcon icon={faChevronRight} />
+              Ödeme Yap <FontAwesomeIcon icon={faChevronRight} />
             </button>
 
             <div className="flex flex-col gap-3">
@@ -573,7 +573,7 @@ export default function OrderPage() {
               className={`text-sm border-1 rounded-md py-2 px-5 ${!isAgreed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-navBlue text-white'} `}
               disabled={!isAgreed}
             >
-              Save and Continue <FontAwesomeIcon icon={faChevronRight} />
+              Ödeme Yap <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
         </div>
