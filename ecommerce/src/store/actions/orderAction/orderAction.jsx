@@ -30,22 +30,22 @@ export const setLoading = (loading) => {
 export const setAddressThunkAction = (formData) => (dispatch) => {
   const token = localStorage.getItem("Token");
   axiosInstance
-    .post("/user/address", formData, {
-      headers: {
-        Authorization: token,
-      },
-    })
-    .then((res) => {
-      dispatch(setAddress(res.data));
-      toast.success("Address added.");
-      // Sayfayı yeniden yükle
-      window.location.reload();
-    })
-    .catch((err) => {
-      console.error("Error adding address:", err);
-      toast.error("Error adding address. Please try again.");
-    });
+     .post("/user/address", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`, // token değerini kullanarak Authorization başlığı
+    },
+  })
+  .then((res) => {
+    dispatch(setAddress(res.data));
+    toast.success("Address added.");
+    // Sayfayı yeniden yükle
+    window.location.reload();
+  })
+  .catch((err) => {
+    console.error("Error adding address:", err);
+  });
 };
+
 
 export const removeAddressAction = (id) => {
   console.log("Removing address action:", id);

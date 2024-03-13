@@ -80,7 +80,7 @@ export default function AddressForm({ address, closeModal, onSubmitCallback }) {
   
           // Update local storage with the new address
           const storedAddresses =
-            JSON.parse(localStorage.getItem("address")) || [];
+            JSON.parse(localStorage.getItem("addresses")) || [];
           localStorage.setItem(
             "addresses",
             JSON.stringify([...storedAddresses, newAddress])

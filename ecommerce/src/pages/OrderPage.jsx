@@ -168,32 +168,6 @@ export default function OrderPage() {
     }
   }, [token, dispatch]);
 
-  const handleFormSubmit = () => {
-    axiosInstance
-      .get("/user/address", {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((res) => {
-        dispatch(setAddress(res.data));
-        closeAddress();
-        onSubmitCallback(); // Make sure this is defined and closes the modal
-      })
-      .catch((error) => {
-        console.error("API call failed:", error);
-      })
-      .finally(() => {
-        setShouldCloseModal(true);
-      });
-  };
-
-  const [selectedOption, setSelectedOption] = useState("1");
-
-  const handleOptionChange = (value) => {
-    setSelectedOption(value);
-  };
-
   const handleOrderTotalChange = (total) => {
     setOrderTotal(total);
   };
