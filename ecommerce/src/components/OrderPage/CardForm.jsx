@@ -65,7 +65,7 @@ const CardForm = ({ closeModal}) => {
           name="cardName"
           value={cardInfo.cardName}
           onChange={handleChange}
-          placeholder="Cardholder Name"
+          placeholder="Card Name"
           className="w-full border border-gray-300 rounded-md py-2 px-3 mb-3"
         />
         <input

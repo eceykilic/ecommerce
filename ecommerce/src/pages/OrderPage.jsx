@@ -9,6 +9,7 @@ import {
   faChevronRight,
   faCalendarAlt,
   faCreditCard,
+  faPenToSquare
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axiosInstance from "../api/axiosInstance";
@@ -458,7 +459,7 @@ export default function OrderPage() {
                       {cards.map((card, index) => (
                         <div
                           key={card.id}
-                          className="flex flex-col gap-5 p-3 mb-3"
+                          className="flex flex-col gap-2 p-3 mb-3"
                         >
                           <div className="flex gap-3">
                             <input
@@ -492,12 +493,18 @@ export default function OrderPage() {
                                 {card.expire_month}/{card.expire_year}
                               </p>
                             </div>
-                            <div className="pl-4 pb-1">
+                            <div className="pl-4 pb-1 flex gap-2">
                               <FontAwesomeIcon
                                 onClick={() => handleRemoveCard(card.id)}
                                 className="h-4 w-4 text-lighterDark cursor-pointer pt-3"
                                 icon={faTrash}
                               />
+                              {/* }
+                              <FontAwesomeIcon
+                                className="h-4 w-4 text-lighterDark cursor-pointer pt-3"
+                                icon={faPenToSquare}
+                              />
+                      {*/ }
                             </div>
                           </div>
                         </div>
@@ -555,7 +562,7 @@ export default function OrderPage() {
               onClick={() => {
                 history.push("/checkout");
               }}
-              className="text-sm border-1 rounded-md py-2 px-5 bg-navBlue text-white"
+              className={`text-sm border-1 rounded-md py-2 px-5 ${!isAgreed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-navBlue text-white'} `}
               disabled={!isAgreed}
             >
               Save and Continue <FontAwesomeIcon icon={faChevronRight} />
@@ -589,7 +596,7 @@ export default function OrderPage() {
               onClick={() => {
                 history.push("/checkout");
               }}
-              className="text-sm border-1 rounded-md py-2 px-5 bg-navBlue text-white"
+              className={`text-sm border-1 rounded-md py-2 px-5 ${!isAgreed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-navBlue text-white'} `}
               disabled={!isAgreed}
             >
               Save and Continue <FontAwesomeIcon icon={faChevronRight} />
