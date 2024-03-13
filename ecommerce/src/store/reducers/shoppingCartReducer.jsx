@@ -57,7 +57,10 @@ export const shoppingCartReducer = (state = initialState, action) => {
       );
 
       // Update local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(updatedCartAfterRemoval));
+      localStorage.setItem(
+        localStorageKey,
+        JSON.stringify(updatedCartAfterRemoval)
+      );
 
       return { ...state, cart: updatedCartAfterRemoval };
 
@@ -71,7 +74,10 @@ export const shoppingCartReducer = (state = initialState, action) => {
       });
 
       // Update local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(updatedCartAfterDecrement));
+      localStorage.setItem(
+        localStorageKey,
+        JSON.stringify(updatedCartAfterDecrement)
+      );
 
       return { ...state, cart: updatedCartAfterDecrement };
 
@@ -96,6 +102,12 @@ export const shoppingCartReducer = (state = initialState, action) => {
     // Set Address
     case SET_ADDRESS:
       return { ...state, address: action.payload };
+
+    case "CLEAR_SHOPPING_CART":
+      return {
+        ...state,
+        cart: [], // Sepeti boşalt
+      };
 
     default:
       return state;
