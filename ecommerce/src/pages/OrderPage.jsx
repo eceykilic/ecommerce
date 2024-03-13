@@ -20,7 +20,10 @@ import AddressForm from "../components/OrderPage/AddressForm";
 import OrderSum from "../components/Repetitive/OrderSum";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CardForm from "../components/OrderPage/CardForm";
-import { addCardsThunkAction, removeCardThunkAction } from "../store/actions/orderAction/orderAction";
+import {
+  addCardsThunkAction,
+  removeCardThunkAction,
+} from "../store/actions/orderAction/orderAction";
 
 export default function OrderPage() {
   const dispatch = useDispatch();
@@ -34,6 +37,9 @@ export default function OrderPage() {
   const [orderTotal, setOrderTotal] = useState(0);
   const [shouldCloseModal, setShouldCloseModal] = useState(false);
   const [cards, setCards] = useState([]);
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState("card");
+  const [selectedInstallmentOption, setSelectedInstallmentOption] =
+    useState("1");
 
   const removeAddress = (id) => {
     dispatch(removeAddressThunkAction(id));
@@ -217,19 +223,20 @@ export default function OrderPage() {
     // Dispatch addCardsThunkAction to add the new card to the backend
     dispatch(addCardsThunkAction(cardInfo)).then(() => {
       // Fetch the updated list of cards after adding the new card
-      axiosInstance.get("/user/card", {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((res) => {
-        // Update the cards state with the updated list of cards
-        setCards(res.data);
-        setIsAddingCard(false); // Close the modal after adding the card
-      })
-      .catch((error) => {
-        console.error("Error fetching updated cards data:", error);
-      });
+      axiosInstance
+        .get("/user/card", {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((res) => {
+          // Update the cards state with the updated list of cards
+          setCards(res.data);
+          setIsAddingCard(false); // Close the modal after adding the card
+        })
+        .catch((error) => {
+          console.error("Error fetching updated cards data:", error);
+        });
     });
   };
 
@@ -250,17 +257,23 @@ export default function OrderPage() {
     try {
       // Dispatch removeCardThunkAction to remove the card from the backend
       await dispatch(removeCardThunkAction(cardId));
-  
+
       // After successful removal from backend, update local state to reflect the change
-      setCards(prevCards => prevCards.filter(card => card.id !== cardId));
+      setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
     } catch (error) {
-      console.error('Error removing card:', error);
+      console.error("Error removing card:", error);
       // Handle error if needed
     }
   };
 
+  const handlePaymentOptionChange = (option) => {
+    setSelectedPaymentOption(option);
+  };
 
-  
+  const handleInstallmentOptionChange = (option) => {
+    setSelectedInstallmentOption(option);
+  };
+
   return (
     <div className="">
       <div className="flex max-w-screen-2xl justify-between mx-auto mt-14 gap-10 mb-10">
@@ -442,32 +455,53 @@ export default function OrderPage() {
                   </div>
                   <div>
                     <div className="flex flex-wrap justify-between">
-                    {cards.map((card, index) => (
-                  <div key={card.id} className="flex flex-col gap-5 p-3 mb-3">
-                    <div className="rounded-md flex flex-col gap-5 p-3 h-[150px] justify-center border-2">
-                      <div className="flex justify-between">
-                        <div className="flex gap-2">
-                          <FontAwesomeIcon
-                            className="text-navBlue pt-1"
-                            icon={faCreditCard}
-                          />
-                          <h2>
-                            {card.cardName}
-                          </h2>
+                      {cards.map((card, index) => (
+                        <div
+                          key={card.id}
+                          className="flex flex-col gap-5 p-3 mb-3"
+                        >
+                          <div className="flex gap-3">
+                            <input
+                              type="radio"
+                              name="selectedCard"
+                              className="form-radio"
+                              value="card"
+                              checked={selectedPaymentOption === "card"}
+                              onChange={() => handlePaymentOptionChange("card")}
+                            />
+                            <span className="text-darkText">
+                              {card.name_on_card}
+                            </span>
+                          </div>
+                          <div className="rounded-md flex flex-col h-[180px] w-[350px] justify-center border-2">
+                            <div className="flex justify-between pr-4 pl-2">
+                              <img
+                                src="/creditcard/bonus.jpg"
+                                alt=""
+                                className="w-20 h-10"
+                              />
+                              <img
+                                src="/creditcard/card.png"
+                                alt=""
+                                className="w-10 h-10"
+                              />
+                            </div>
+                            <div className="flex flex-col text-right pt-12 pr-4">
+                              <p>{card.card_no}</p>
+                              <p>
+                                {card.expire_month}/{card.expire_year}
+                              </p>
+                            </div>
+                            <div className="pl-4 pb-1">
+                              <FontAwesomeIcon
+                                onClick={() => handleRemoveCard(card.id)}
+                                className="h-4 w-4 text-lighterDark cursor-pointer pt-3"
+                                icon={faTrash}
+                              />
+                            </div>
+                          </div>
                         </div>
-                        {/* Kartı silme butonu */}
-                        <FontAwesomeIcon
-                          onClick={() => handleRemoveCard(card.id)}
-                          className="h-4 w-4 text-lighterDark cursor-pointer pt-14"
-                          icon={faTrash}
-                        />
-                      </div>
-                      {/* Kart bilgileri */}
-                      <p>{card.cardNumber}</p>
-                      <p>Expiration: {card.expirationMonth}/{card.expirationYear}</p>
-                    </div>
-                  </div>
-                ))}
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -494,8 +528,11 @@ export default function OrderPage() {
                                 type="radio"
                                 name="taksit"
                                 className="form-radio"
-                                checked={selectedOption === "1"}
-                                onChange={() => handleOptionChange("1")}
+                                value="1"
+                                checked={selectedInstallmentOption === "1"}
+                                onChange={() =>
+                                  handleInstallmentOptionChange("1")
+                                }
                               />
                               <span className="ml-2">1 Taksit</span>
                             </label>

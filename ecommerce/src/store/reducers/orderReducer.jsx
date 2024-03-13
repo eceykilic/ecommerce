@@ -10,6 +10,7 @@ const initialState = {
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.SET_PAYMENT:
+      console.log("SET_PAYMENT action payload:", action.payload);
       return { ...state, payment: action.payload };
     case types.SET_ADDRESS:
       console.log("SET_ADDRESS action payload:", action.payload);
