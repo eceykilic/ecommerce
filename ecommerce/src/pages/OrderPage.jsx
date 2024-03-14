@@ -9,7 +9,7 @@ import {
   faChevronRight,
   faCalendarAlt,
   faCreditCard,
-  faPenToSquare
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axiosInstance from "../api/axiosInstance";
@@ -25,6 +25,7 @@ import {
   addCardsThunkAction,
   removeCardThunkAction,
 } from "../store/actions/orderAction/orderAction";
+import { clearShoppingCart } from "../store/actions/shoppingCart/shoppingCartActions";
 
 export default function OrderPage() {
   const dispatch = useDispatch();
@@ -41,6 +42,9 @@ export default function OrderPage() {
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("card");
   const [selectedInstallmentOption, setSelectedInstallmentOption] =
     useState("1");
+  const cart = useSelector((store) => store.shoppingCart.cart);
+  const shoppingCart = useSelector((store) => store.shoppingCart);
+  const [selectedCardInfo, setSelectedCardInfo] = useState(1);
 
   const removeAddress = (id) => {
     dispatch(removeAddressThunkAction(id));
@@ -241,12 +245,58 @@ export default function OrderPage() {
     }
   };
 
-  const handlePaymentOptionChange = (option) => {
-    setSelectedPaymentOption(option);
+  const handlePaymentOptionChange = (cardId) => {
+    setSelectedPaymentOption(cardId);
+    const selectedCard = cards.find((card) => card.id === cardId);
+    setSelectedCardInfo(selectedCard);
   };
 
   const handleInstallmentOptionChange = (option) => {
     setSelectedInstallmentOption(option);
+  };
+
+  const products = cart.map((item) => ({
+    product_id: item.id,
+    count: item.count,
+    detail: item.name, // veya başka bir detay
+  }));
+
+  const { card_no, expire_month, expire_year, card_ccv } = selectedCardInfo;
+  const handlePayment = async () => {
+    try {
+      // Sipariş verisi oluştur
+      const orderData = {
+        address_id: defaultAdress.id,
+        order_date: new Date().toISOString(), // Şu anki tarih ve saat
+        card_no: card_no,
+        card_expire_month: expire_month,
+        card_expire_year: expire_year,
+        card_ccv: card_ccv,
+        price: orderTotal,
+        products: [...products],
+      };
+
+      // Siparişi oluşturmak için POST isteği gönder
+      const response = await axiosInstance.post("/order", orderData, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      // Başarılı olup olmadığını kontrol etmek için response'ı kontrol edin
+      console.log("Order created successfully:", response.data);
+
+      // Sipariş oluşturulduktan sonra alışveriş sepetini boşaltabilirsiniz
+      // dispatch(clearShoppingCart()); // Eğer bir clearShoppingCart action'ı kullanıyorsanız
+      dispatch(clearShoppingCart());
+
+      // Ödeme başarılı olduğunda kullanıcıyı başka bir sayfaya yönlendirebilirsiniz
+      history.push("/checkout"); // Ödeme başarılı sayfasına yönlendirme
+    } catch (error) {
+      console.error("Error creating order:", error);
+      // Hata durumunda kullanıcıya uygun bir mesaj gösterebilirsiniz
+      // Hata durumunda alınabilecek diğer adımları da burada belirleyebilirsiniz
+    }
   };
 
   return (
@@ -441,8 +491,10 @@ export default function OrderPage() {
                               name="selectedCard"
                               className="form-radio"
                               value="card"
-                              checked={selectedPaymentOption === "card"}
-                              onChange={() => handlePaymentOptionChange("card")}
+                              checked={selectedPaymentOption === card.id}
+                              onChange={() =>
+                                handlePaymentOptionChange(card.id)
+                              }
                             />
                             <span className="text-darkText">
                               {card.name_on_card}
@@ -478,7 +530,7 @@ export default function OrderPage() {
                                 className="h-4 w-4 text-lighterDark cursor-pointer pt-3"
                                 icon={faPenToSquare}
                               />
-                      {*/ }
+                      {*/}
                             </div>
                           </div>
                         </div>
@@ -533,10 +585,12 @@ export default function OrderPage() {
         <div className="flex flex-col border-2 p-4 max-w-[400px] h-[20%]">
           <div className="flex flex-col gap-4 ">
             <button
-              onClick={() => {
-                history.push("/checkout");
-              }}
-              className={`text-sm border-1 rounded-md py-2 px-5 ${!isAgreed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-navBlue text-white'} `}
+              onClick={handlePayment}
+              className={`text-sm border-1 rounded-md py-2 px-5 ${
+                !isAgreed
+                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  : "bg-navBlue text-white"
+              } `}
               disabled={!isAgreed}
             >
               Ödeme Yap <FontAwesomeIcon icon={faChevronRight} />
@@ -567,10 +621,12 @@ export default function OrderPage() {
 
             <OrderSum onOrderTotalChange={handleOrderTotalChange} />
             <button
-              onClick={() => {
-                history.push("/checkout");
-              }}
-              className={`text-sm border-1 rounded-md py-2 px-5 ${!isAgreed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-navBlue text-white'} `}
+              onClick={handlePayment}
+              className={`text-sm border-1 rounded-md py-2 px-5 ${
+                !isAgreed
+                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  : "bg-navBlue text-white"
+              } `}
               disabled={!isAgreed}
             >
               Ödeme Yap <FontAwesomeIcon icon={faChevronRight} />

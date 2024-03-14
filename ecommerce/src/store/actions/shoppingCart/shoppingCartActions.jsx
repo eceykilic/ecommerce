@@ -32,3 +32,9 @@ import {
   export const setAddress = (address) => {
     return { type: SET_ADDRESS, payload: address };
   };
+
+  export const clearShoppingCart = () => {
+    return {
+      type: 'CLEAR_SHOPPING_CART',
+    };
+  };
