@@ -31,7 +31,7 @@ function App() {
     const storedToken = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token : null;
   
     if (!storedToken || !isLoggedIn) {
-      // Eğer token yoksa veya kullanıcı giriş yapmamışsa login sayfasına yönlendir
+      // Eğer token yoksa veya kullanıcı giriş yapmamışsa login sayfasına yönlendir //
       if (window.location.pathname !== "/login") {
         window.location.replace("/login");
       }
