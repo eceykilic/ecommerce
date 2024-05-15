@@ -1,1 +1,0 @@
-export const SET_SELLER_STORE = 'SET_SELLER_STORE';
